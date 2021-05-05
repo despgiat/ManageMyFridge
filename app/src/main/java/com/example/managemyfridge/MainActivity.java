@@ -65,12 +65,19 @@ public class MainActivity extends AppCompatActivity {
         if (view.getId() == R.id.yesButton)
         {
             if (checked)
+            {
                 openedLayout.setVisibility(View.VISIBLE);
+            }
+
         }
         if (view.getId() == R.id.noButton)
         {
             if (checked)
-                    openedLayout.setVisibility(View.INVISIBLE);
+            {
+                openedLayout.setVisibility(View.INVISIBLE);
+            }
+
+
         }
     }
 }
