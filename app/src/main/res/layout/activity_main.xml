@@ -9,12 +9,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="4dp"
         android:fillViewport="true"
         android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -46,48 +47,55 @@
                 android:layout_height="42dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
+                android:checkedButton="@id/noButton"
                 android:orientation='horizontal'
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5">
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/yesButton"
                     android:layout_width="75dp"
                     android:layout_height="34dp"
                     android:onClick="itemOpened"
                     android:text="@string/yes" />
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/noButton"
                     android:layout_width="72dp"
                     android:layout_height="35dp"
+                    android:onClick="itemOpened"
                     android:text="@string/no" />
             </RadioGroup>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
-                android:layout_width="291dp"
-                android:layout_height="153dp"
-                android:layout_marginStart="92dp"
+                android:layout_width="wrap_content"
+                android:layout_height="156dp"
+                android:layout_marginStart="84dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+                app:layout_constraintVertical_bias="0.346"
+                tools:visibility="invisible">
 
                 <RadioGroup
                     android:id="@+id/radioGroup2"
                     android:layout_width="198dp"
                     android:layout_height="49dp"
+                    android:checkedButton="@id/otherDateButton"
                     android:orientation='horizontal'
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView10">
 
                     <RadioButton
-                        android:id="@+id/radioButton3"
+                        android:id="@+id/todayButton"
                         android:layout_width="102dp"
                         android:layout_height="wrap_content"
                         android:text="@string/today" />
 
                     <RadioButton
-                        android:id="@+id/radioButton4"
+                        android:id="@+id/otherDateButton"
                         android:layout_width="94dp"
                         android:layout_height="wrap_content"
                         android:text="@string/other" />
@@ -102,29 +110,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="92dp"
+                    android:text="@string/dd_mm_yyyy"
+                    android:textColor="#F00"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextDate4" />
+
                 <EditText
                     android:id="@+id/editTextDate4"
                     android:layout_width="182dp"
                     android:layout_height="42dp"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="104dp"
                     android:autofillHints=""
                     android:ems="10"
                     android:hint="1/1/2021"
                     android:inputType="date"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="104dp"
-                    android:text="@string/dd_mm_yyyy"
-                    android:textColor="#F00"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextDate4" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -133,10 +140,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="88dp"
-                android:layout_marginBottom="340dp"
+                android:layout_marginBottom="244dp"
                 android:text="Items"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button"
+                app:layout_constraintHorizontal_bias="0.028"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
@@ -188,11 +196,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="228dp"
-                android:layout_marginBottom="340dp"
+                android:layout_marginTop="192dp"
                 android:onClick="addNewItem"
                 android:text="@string/add_new_item"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

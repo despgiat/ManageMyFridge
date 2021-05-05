@@ -1,16 +1,19 @@
 package com.example.managemyfridge;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView itemShowName;
     EditText itemName;
+    ConstraintLayout openedLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         itemShowName = findViewById(R.id.textView2);
         itemName = findViewById(R.id.editTextTextPersonName);
+        openedLayout = findViewById(R.id.constraintLayout);
 
         if (savedInstanceState != null) {
             //Retrieve data from the Bundle (other methods include getInt(), getBoolean() etc)
@@ -55,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void itemOpened(View view)
     {
+        boolean checked = ((RadioButton) view).isChecked();
 
+        // Check which radio button was clicked
+        if (view.getId() == R.id.yesButton)
+        {
+            if (checked)
+                openedLayout.setVisibility(View.VISIBLE);
+        }
+        if (view.getId() == R.id.noButton)
+        {
+            if (checked)
+                    openedLayout.setVisibility(View.INVISIBLE);
+        }
     }
 }
