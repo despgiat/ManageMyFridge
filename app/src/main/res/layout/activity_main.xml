@@ -76,14 +76,13 @@
                 app:layout_constraintBottom_toTopOf="@+id/button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-                app:layout_constraintVertical_bias="0.346"
-                tools:visibility="invisible">
+                app:layout_constraintVertical_bias="0.346">
 
                 <RadioGroup
                     android:id="@+id/radioGroup2"
                     android:layout_width="198dp"
                     android:layout_height="49dp"
-                    android:checkedButton="@id/otherDateButton"
+                    android:checkedButton="@id/todayButton"
                     android:orientation='horizontal'
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView10">
@@ -92,13 +91,15 @@
                         android:id="@+id/todayButton"
                         android:layout_width="102dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/today" />
+                        android:text="@string/today"
+                        android:onClick="dayOpened"/>
 
                     <RadioButton
                         android:id="@+id/otherDateButton"
                         android:layout_width="94dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/other" />
+                        android:text="@string/other"
+                        android:onClick="dayOpened"/>
                 </RadioGroup>
 
                 <TextView
@@ -106,12 +107,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/when_was_is_opened"
+                    android:text="@string/when_was_it_opened"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/textViewDateFormat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -119,10 +120,11 @@
                     android:text="@string/dd_mm_yyyy"
                     android:textColor="#F00"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextDate4" />
+                    app:layout_constraintTop_toBottomOf="@+id/editTextDateOpened"
+                    android:visibility="invisible"/>
 
                 <EditText
-                    android:id="@+id/editTextDate4"
+                    android:id="@+id/editTextDateOpened"
                     android:layout_width="182dp"
                     android:layout_height="42dp"
                     android:layout_marginStart="104dp"
@@ -131,7 +133,8 @@
                     android:hint="1/1/2021"
                     android:inputType="date"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
+                    android:visibility="invisible"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

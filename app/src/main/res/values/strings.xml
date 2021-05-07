@@ -18,7 +18,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="today">Today</string>
     <string name="other">Other</string>
-    <string name="when_was_is_opened">WHEN WAS IS OPENED?</string>
+    <string name="when_was_it_opened">WHEN WAS IT OPENED?</string>
     <string name="login">Login</string>
     <string name="don_t_have_an_account_yet">Don\'t have an account yet?</string>
     <string name="sign_up">Sign up</string>
@@ -29,4 +29,5 @@
     <string name="password_confirmation">Password Confirmation</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="username">Username</string>
+    <string name="expired_items_in_your_fridge">There are still expired items in your fridge</string>
 </resources>

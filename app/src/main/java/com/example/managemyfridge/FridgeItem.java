@@ -2,7 +2,6 @@ package com.example.managemyfridge;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class FridgeItem { //The fridge item class
 
@@ -10,29 +9,48 @@ public class FridgeItem { //The fridge item class
     private LocalDate expiry;
     private boolean opened;
     private LocalDate dayOpened;
+    //private ProductType
+
+    //Insert shelf life after opening (if specified on the product)
+
 
     public FridgeItem()
     {
-        name = "";
-        opened = false;
-
-        LocalDate date = LocalDate.now(); //We retrieve the current system date
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String text = date.format(formatter);
-
-        expiry = LocalDate.parse(text, formatter);
-        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-
-        name = "";
-        dayOpened = null;
+        setName("");
+        setOpened(false);
+        setExpiry(null);
+        setDayOpened(null);
     }
 
-    public FridgeItem(String name, LocalDate expiry, boolean opened, LocalDate dayOpened)
-    {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDate getExpiry() {
+        return expiry;
+    }
+
+    public void setExpiry(LocalDate expiry) {
         this.expiry = expiry;
+    }
+
+    public boolean isOpened() {
+        return opened;
+    }
+
+    public void setOpened(boolean opened) {
         this.opened = opened;
+    }
+
+    public LocalDate getDayOpened() {
+        return dayOpened;
+    }
+
+    public void setDayOpened(LocalDate dayOpened) {
         this.dayOpened = dayOpened;
     }
-
 }

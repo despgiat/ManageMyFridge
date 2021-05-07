@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainScreen">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="394dp"
+        android:layout_height="49dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.073">
+
+        <Button
+            android:id="@+id/button4"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            app:icon="@android:drawable/ic_dialog_alert"
+            app:iconSize="@android:dimen/app_icon_size"
+            app:iconTint="#FFC107"
+            app:strokeColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/expired_items_warning"
+            android:layout_width="301dp"
+            android:layout_height="match_parent"
+            android:text="@string/expired_items_in_your_fridge"
+            android:textAlignment="center"
+            android:textColor="#FFC107"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Today to expire"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="176dp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tomorrow to expire"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="356dp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Soon to expire"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="472dp" />
+
+    <Button
+        android:id="@+id/itemActions"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="106dp"
+        android:layout_height="105dp"
+        android:backgroundTint="#00FFFFFF"
+        android:focusableInTouchMode="true"
+        android:textAlignment="center"
+        app:icon="@android:drawable/ic_menu_add"
+        app:iconPadding="8dp"
+        app:iconSize="80dip"
+        app:iconTint="#FFC107"
+        app:iconTintMode="add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.969" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="224dp"
+        android:layout_height="158dp"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="195dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
