@@ -3,6 +3,7 @@ package com.example.managemyfridge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -68,7 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void addNewItem(View view)
     {
-        //If not all fields are filled up, a toast with a warning appears
+        //If not all fields are filled up, a toast with a warning appears-> return if happens;
+
+        Intent returnData = new Intent();
+        setResult(RESULT_OK , returnData);
+        finish();
 
     }
 
