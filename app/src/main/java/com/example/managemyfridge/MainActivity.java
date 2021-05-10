@@ -10,30 +10,45 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Things to implement:
+    //Warning about incorrect date format (To be made)
+    //Warning about not filling all the required fields (DONE)
+
     EditText itemName;
+    EditText expiry;
+    EditText openedDate;
+    boolean customOpenedDate;
     ConstraintLayout openedLayout;
     RadioGroup radioGroupOpened;
-
-    private Fridge fridge;
+    Intent i;
+    Fridge fridge;
     private FridgeItem fridgeItem;
+    DateTimeFormatter formatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         itemName = findViewById(R.id.editTextTextPersonName);
+        expiry = findViewById(R.id.editTextDate);
+        openedDate = findViewById(R.id.editTextDateOpened);
+
         openedLayout = findViewById(R.id.constraintLayout);
         openedLayout.setVisibility(View.INVISIBLE);
         radioGroupOpened = findViewById(R.id.radioGroup);
 
-        fridge = new Fridge();
+        i = getIntent();
+        fridge = (Fridge) i.getSerializableExtra("Fridge");
         fridgeItem = new FridgeItem();
 
         if (savedInstanceState != null) {
@@ -42,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             //CharSequence displayText = savedInstanceState.getCharSequence("savedDisplayText");
             int userChoice = savedInstanceState.getInt("savedUserChoice");
 
-
             //Restore the dynamic state of the UI
             itemName.setText(userText);
 
@@ -50,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             //Initialize the UI
             itemName.setText("");
-
             radioGroupOpened.check(R.id.noButton);
 
         }
@@ -71,9 +84,34 @@ public class MainActivity extends AppCompatActivity {
     {
         //If not all fields are filled up, a toast with a warning appears-> return if happens;
 
-        Intent returnData = new Intent();
-        setResult(RESULT_OK , returnData);
-        finish();
+        //We process the input from the edittexts (the dates)
+        //String textOther = otherDate.getText().toString(); //We get the user's input
+        //LocalDate dateOther = LocalDate.parse(textOther, formatter);
+        //fridgeItem.setDayOpened(dateOther);
+
+        String itemNameText = itemName.getText().toString();
+        fridgeItem.setName(itemNameText);
+        String expiryText = expiry.getText().toString();
+        fridgeItem.setExpiry(expiryText);
+        String openedDateText = openedDate.getText().toString();
+
+        if(customOpenedDate)
+        {
+            fridgeItem.setDayOpened(openedDateText);
+        }
+
+        if(fridgeItem.getName().isEmpty() || fridgeItem.getExpiry().isEmpty() || (fridgeItem.isOpened() && fridgeItem.getDayOpened().isEmpty()))
+        {
+            Toast.makeText(this, "You're missing some fields!", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            fridge.addItem(fridgeItem);
+            Intent returnData = new Intent();
+            returnData.putExtra("Fridge", fridge);
+            setResult(RESULT_OK , returnData);
+            finish();
+        }
 
     }
 
@@ -97,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 openedLayout.setVisibility(View.INVISIBLE);
                 fridgeItem.setOpened(false);
-                fridgeItem.setDayOpened(null);
+                fridgeItem.setDayOpened("");
             }
         }
     }
@@ -110,24 +148,20 @@ public class MainActivity extends AppCompatActivity {
         EditText otherDate = findViewById(R.id.editTextDateOpened);
         TextView dateFormat = findViewById(R.id.textViewDateFormat);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-
         switch (choiceId)
         {
             case R.id.todayButton:
                 LocalDate date = LocalDate.now(); //We retrieve the current system date
                 String text = date.format(formatter);
-                fridgeItem.setDayOpened((LocalDate.parse(text, formatter)));
+                fridgeItem.setDayOpened(text);
                 otherDate.setVisibility(View.INVISIBLE);
                 dateFormat.setVisibility(View.INVISIBLE);
+                customOpenedDate = false;
                 break;
             case R.id.otherDateButton:
                 otherDate.setVisibility(View.VISIBLE);
                 dateFormat.setVisibility(View.VISIBLE);
-                //String textOther = otherDate.getText().toString(); //We get the user's input
-                //LocalDate dateOther = LocalDate.parse(textOther, formatter);
-                //fridgeItem.setDayOpened(dateOther);
+                customOpenedDate = true;
                 break;
         }
 

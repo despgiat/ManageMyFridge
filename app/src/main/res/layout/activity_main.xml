@@ -47,7 +47,6 @@
                 android:layout_height="42dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
-                android:checkedButton="@id/noButton"
                 android:orientation='horizontal'
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5">
@@ -82,7 +81,6 @@
                     android:id="@+id/radioGroup2"
                     android:layout_width="198dp"
                     android:layout_height="49dp"
-                    android:checkedButton="@id/todayButton"
                     android:orientation='horizontal'
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView10">

@@ -1,25 +1,25 @@
 package com.example.managemyfridge;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class FridgeItem { //The fridge item class
+public class FridgeItem implements Serializable { //The fridge item class
 
     private String name;
-    private LocalDate expiry;
+    private String expiry;
     private boolean opened;
-    private LocalDate dayOpened;
+    private String dayOpened;
     //private ProductType
 
     //Insert shelf life after opening (if specified on the product)
-
 
     public FridgeItem()
     {
         setName("");
         setOpened(false);
-        setExpiry(null);
-        setDayOpened(null);
+        setExpiry("");
+        setDayOpened("");
     }
 
     public String getName() {
@@ -30,11 +30,11 @@ public class FridgeItem { //The fridge item class
         this.name = name;
     }
 
-    public LocalDate getExpiry() {
+    public String getExpiry() {
         return expiry;
     }
 
-    public void setExpiry(LocalDate expiry) {
+    public void setExpiry(String expiry) {
         this.expiry = expiry;
     }
 
@@ -46,11 +46,11 @@ public class FridgeItem { //The fridge item class
         this.opened = opened;
     }
 
-    public LocalDate getDayOpened() {
+    public String getDayOpened() {
         return dayOpened;
     }
 
-    public void setDayOpened(LocalDate dayOpened) {
+    public void setDayOpened(String dayOpened) {
         this.dayOpened = dayOpened;
     }
 }

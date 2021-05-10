@@ -1,38 +1,54 @@
 package com.example.managemyfridge;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Fridge {
+public class Fridge implements Serializable {
 
     private ArrayList<FridgeItem> fridgeItems;
     private ArrayList<FridgeItem> expiredItems;
 
     public Fridge()
     {
-        fridgeItems = null;
-        expiredItems = null;
+        setFridgeItems(new ArrayList<>());
+        setExpiredItems(new ArrayList<>());
     }
 
     public Fridge(ArrayList<FridgeItem> fridgeItems, ArrayList<FridgeItem> expiredItems )
     {
-        this.fridgeItems = fridgeItems;
-        this.expiredItems = expiredItems;
+        this.setFridgeItems(fridgeItems);
+        this.setExpiredItems(expiredItems);
     }
 
     public void addItem(FridgeItem item)
     {
-        fridgeItems.add(item);
+        getFridgeItems().add(item);
     }
 
     public void removeItem(int id)
     {
-        fridgeItems.remove(id);
+        getFridgeItems().remove(id);
     }
 
     public void openItem(int id)
     {
-        fridgeItems.get(id).setOpened(true);
+        getFridgeItems().get(id).setOpened(true);
     }
 
 
+    public ArrayList<FridgeItem> getFridgeItems() {
+        return fridgeItems;
+    }
+
+    public void setFridgeItems(ArrayList<FridgeItem> fridgeItems) {
+        this.fridgeItems = fridgeItems;
+    }
+
+    public ArrayList<FridgeItem> getExpiredItems() {
+        return expiredItems;
+    }
+
+    public void setExpiredItems(ArrayList<FridgeItem> expiredItems) {
+        this.expiredItems = expiredItems;
+    }
 }

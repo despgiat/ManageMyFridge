@@ -18,11 +18,18 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
 
         fridge = new Fridge();
+        FridgeItem product = new FridgeItem();
+        product.setName("Milk"); //Placeholder for testing
+        product.setExpiry("23/5/2021");
+        product.setOpened(false);
+
+        fridge.addItem(product);
     }
 
     public void addNewItem(View view)
     {
         Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("Fridge", fridge);
         startActivityForResult(i, 2);
     }
 
@@ -33,6 +40,12 @@ public class MainScreen extends AppCompatActivity {
         {
             //Create toast when new item has been added
             Toast.makeText(this, "You have added a new product in your fridge", Toast.LENGTH_SHORT).show();
+            fridge = (Fridge) data.getExtras().getSerializable("Fridge");
+
+            for (FridgeItem product: fridge.getFridgeItems())
+            {
+                System.out.println(product.getName());
+            }
         }
         //Get saved data from the returning Intent
         //CharSequence userTextNew = data.getExtras().getCharSequence( getCharSequence("userTextNew
