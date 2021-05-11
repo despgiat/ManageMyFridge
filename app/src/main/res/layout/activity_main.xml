@@ -128,7 +128,7 @@
                     android:layout_marginStart="104dp"
                     android:autofillHints=""
                     android:ems="10"
-                    android:hint="1/1/2021"
+                    android:hint="01/01/2021"
                     android:inputType="date"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
@@ -177,7 +177,7 @@
                 android:layout_marginStart="16dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:hint="1/1/2021"
+                android:hint="01/01/2021"
                 android:inputType="date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />

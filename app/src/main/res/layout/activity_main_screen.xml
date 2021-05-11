@@ -46,16 +46,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Today to expire"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="176dp" />
+        app:layout_constraintBottom_toTopOf="@+id/todayExpiresRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.887" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:text="Tomorrow to expire"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="356dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todayExpiresRecyclerView" />
 
     <TextView
         android:id="@+id/textView14"
@@ -63,7 +70,7 @@
         android:layout_height="wrap_content"
         android:text="Soon to expire"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="472dp" />
+        tools:layout_editor_absoluteY="542dp" />
 
     <Button
         android:id="@+id/itemActions"
@@ -72,6 +79,7 @@
         android:layout_height="105dp"
         android:backgroundTint="#00FFFFFF"
         android:focusableInTouchMode="true"
+        android:onClick="addNewItem"
         android:textAlignment="center"
         app:icon="@android:drawable/ic_menu_add"
         app:iconPadding="8dp"
@@ -83,13 +91,31 @@
         app:layout_constraintHorizontal_bias="0.947"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.969"
-        android:onClick="addNewItem"/>
+        app:layout_constraintVertical_bias="0.969" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="224dp"
-        android:layout_height="158dp"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="195dp" />
+        android:id="@+id/todayExpiresRecyclerView"
+        android:layout_width="328dp"
+        android:layout_height="155dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.328" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="40dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="368dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,23 +14,25 @@ import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Things to implement:
-    //Warning about incorrect date format (To be made)
-    //Warning about not filling all the required fields (DONE)
+    //Things to add:
+    //When the user adds an item which expires today or has already expired, add it to the expired items list of the fridge
+    //Make the toast at the end a Snackbar and implement the undo button (Προαιρετικά)
 
     EditText itemName;
     EditText expiry;
     EditText openedDate;
     boolean customOpenedDate;
     ConstraintLayout openedLayout;
-    RadioGroup radioGroupOpened;
+    //RadioGroup radioGroupOpened;
     Intent i;
     Fridge fridge;
     private FridgeItem fridgeItem;
     DateTimeFormatter formatter;
+    LocalDate currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        currentDate = LocalDate.now();
 
         itemName = findViewById(R.id.editTextTextPersonName);
         expiry = findViewById(R.id.editTextDate);
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         openedLayout = findViewById(R.id.constraintLayout);
         openedLayout.setVisibility(View.INVISIBLE);
-        radioGroupOpened = findViewById(R.id.radioGroup);
+        //radioGroupOpened = findViewById(R.id.radioGroup);
 
         i = getIntent();
         fridge = (Fridge) i.getSerializableExtra("Fridge");
@@ -60,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
             //Restore the dynamic state of the UI
             itemName.setText(userText);
 
-            radioGroupOpened.check(userChoice);
+            //radioGroupOpened.check(userChoice);
         } else {
             //Initialize the UI
             itemName.setText("");
-            radioGroupOpened.check(R.id.noButton);
+            //radioGroupOpened.check(R.id.noButton);
 
         }
     }
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         outState.putCharSequence("savedUserText", userText);
 
         //outState.putCharSequence("savedDisplayText", displayText);
-        outState.putInt("savedUserChoice", radioGroupOpened.getCheckedRadioButtonId());
+        //outState.putInt("savedUserChoice", radioGroupOpened.getCheckedRadioButtonId());
     }
 
     public void addNewItem(View view)
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         String itemNameText = itemName.getText().toString();
         fridgeItem.setName(itemNameText);
         String expiryText = expiry.getText().toString();
+
         fridgeItem.setExpiry(expiryText);
         String openedDateText = openedDate.getText().toString();
 
@@ -106,7 +110,38 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
+            try //We check if the inputted dates are valid
+            {
+                LocalDate expDate = LocalDate.parse(fridgeItem.getExpiry(), formatter);
+            }
+            catch (DateTimeParseException e)
+            {
+                Toast.makeText(this, "Incorrect date format!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(fridgeItem.isOpened())
+            {
+                try
+                {
+                    LocalDate openDate = LocalDate.parse(fridgeItem.getDayOpened(), formatter);
+                }
+                catch (DateTimeParseException e)
+                {
+                    Toast.makeText(this, "Incorrect date format!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
             fridge.addItem(fridgeItem);
+            LocalDate expDate = LocalDate.parse(fridgeItem.getExpiry(), formatter);
+            if(currentDate.compareTo(expDate) >= 0)
+            {
+                fridge.AddExpired(fridgeItem);
+            }
+
+            //Check the expiration date here and if it is equal to the current system date or lower, add it to the expired items
+
             Intent returnData = new Intent();
             returnData.putExtra("Fridge", fridge);
             setResult(RESULT_OK , returnData);
@@ -117,26 +152,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void itemOpened(View view)
     {
-        boolean checked = ((RadioButton) view).isChecked();
+        RadioGroup openedRadioGroup = findViewById(R.id.radioGroup);
+        int checked = openedRadioGroup.getCheckedRadioButtonId();
 
-        // Check which radio button was clicked
-        if (view.getId() == R.id.yesButton)
+        switch (checked)
         {
-            if (checked)
-            {
+            case R.id.yesButton:
                 openedLayout.setVisibility(View.VISIBLE);
                 fridgeItem.setOpened(true);
-            }
+                break;
 
-        }
-        if (view.getId() == R.id.noButton)
-        {
-            if (checked)
-            {
+            case R.id.noButton:
                 openedLayout.setVisibility(View.INVISIBLE);
                 fridgeItem.setOpened(false);
-                fridgeItem.setDayOpened("");
-            }
         }
     }
 
@@ -151,8 +179,7 @@ public class MainActivity extends AppCompatActivity {
         switch (choiceId)
         {
             case R.id.todayButton:
-                LocalDate date = LocalDate.now(); //We retrieve the current system date
-                String text = date.format(formatter);
+                String text = currentDate.format(formatter);
                 fridgeItem.setDayOpened(text);
                 otherDate.setVisibility(View.INVISIBLE);
                 dateFormat.setVisibility(View.INVISIBLE);

@@ -1,6 +1,7 @@
 package com.example.managemyfridge;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Fridge implements Serializable {
@@ -25,6 +26,11 @@ public class Fridge implements Serializable {
         getFridgeItems().add(item);
     }
 
+    public void addItems(ArrayList<FridgeItem> products)
+    {
+        fridgeItems.addAll(products);
+    }
+
     public void removeItem(int id)
     {
         getFridgeItems().remove(id);
@@ -35,6 +41,29 @@ public class Fridge implements Serializable {
         getFridgeItems().get(id).setOpened(true);
     }
 
+    public ArrayList<FridgeItem> checkExpiredAtDate(String date)
+    {
+        ArrayList<FridgeItem> products = new ArrayList<>();
+
+        for (FridgeItem product: fridgeItems)
+        {
+            if(product.getExpiry().equals(date))
+            {
+                products.add(product);
+            }
+        }
+        return  products;
+    }
+
+    public void AddExpired(FridgeItem product)
+    {
+        expiredItems.add(product);
+    }
+
+    public void AddExpired(ArrayList<FridgeItem> products)
+    {
+        expiredItems.addAll(products);
+    }
 
     public ArrayList<FridgeItem> getFridgeItems() {
         return fridgeItems;
