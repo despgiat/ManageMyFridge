@@ -1,38 +1,73 @@
 package com.example.managemyfridge;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class MainScreen extends AppCompatActivity {
+public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private Fridge fridge;
     LocalDate currentDate;
     DateTimeFormatter formatter;
     ArrayList<FridgeItem> expiredProducts;
-    //Arraylist<FridgeItem> expireTomorrow;
-    //Arratlist<FridgeItem> expireSoon;
+    ArrayList<FridgeItem> expireTomorrow;
+    ArrayList<FridgeItem> expireSoon;
+
+    DrawerLayout drawerLayout;
+    NavigationView navigationView; //The navigation drawer panel
+    AppBarConfiguration appBarConfiguration;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        //appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        navigationView = findViewById(R.id.nav_view);
+//        NavigationUI.setupWithNavController(navigationView, navController);
+        drawerLayout = findViewById(R.id.drawerLayout);
+
+        View inflatedView = navigationView.inflateHeaderView(R.layout.header_navigation_drawer);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
+        navigationView.getMenu().getItem(0).setChecked(true);
+
         //When the activity is created it will search for the expired items in the fridge and make them appear in the recyclerview on the front screen
         //First get the currect date
 
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         currentDate = LocalDate.now();
-        //tomorrow
-        //three days later
+        LocalDate tomorrow = currentDate.plusDays(1);
+        LocalDate soon = currentDate.plusDays(2); //three days later
 
         String dateText = currentDate.format(formatter);
 
@@ -61,6 +96,9 @@ public class MainScreen extends AppCompatActivity {
         fridge.addItem(product4);
 
         expiredProducts = fridge.checkExpiredAtDate(dateText); //Only the ones which expire at the currect Date will be added to the expired products
+        expireTomorrow = fridge.checkExpiredAtDate(tomorrow.format(formatter)); //Those that expire the next day
+        expireSoon = fridge.checkExpiredAtDate(soon.format(formatter)); //Products that expire in 2 days.
+
         fridge.AddExpired(expiredProducts);
 
         System.out.println("Fridge Items");
@@ -105,5 +143,14 @@ public class MainScreen extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        item.setChecked(true);
+        drawerLayout.close();
+        return true;
+    }
+
+
 
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:title="Home"
+            android:checked="true" />
+        <item
+            android:id="@+id/item1"
+            android:title="My Fridge" />
+        <item
+            android:id="@+id/item2"
+            android:title="Expired Items" />
+        <item
+            android:id="@+id/item3"
+            android:title="Recipes"
+            />
+        <item
+            android:id="@+id/item4"
+            android:title="Zero Waste Tips" />
+    </group>
+
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/profileItem"
+            android:title="Profile" />
+        <item
+            android:id="@+id/settingsItem"
+            android:title="Settings" />
+        <item
+            android:id="@+id/logoutItem"
+            android:title="Logout" />
+    </group>
+
+</menu>

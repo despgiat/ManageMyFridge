@@ -30,4 +30,6 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="username">Username</string>
     <string name="expired_items_in_your_fridge">There are still expired items in your fridge</string>
+    <string name="navigation_drawer_open" />
+    <string name="navigation_drawer_close" />
 </resources>
