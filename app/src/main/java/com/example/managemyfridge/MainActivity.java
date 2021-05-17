@@ -134,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             fridge.addItem(fridgeItem);
-            LocalDate expDate = LocalDate.parse(fridgeItem.getExpiry(), formatter);
-            if(currentDate.compareTo(expDate) >= 0)
+            String date = currentDate.format(formatter);
+            if(fridgeItem.productExpired(date))//Checks if item added was expired
             {
                 fridge.AddExpired(fridgeItem);
             }

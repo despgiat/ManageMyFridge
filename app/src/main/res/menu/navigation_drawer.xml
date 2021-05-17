@@ -5,21 +5,21 @@
         android:id="@+id/group1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
+            android:id="@+id/homeItem"
             android:title="Home"
             android:checked="true" />
         <item
-            android:id="@+id/item1"
+            android:id="@+id/myFridgeItem"
             android:title="My Fridge" />
         <item
-            android:id="@+id/item2"
+            android:id="@+id/expiredItem"
             android:title="Expired Items" />
         <item
-            android:id="@+id/item3"
+            android:id="@+id/recipesItem"
             android:title="Recipes"
             />
         <item
-            android:id="@+id/item4"
+            android:id="@+id/zeroWasteItem"
             android:title="Zero Waste Tips" />
     </group>
 

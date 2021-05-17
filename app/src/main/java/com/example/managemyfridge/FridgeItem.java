@@ -16,10 +16,20 @@ public class FridgeItem implements Serializable { //The fridge item class
 
     public FridgeItem()
     {
+
         setName("");
         setOpened(false);
         setExpiry("");
         setDayOpened("");
+    }
+
+    public boolean productExpired(String date)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate expDate = LocalDate.parse(expiry, formatter);
+
+        return localDate.compareTo(expDate) >= 0;
     }
 
     public String getName() {
@@ -53,4 +63,7 @@ public class FridgeItem implements Serializable { //The fridge item class
     public void setDayOpened(String dayOpened) {
         this.dayOpened = dayOpened;
     }
+
+
+
 }

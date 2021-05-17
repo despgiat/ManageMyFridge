@@ -2,6 +2,8 @@ package com.example.managemyfridge;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Fridge implements Serializable {
@@ -41,18 +43,32 @@ public class Fridge implements Serializable {
         getFridgeItems().get(id).setOpened(true);
     }
 
-    public ArrayList<FridgeItem> checkExpiredAtDate(String date)
+    public ArrayList<FridgeItem> checkForExpiredAtDate(String date)
     {
         ArrayList<FridgeItem> products = new ArrayList<>();
 
         for (FridgeItem product: fridgeItems)
         {
-            if(product.getExpiry().equals(date))
+            if(product.productExpired(date)) //Not just the .equals, it is deemed at expired if it is EQUAL OR LESS
             {
                 products.add(product);
             }
         }
-        return  products;
+        return products;
+    }
+
+    public ArrayList<FridgeItem> expiresAtDate(String date)
+    {
+        ArrayList<FridgeItem> products = new ArrayList<>();
+
+        for (FridgeItem product: fridgeItems)
+        {
+            if(product.getExpiry().equals(date)) //Not just the .equals, it is deemed at expired if it is EQUAL OR LESS
+            {
+                products.add(product);
+            }
+        }
+        return products;
     }
 
     public void AddExpired(FridgeItem product)
@@ -80,4 +96,5 @@ public class Fridge implements Serializable {
     public void setExpiredItems(ArrayList<FridgeItem> expiredItems) {
         this.expiredItems = expiredItems;
     }
+
 }
