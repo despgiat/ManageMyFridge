@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/homeFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/itemActions"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="135dp"
+            android:adjustViewBounds="true"
+            android:elevation="8dp"
+            android:focusableInTouchMode="true"
+            android:onClick="addNewItem"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_add_item"
+            app:icon="@drawable/ic_add_item"
+            app:iconPadding="8dp"
+            app:iconSize="80dip"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/todayTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Today to expire"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.165"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutWarning" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/todayExpireRecyclerView"
+            android:layout_width="341dp"
+            android:layout_height="109dp"
+            app:layout_constraintBottom_toTopOf="@+id/tomorrowTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/todayTextView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tomorrowTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Tomorrow to expire"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/todayExpireRecyclerView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tomorrowExpireRecyclerView"
+            android:layout_width="339dp"
+            android:layout_height="109dp"
+            app:layout_constraintBottom_toTopOf="@+id/soonTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tomorrowTextView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/soonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:text="Soon to expire"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tomorrowExpireRecyclerView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/soonExpireRecyclerView"
+            android:layout_width="339dp"
+            android:layout_height="109dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/soonTextView"
+            app:layout_constraintVertical_bias="0.0">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutWarning"
+            android:layout_width="400dp"
+            android:layout_height="77dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal"
+            android:paddingTop="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/todayTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/warningExpiredButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                app:icon="@drawable/ic_warning"
+                app:iconSize="64dp"
+                app:iconTint="#FFC107"
+                app:strokeColor="#FFFFFF"
+                android:onClick="goToExpired"/>
+
+            <TextView
+                android:id="@+id/expired_items_warning"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="8dp"
+                android:text="@string/expired_items_in_your_fridge"
+                android:textAlignment="center"
+                android:textColor="#FFC107"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

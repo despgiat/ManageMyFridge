@@ -23,6 +23,14 @@ public class FridgeItem implements Serializable { //The fridge item class
         setDayOpened("");
     }
 
+    public FridgeItem(String name, boolean opened, String expiry, String dayOpened)
+    {
+        setName(name);
+        setOpened(opened);
+        setExpiry(expiry);
+        setDayOpened(dayOpened);
+    }
+
     public boolean productExpired(String date)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
