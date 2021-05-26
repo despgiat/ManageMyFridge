@@ -1,12 +1,21 @@
 package com.example.managemyfridge;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.security.keystore.StrongBoxUnavailableException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.time.LocalDate;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,43 +24,49 @@ import android.view.ViewGroup;
  */
 public class ExpiredFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "fridge_from_Activity";
-    private static final String ARG_PARAM2 = "param2";
+    private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
+    private static final String FRIDGE = "fridge_from_Activity";
+    TextView warning;
+    HomeFragment.HomeFragmentListener activityCallback; //For communication with the activity
+    RecyclerView.Adapter adapterFridgeItems;
+    CardView cardView;
+    String currentDate;
 
-    // TODO: Rename and change types of parameters
-    private Fridge fridge;
-    //private String mParam2;
 
-    public ExpiredFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExpiredFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ExpiredFragment newInstance(Fridge fridge) {
         ExpiredFragment fragment = new ExpiredFragment();
+
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, fridge);
-        //args.putString(ARG_PARAM2, param2);
+        args.putSerializable(FRIDGE, fridge);
+        //args.putString(DATE, currentDate);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+
+        try {
+            activityCallback = (HomeFragment.HomeFragmentListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement HomeFragmentListener");
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LocalDate now = LocalDate.now();
+        currentDate = now.format(MainScreen.formatter);
+
         if (getArguments() != null) {
-            fridge = (Fridge) getArguments().getSerializable("fridge_from_Activity");
-            //mParam2 = getArguments().getString(ARG_PARAM2);
+            fridge = (Fridge) getArguments().getSerializable(FRIDGE);
+            //currentDate = getArguments().getString(DATE);
+
         }
     }
 
@@ -59,15 +74,31 @@ public class ExpiredFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_expired, container, false);
-        System.out.println("LALALALALALALALA");
+        activityCallback.UpdateData(fridge);
 
-        for (FridgeItem product:fridge.getExpiredItems())
+        warning = view.findViewById(R.id.noExpiredTextView);
+        //cardView = (CardView) view.findViewById(R.id.productEditableCardLayout);
+        //cardView.setCardBackgroundColor(Color.parseColor("#FFFFC107"));
+
+        if(fridge.checkForExpiredAtDate(currentDate).size() == 0) //We need to pass the currentDate to the fragment too
         {
-            System.out.println(product.getName());
+            warning.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            warning.setVisibility(View.GONE);
         }
 
-        return view;
+        RecyclerView productsRecyclerView = view.findViewById(R.id.expiredProductsRecyclerView);
+        LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
+
+        productsRecyclerView.setLayoutManager(linearLayoutManagerToday);
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate));
+        productsRecyclerView.setAdapter(adapterFridgeItems);
+
+        return  view;
     }
+
+
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,6 +48,8 @@ public class HomeFragment extends Fragment {
     RecyclerView.Adapter adapterTomorrow;
     RecyclerView.Adapter adapterSoon;
 
+    ImageButton addItemButton;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -55,8 +58,7 @@ public class HomeFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param fridge Parameter 1.
      * @return A new instance of fragment BlankFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -80,6 +82,7 @@ public class HomeFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement HomeFragmentListener");
         }
+
     }
 
 
@@ -104,18 +107,25 @@ public class HomeFragment extends Fragment {
         product1.setName("Milk"); //Placeholder for testing
         product1.setExpiry("25/05/2021");
         product1.setOpened(true);
+        product1.setDayOpened("22/05/2021");
+
         product2.setName("Eggs"); //Placeholder for testing
         product2.setExpiry("26/05/2021");
         product2.setOpened(false);
         product3.setName("Salami"); //Placeholder for testing
         product3.setExpiry("26/05/2021");
         product3.setOpened(true);
+        product3.setDayOpened("15/05/2021");
+
+
         product4.setName("Sweet Yoghurt"); //Placeholder for testing
         product4.setExpiry("27/05/2021");
         product4.setOpened(false);
         product5.setName("Chicken"); //Placeholder for testing
         product5.setExpiry("24/05/2021");
         product5.setOpened(true);
+        product5.setDayOpened("20/05/2021");
+
 
         fridge.addItem(product1);
         fridge.addItem(product2);
@@ -187,6 +197,16 @@ public class HomeFragment extends Fragment {
         adapterSoon = new RecyclerAdapter(expireSoon);
         soonRecyclerView.setAdapter(adapterSoon);
 
+        /*addItemButton = view.findViewById(R.id.itemActions);
+        addItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainScreen) getActivity()).addNewItem();
+            }
+        });
+
+         */
+
 
         // Inflate the layout for this fragment
         return view;
@@ -205,11 +225,13 @@ public class HomeFragment extends Fragment {
     public void CheckFridge()
     {
         ArrayList<FridgeItem> products = fridge.checkForExpiredAtDate(currentDate);
-        for (FridgeItem product: products)
+        /*for (FridgeItem product: products)
         {
             if(!fridge.getExpiredItems().contains(product))
                 fridge.AddExpired(product);
         }
+
+         */
 
         //expiredItems = false;
         //fridge.AddExpired(fridge.checkForExpiredAtDate(currentDate));
@@ -250,7 +272,7 @@ public class HomeFragment extends Fragment {
             soonTextView.setText("Soon");
         }
 
-        if(fridge.getExpiredItems().size() > 0)
+        if(products.size() > 0) //fridge.getExpiredItems().size() > 0
         {
             expiredItems = true;
             expiredWarning.setVisibility(View.VISIBLE);
@@ -280,6 +302,7 @@ public class HomeFragment extends Fragment {
 
  */
     }
+
 
     public interface HomeFragmentListener {
         public void UpdateData(Fridge fridge);

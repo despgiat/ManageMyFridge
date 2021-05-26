@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,9 +19,9 @@
             android:adjustViewBounds="true"
             android:elevation="8dp"
             android:focusableInTouchMode="true"
-            android:onClick="addNewItem"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_add_item"
+            android:visibility="gone"
             app:icon="@drawable/ic_add_item"
             app:iconPadding="8dp"
             app:iconSize="80dip"
@@ -49,11 +50,9 @@
             android:id="@+id/todayExpireRecyclerView"
             android:layout_width="341dp"
             android:layout_height="109dp"
-            app:layout_constraintBottom_toTopOf="@+id/tomorrowTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/todayTextView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/todayTextView" />
 
         <TextView
             android:id="@+id/tomorrowTextView"
@@ -65,7 +64,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.24"
+            app:layout_constraintHorizontal_bias="0.231"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/todayExpireRecyclerView" />
 
@@ -73,23 +72,22 @@
             android:id="@+id/tomorrowExpireRecyclerView"
             android:layout_width="339dp"
             android:layout_height="109dp"
-            app:layout_constraintBottom_toTopOf="@+id/soonTextView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.486"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrowTextView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tomorrowTextView" />
 
         <TextView
             android:id="@+id/soonTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="24dp"
             android:text="Soon to expire"
             android:textAllCaps="true"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.16"
+            app:layout_constraintHorizontal_bias="0.157"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tomorrowExpireRecyclerView" />
 
@@ -126,11 +124,11 @@
                 android:layout_width="76dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00FFFFFF"
+                android:onClick="goToExpired"
                 app:icon="@drawable/ic_warning"
                 app:iconSize="64dp"
                 app:iconTint="#FFC107"
-                app:strokeColor="#FFFFFF"
-                android:onClick="goToExpired"/>
+                app:strokeColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/expired_items_warning"

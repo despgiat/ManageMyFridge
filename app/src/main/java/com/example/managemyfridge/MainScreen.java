@@ -82,8 +82,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private Menu navigationDrawer;
 
     //Fragments:
+    Fragment activeScreen;
     //HomeFragment homeFragment;
-    ExpiredFragment expiredFragment;
+    //ExpiredFragment expiredFragment;
 
 
     @Override
@@ -196,7 +197,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         //soonRecyclerView.setAdapter(adapterSoon);
 
         //homeFragment = new HomeFragment();
-        expiredFragment = new ExpiredFragment();
+        //expiredFragment = new ExpiredFragment();
 
         /**
          * When there are expired products, the HomeFragment will send the expires Items arraylist to this activity,
@@ -236,7 +237,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
     //This will be accessed from the Home Fragment and the MyFridge Fragment, so it should be implemented here
-    public void addNewItem(View view)
+    public void addNewItem()
     {
         System.out.println("ADD NEW ITEM!!!");
         Intent i = new Intent(this, MainActivity.class);
@@ -255,11 +256,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             Toast.makeText(this, "You have added a new product in your fridge", Toast.LENGTH_SHORT).show();
             fridge = (Fridge) data.getExtras().getSerializable("Fridge");
 
+            //Updates all of the fragments with the new fridge
+            //Since it will be called only from MyFridge, it will return there
+
             Bundle bundle = new Bundle(); //Sends the fridge back to the fragment (It doesn't unfortunately...) Let's fix that real quick
             bundle.putSerializable("fridge", fridge);
-            HomeFragment home = new HomeFragment();
-            home.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.screen, home).commit();
+            MyFridge myFridge = new MyFridge();
+            myFridge.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
 
             //HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.homeFragment);
             //homeFragment.GetFridgeFromMain(fridge);
@@ -271,7 +275,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             }
 
             System.out.println("Expired Items");
-            for (FridgeItem fridgeItem:fridge.getExpiredItems())
+            for (FridgeItem fridgeItem:fridge.checkForExpiredAtDate(currentDate.format(formatter)))
             {
                 System.out.println(fridgeItem.getName());
             }
@@ -345,7 +349,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         switch (item.getItemId())
         {
             case R.id.myFridgeItem:
-                getSupportFragmentManager().beginTransaction().replace(R.id.screen, new MyFridge()).commit();
+                bundle.putSerializable("fridge", fridge);
+                MyFridge myFridge = new MyFridge();
+                myFridge.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
                 /*Intent i = new Intent(this, MyFridge.class);
                 i.putExtra("Fridge", fridge);
                 startActivity(i);
@@ -367,6 +374,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 bundle.putSerializable("fridge_from_Activity", fridge);
 // set Fragmentclass Arguments
                 //ExpiredFragment expiredFragment = new ExpiredFragment();
+                ExpiredFragment expiredFragment = new ExpiredFragment();
                 expiredFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
                 break;
@@ -518,4 +526,24 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
     }
+
+    public void openProduct(int id)
+    {
+        if(!fridge.getFridgeItems().get(id).isOpened())
+        {
+            fridge.getFridgeItems().get(id).setOpened(true);
+            fridge.getFridgeItems().get(id).setDayOpened(currentDate.format(formatter));
+        }
+
+    }
+
+    public void deleteProduct(int id)
+    {
+        fridge.removeItem(id);
+    }
+
+    //public void editProduct(int id)
+    //{
+
+    //}
 }

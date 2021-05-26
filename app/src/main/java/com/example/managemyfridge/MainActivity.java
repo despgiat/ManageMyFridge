@@ -134,12 +134,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
             fridge.addItem(fridgeItem);
-            String date = currentDate.format(formatter);
+
+            /*String date = currentDate.format(formatter);
 
             if(fridgeItem.productExpired(date))//Checks if item added was expired
             {
                 fridge.AddExpired(fridgeItem);
             }
+
+             */
 
             //Check the expiration date here and if it is equal to the current system date or lower, add it to the expired items
 
@@ -164,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.noButton:
-                openedLayout.setVisibility(View.INVISIBLE);
+                openedLayout.setVisibility(View.GONE);
                 fridgeItem.setOpened(false);
         }
     }
@@ -182,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.todayButton:
                 String text = currentDate.format(formatter);
                 fridgeItem.setDayOpened(text);
-                otherDate.setVisibility(View.INVISIBLE);
-                dateFormat.setVisibility(View.INVISIBLE);
+                otherDate.setVisibility(View.GONE);
+                dateFormat.setVisibility(View.GONE);
                 customOpenedDate = false;
                 break;
             case R.id.otherDateButton:

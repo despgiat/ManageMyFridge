@@ -1,6 +1,5 @@
 package com.example.managemyfridge;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
@@ -26,7 +23,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_overview_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_overview_home_layout, parent, false);
         return new ViewHolder(v);
     }
 
@@ -39,8 +36,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
          */
 
         holder.itemName.setText(productData.get(position).getName());
-        holder.itemOpened.setText(productData.get(position).isOpened() ? "Opened" : "");
-        //holder.deleteItem.setImageResource("@drawable/ic_delete_item");
+        holder.itemOpened.setText(productData.get(position).isOpened() ? "Opened at " + (productData.get(position).getDayOpened()) : "");
+        /*holder.deleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Click clicky clickety!");
+            }
+        });
+
+         */
 
     }
 
@@ -57,7 +61,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             itemName = itemView.findViewById(R.id.item_nameTextView);
             itemOpened = itemView.findViewById(R.id.item_openedTextView);
-            deleteItem = itemView.findViewById(R.id.deleteItemButton);
+            //deleteItem = itemView.findViewById(R.id.deleteItemButton);
         }
     }
 }

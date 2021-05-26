@@ -9,18 +9,18 @@ import java.util.ArrayList;
 public class Fridge implements Serializable {
 
     private ArrayList<FridgeItem> fridgeItems;
-    private ArrayList<FridgeItem> expiredItems;
+    //private ArrayList<FridgeItem> expiredItems;
 
     public Fridge()
     {
         setFridgeItems(new ArrayList<>());
-        setExpiredItems(new ArrayList<>());
+        //setExpiredItems(new ArrayList<>());
     }
 
     public Fridge(ArrayList<FridgeItem> fridgeItems, ArrayList<FridgeItem> expiredItems )
     {
         this.setFridgeItems(fridgeItems);
-        this.setExpiredItems(expiredItems);
+        //this.setExpiredItems(expiredItems);
     }
 
     public void addItem(FridgeItem item)
@@ -41,6 +41,7 @@ public class Fridge implements Serializable {
     public void openItem(int id)
     {
         getFridgeItems().get(id).setOpened(true);
+        //getExpiredItems().get(getFridgeItems().get(id)).setOpened(true);
     }
 
     public ArrayList<FridgeItem> checkForExpiredAtDate(String date)
@@ -71,15 +72,15 @@ public class Fridge implements Serializable {
         return products;
     }
 
-    public void AddExpired(FridgeItem product)
-    {
-        expiredItems.add(product);
-    }
+   // public void AddExpired(FridgeItem product)
+    //{
+    //    expiredItems.add(product);
+   // }
 
-    public void AddExpired(ArrayList<FridgeItem> products)
-    {
-        expiredItems.addAll(products);
-    }
+    //public void AddExpired(ArrayList<FridgeItem> products)
+    //{
+     //   expiredItems.addAll(products);
+   // }
 
     public ArrayList<FridgeItem> getFridgeItems() {
         return fridgeItems;
@@ -89,12 +90,12 @@ public class Fridge implements Serializable {
         this.fridgeItems = fridgeItems;
     }
 
-    public ArrayList<FridgeItem> getExpiredItems() {
-        return expiredItems;
-    }
+    //public ArrayList<FridgeItem> getExpiredItems() {
+        //return expiredItems;
+    //}
 
-    public void setExpiredItems(ArrayList<FridgeItem> expiredItems) {
-        this.expiredItems = expiredItems;
-    }
+    //public void setExpiredItems(ArrayList<FridgeItem> expiredItems) {
+        //this.expiredItems = expiredItems;
+    //}
 
 }
