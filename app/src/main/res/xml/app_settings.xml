@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:title="General">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_baseline_dark_mode_24"
+            android:title="Dark Mode" />
+        <PreferenceCategory android:title="Notifications">
+
+            <SwitchPreference
+                android:defaultValue="false"
+                android:icon="@drawable/ic_send_notifications"
+                android:title="Allow notifications" />
+        </PreferenceCategory>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="About App">
+        <Preference
+            android:title="Version"
+            android:key="version"
+            app:icon="@drawable/ic_info" />
+        <Preference
+            android:title="Send feedback"
+            android:key="send_feedback"
+            app:icon="@drawable/ic_send_feedback"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>

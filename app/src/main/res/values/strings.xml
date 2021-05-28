@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ManageMyFridge</string>
+    <string name="app_version">ManageMyFridge ver. 0.0.1</string>
     <string name="item_name">ΙΤΕΜ ΝΑΜΕ</string>
     <string name="expiration_date">EXPIRATION DATE</string>
     <string name="dd_mm_yyyy">DD/MM/YYYY</string>

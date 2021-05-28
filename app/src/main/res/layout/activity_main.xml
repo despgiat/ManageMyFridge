@@ -8,18 +8,19 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView3"
@@ -89,15 +90,15 @@
                         android:id="@+id/todayButton"
                         android:layout_width="102dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/today"
-                        android:onClick="dayOpened"/>
+                        android:onClick="dayOpened"
+                        android:text="@string/today" />
 
                     <RadioButton
                         android:id="@+id/otherDateButton"
                         android:layout_width="94dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/other"
-                        android:onClick="dayOpened"/>
+                        android:onClick="dayOpened"
+                        android:text="@string/other" />
                 </RadioGroup>
 
                 <TextView
@@ -117,9 +118,9 @@
                     android:layout_marginEnd="92dp"
                     android:text="@string/dd_mm_yyyy"
                     android:textColor="#F00"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextDateOpened"
-                    android:visibility="invisible"/>
+                    app:layout_constraintTop_toBottomOf="@+id/editTextDateOpened" />
 
                 <EditText
                     android:id="@+id/editTextDateOpened"
@@ -130,23 +131,11 @@
                     android:ems="10"
                     android:hint="01/01/2021"
                     android:inputType="date"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
-                    android:visibility="invisible"/>
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="88dp"
-                android:layout_marginBottom="244dp"
-                android:text="Items"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button"
-                app:layout_constraintHorizontal_bias="0.028"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -187,7 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="136dp"
                 android:text="@string/expiration_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
@@ -195,13 +184,14 @@
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="228dp"
-                android:layout_marginTop="192dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="112dp"
                 android:onClick="addNewItem"
                 android:text="@string/add_new_item"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.939"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

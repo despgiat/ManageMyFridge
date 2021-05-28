@@ -79,7 +79,7 @@ public class ExpiredFragment extends Fragment {
 
         warning = view.findViewById(R.id.noExpiredTextView);
         //cardView = (CardView) view.findViewById(R.id.productEditableCardLayout);
-        //cardView.setCardBackgroundColor(Color.parseColor("#FFFFC107"));
+
 
         if(fridge.checkForExpiredAtDate(currentDate).size() == 0) //We need to pass the currentDate to the fragment too
         {
@@ -91,10 +91,11 @@ public class ExpiredFragment extends Fragment {
         }
 
         RecyclerView productsRecyclerView = view.findViewById(R.id.expiredProductsRecyclerView);
+
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
         productsRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate));
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate), Color.parseColor("#FFFFC107"));
         productsRecyclerView.setAdapter(adapterFridgeItems);
 
         return  view;

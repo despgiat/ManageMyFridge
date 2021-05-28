@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,7 +87,7 @@ public class MyFridge extends Fragment {
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
         productsRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.getFridgeItems());
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.getFridgeItems(), getResources().getColor((R.color.teal_200)));
         productsRecyclerView.setAdapter(adapterFridgeItems);
 
         return  view;

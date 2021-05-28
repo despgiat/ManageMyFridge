@@ -1,5 +1,6 @@
 package com.example.managemyfridge;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -135,6 +137,52 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         //First get the currect date
 
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+                    toggle.setDrawerIndicatorEnabled(false);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+                    toggle.setToolbarNavigationClickListener(new View.OnClickListener() { //https://stackoverflow.com/questions/17258020/switching-between-android-navigation-drawer-image-and-up-caret-when-using-fragme
+                        @Override
+                        public void onClick(View v) {
+                            getSupportFragmentManager().popBackStack();
+                        }
+                    });
+
+                }
+                else {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    toggle.setDrawerIndicatorEnabled(true);
+                }
+            }
+        });
+
+
+
+        /*getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() { //https://stackoverflow.com/questions/48185871/navigation-drawer-back-button-in-fragments
+            @Override
+            public void onBackStackChanged() {
+                if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    toggle.setDrawerIndicatorEnabled(true);
+
+                }else{
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    toggle.setDrawerIndicatorEnabled(false);
+
+
+                }
+            }
+        });
+
+         */
+
+
         ;
 
        /* fridge = new Fridge(); //Placeholder -> It will derive the fridge's insides from the database
@@ -220,6 +268,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public void onResume()
     {
         super.onResume();
+
+
+
+
        /* if(fridge.getExpiredItems().size() > 0)
         {
             //expiredItems = true;
@@ -299,11 +351,18 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onBackPressed() { //Stays
         // 5 - Handle back click to close menu
-        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (this.drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
             this.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        }
+        else
+        {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -378,6 +437,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 expiredFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
                 break;
+
+            case R.id.recipesItem:
+                RecipesOverviewFragment recipesSearchFragment = new RecipesOverviewFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipesSearchFragment).commit();
+                break;
+
+            case R.id.settingsItem:
+                SettingsFragment settingsFragment = new SettingsFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.screen, settingsFragment).commit();
         }
 
         drawerLayout.close();
@@ -541,6 +609,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     {
         fridge.removeItem(id);
     }
+
+    public void MoveUp(Fragment fromFragment)
+    {
+
+    }
+
 
     //public void editProduct(int id)
     //{

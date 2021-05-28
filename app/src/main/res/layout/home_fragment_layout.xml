@@ -36,13 +36,13 @@
             android:id="@+id/todayTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="28dp"
             android:text="Today to expire"
             android:textAllCaps="true"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.165"
+            app:layout_constraintHorizontal_bias="0.164"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutWarning" />
 
@@ -50,7 +50,9 @@
             android:id="@+id/todayExpireRecyclerView"
             android:layout_width="341dp"
             android:layout_height="109dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.471"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/todayTextView" />
 
@@ -58,7 +60,7 @@
             android:id="@+id/tomorrowTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="36dp"
             android:text="Tomorrow to expire"
             android:textAllCaps="true"
             android:textSize="24sp"
@@ -81,13 +83,13 @@
             android:id="@+id/soonTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="36dp"
             android:text="Soon to expire"
             android:textAllCaps="true"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintHorizontal_bias="0.148"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tomorrowExpireRecyclerView" />
 
@@ -108,13 +110,10 @@
             android:id="@+id/linearLayoutWarning"
             android:layout_width="400dp"
             android:layout_height="77dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:paddingTop="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/todayTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.454"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
