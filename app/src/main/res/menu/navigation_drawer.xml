@@ -6,21 +6,21 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/homeItem"
-            android:title="Home"
+            android:title="@string/home"
             android:checked="true" />
         <item
             android:id="@+id/myFridgeItem"
-            android:title="My Fridge" />
+            android:title="@string/my_fridge" />
         <item
             android:id="@+id/expiredItem"
-            android:title="Expired Items" />
+            android:title="@string/expired_items" />
         <item
             android:id="@+id/recipesItem"
-            android:title="Recipes"
+            android:title="@string/recipes"
             />
         <item
             android:id="@+id/zeroWasteItem"
-            android:title="Zero Waste Tips" />
+            android:title="@string/zero_waste_tips" />
     </group>
 
     <group
@@ -28,13 +28,14 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/profileItem"
-            android:title="Profile" />
+            android:title="@string/profile" />
         <item
             android:id="@+id/settingsItem"
-            android:title="Settings" />
+            android:title="@string/settings" />
         <item
             android:id="@+id/logoutItem"
-            android:title="Logout" />
+            android:title="@string/logout"
+            android:visible="false" />
     </group>
 
 </menu>

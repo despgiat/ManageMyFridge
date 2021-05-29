@@ -3,6 +3,7 @@ package com.example.managemyfridge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,34 +62,17 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     LocalDate currentDate;
     public static DateTimeFormatter formatter;
 
-    /*ArrayList<FridgeItem> expireToday;
-    ArrayList<FridgeItem> expireTomorrow;
-    ArrayList<FridgeItem> expireSoon;
-    boolean expiredItems;
-
-     */
-
-    //LinearLayout expiredWarning;
     DrawerLayout drawerLayout;
     NavigationView navigationView; //The navigation drawer panel
-    //AppBarConfiguration appBarConfiguration;
-    //NavController navController; //Not needed as the choices are handled manually
 
-    //RecyclerView.Adapter adapterToday;
-    //RecyclerView.Adapter adapterTomorrow;
-    //RecyclerView.Adapter adapterSoon;
-    //TextView todayTextView;
-    //TextView tomorrowTextView;
-    //TextView soonTextView;
-    //ImageView warningSign;
     View inflatedView;
     ImageView profilePicture;
-    private Menu navigationDrawer;
+    //private Menu navigationDrawer;
+
+    Fragment currentFragment;
 
     //Fragments:
-    Fragment activeScreen;
-    //HomeFragment homeFragment;
-    //ExpiredFragment expiredFragment;
+    //Fragment activeScreen;
 
 
     @Override
@@ -97,17 +83,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         currentDate = LocalDate.now();
 
         /**----------Finding view IDs-------------**/
-        //expiredWarning = findViewById(R.id.linearLayoutWarning);
-        //todayTextView = findViewById(R.id.todayTextView);
-        //tomorrowTextView = findViewById(R.id.tomorrowTextView);
-        //soonTextView = findViewById(R.id.soonTextView);
-
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawerLayout);
-
-        //RecyclerView expiredRecyclerView = findViewById(R.id.todayExpireRecyclerView);
-        //RecyclerView tomorrowRecyclerView = findViewById(R.id.tomorrowExpireRecyclerView);
-        //RecyclerView soonRecyclerView = findViewById(R.id.soonExpireRecyclerView);
 
         /**----------END OF Finding view IDs-------**/
 
@@ -117,9 +94,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        //appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
 
-//       NavigationUI.setupWithNavController(navigationView, navController);
 
 
         inflatedView = navigationView.inflateHeaderView(R.layout.header_navigation_drawer);
@@ -137,7 +112,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         //First get the currect date
 
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
 
 
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -163,90 +137,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         });
 
 
-
-        /*getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() { //https://stackoverflow.com/questions/48185871/navigation-drawer-back-button-in-fragments
-            @Override
-            public void onBackStackChanged() {
-                if(getSupportFragmentManager().getBackStackEntryCount() == 0){
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    toggle.setDrawerIndicatorEnabled(true);
-
-                }else{
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                    toggle.setDrawerIndicatorEnabled(false);
-
-
-                }
-            }
-        });
-
-         */
-
-
-        ;
-
-       /* fridge = new Fridge(); //Placeholder -> It will derive the fridge's insides from the database
-        FridgeItem product1 = new FridgeItem();
-        FridgeItem product2 = new FridgeItem();
-        FridgeItem product3 = new FridgeItem();
-        FridgeItem product4 = new FridgeItem();
-
-        product1.setName("Milk"); //Placeholder for testing
-        product1.setExpiry("19/05/2021");
-        product1.setOpened(true);
-        product2.setName("Eggs"); //Placeholder for testing
-        product2.setExpiry("19/05/2021");
-        product2.setOpened(false);
-        product3.setName("Salami"); //Placeholder for testing
-        product3.setExpiry("20/05/2021");
-        product3.setOpened(true);
-        product4.setName("Sweet Yoghurt"); //Placeholder for testing
-        product4.setExpiry("21/05/2021");
-        product4.setOpened(false);
-
-        fridge.addItem(product1);
-        fridge.addItem(product2);
-        fridge.addItem(product3);
-        fridge.addItem(product4);
-
-        */
-
-
-
-       /* Bundle bundle = new Bundle();
-        bundle.putSerializable("fridge", fridge);
-        bundle.putString("date", currentDate.format(formatter));
-
-        */
-
-        //myFragment.setArguments(bundle);
-
-        //CheckFridge(); //-> The main activity should look for expired products once when app is launched and continuously
-        //(when it is resumed for ex. after we add a new product and it was expired)
-
-        // set a LinearLayoutManager with default orientation
-
-        //LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this);
-        //LinearLayoutManager linearLayoutManagerTomorrow = new LinearLayoutManager(this);
-        //LinearLayoutManager linearLayoutManagerSoon = new LinearLayoutManager(this);
-        // set LayoutManager to RecyclerView
-        //expiredRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        //tomorrowRecyclerView.setLayoutManager(linearLayoutManagerTomorrow);
-        //soonRecyclerView.setLayoutManager(linearLayoutManagerSoon);
-
-        //Set my Adapter for the RecyclerView
-       // adapterToday = new RecyclerAdapter(expireToday);
-        //expiredRecyclerView.setAdapter(adapterToday);
-
-        //adapterTomorrow = new RecyclerAdapter(expireTomorrow);
-        //tomorrowRecyclerView.setAdapter(adapterTomorrow);
-
-        //adapterSoon = new RecyclerAdapter(expireSoon);
-        //soonRecyclerView.setAdapter(adapterSoon);
-
-        //homeFragment = new HomeFragment();
-        //expiredFragment = new ExpiredFragment();
-
         /**
          * When there are expired products, the HomeFragment will send the expires Items arraylist to this activity,
          * and this activity will send the ExpiredFragment the data
@@ -254,11 +144,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         if(savedInstanceState == null)
         {
-            //HomeFragment home = new HomeFragment();
+            HomeFragment home = new HomeFragment();
             //home.setArguments(bundle);
             //homeFragment = new HomeFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.screen, new HomeFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.screen, home).commit();
             navigationView.setCheckedItem(R.id.homeItem);
+            currentFragment = home;
         }
 
     }
@@ -269,32 +160,21 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     {
         super.onResume();
 
-
-
-
-       /* if(fridge.getExpiredItems().size() > 0)
-        {
-            //expiredItems = true;
-            //expriredProductsWarning();
-        }
-        else
-        {
-            //expiredItems = false;
-        }
-        //expiredWarning.setVisibility(View.INVISIBLE);
-
-        */
-
-
     }
 
     //This will be accessed from the Home Fragment and the MyFridge Fragment, so it should be implemented here
     public void addNewItem()
     {
+        /*
         System.out.println("ADD NEW ITEM!!!");
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("Fridge", fridge);
         startActivityForResult(i, 2);
+        */
+
+        Intent i = new Intent(this, AddItemActivity.class);
+        startActivity(i);
+
     }
 
 
@@ -315,6 +195,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             bundle.putSerializable("fridge", fridge);
             MyFridge myFridge = new MyFridge();
             myFridge.setArguments(bundle);
+            currentFragment = myFridge;
             getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
 
             //HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.homeFragment);
@@ -358,6 +239,17 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         }
+        else if(getSupportFragmentManager().getBackStackEntryCount() == 0 && !(currentFragment instanceof HomeFragment))
+        {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("fridge", fridge);
+            //bundle.putString("date", currentDate.format(formatter));
+            HomeFragment homeFragment = new HomeFragment();
+            homeFragment.setArguments(bundle);
+            currentFragment = homeFragment;
+            navigationView.setCheckedItem(R.id.homeItem);
+            getSupportFragmentManager().beginTransaction().replace(R.id.screen, homeFragment).commit();
+        }
         else
         {
             super.onBackPressed();
@@ -377,15 +269,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public boolean onContextItemSelected(MenuItem item) { //Profile picture choices handler
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
-            case R.id.take_photo:
-                System.out.println("TAKE PHOTO FROM CAMERA");
-                return true;
             case R.id.from_gallery:
                 System.out.println("CHOOSE PIC FROM GALLERY");
                 Intent i = new Intent();
                 i.setType("image/*");
                 i.setAction(Intent.ACTION_GET_CONTENT);
-
                 // pass the constant to compare it
                 // with the returned requestCode
                 startActivityForResult(Intent.createChooser(i, "Select Picture"), 22);
@@ -411,11 +299,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 bundle.putSerializable("fridge", fridge);
                 MyFridge myFridge = new MyFridge();
                 myFridge.setArguments(bundle);
+                currentFragment = myFridge;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
-                /*Intent i = new Intent(this, MyFridge.class);
-                i.putExtra("Fridge", fridge);
-                startActivity(i);
-                 */
                 break;
 
             case R.id.homeItem:
@@ -424,6 +309,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                 HomeFragment homeFragment = new HomeFragment();
                 homeFragment.setArguments(bundle);
+                currentFragment = homeFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, homeFragment).commit();
 
                 //getSupportFragmentManager().beginTransaction().replace(R.id.screen, new HomeFragment()).commit();
@@ -435,30 +321,39 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 //ExpiredFragment expiredFragment = new ExpiredFragment();
                 ExpiredFragment expiredFragment = new ExpiredFragment();
                 expiredFragment.setArguments(bundle);
+                currentFragment = expiredFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
                 break;
 
             case R.id.recipesItem:
                 RecipesOverviewFragment recipesSearchFragment = new RecipesOverviewFragment();
+                currentFragment = recipesSearchFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipesSearchFragment).commit();
+                break;
+
+            case R.id.zeroWasteItem:
+                TipsOverviewFragment tipsOverviewFragment = new TipsOverviewFragment();
+                currentFragment = tipsOverviewFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.screen, tipsOverviewFragment).commit();
                 break;
 
             case R.id.settingsItem:
                 SettingsFragment settingsFragment = new SettingsFragment();
+                currentFragment = settingsFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, settingsFragment).commit();
+                break;
+
+            case R.id.profileItem:
+                ProfileFragment profileFragment = new ProfileFragment();
+                currentFragment = profileFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.screen, profileFragment).commit();
+                break;
         }
 
         drawerLayout.close();
         return true;
     }
 
-
-   /* public void expriredProductsWarning()
-    {
-        expiredWarning.setVisibility(View.VISIBLE);
-    }
-
-    */
 
    /*
     @Override
@@ -480,105 +375,33 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     */
 
-
-    /*public void CheckFridge() //It should only check for expired products. The rest will be handled by the fragment
+    public void LogOut()
     {
-        currentDate = LocalDate.now();
-        //LocalDate tomorrow = currentDate.plusDays(1);
-        //LocalDate soon = currentDate.plusDays(2); //three days later
+        new AlertDialog.Builder(this)
+                .setTitle("Log out")
+                .setMessage("Are you sure you want to logout?")
 
-        String dateText = currentDate.format(formatter);
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Implement Logout
+                    }
+                })
 
-        /*
-        expireToday = fridge.expiresAtDate(dateText); //Only the ones which expire at the currect Date will be added to the expired products
-        expireTomorrow = fridge.expiresAtDate(tomorrow.format(formatter)); //Those that expire the next day
-        expireSoon = fridge.expiresAtDate(soon.format(formatter)); //Products that expire in 2 days
-
-        if(expireToday.isEmpty())
-        {
-            todayTextView.setText("There are no products expiring today!");
-            todayTextView.setAllCaps(false);
-            todayTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        }
-        else
-        {
-            todayTextView.setText("Today");
-            expiredItems = true;
-            fridge.AddExpired(expireToday);
-        }
-
-        if(expireTomorrow.isEmpty())
-        {
-            tomorrowTextView.setText("There are no products expiring tomorrow!");
-            tomorrowTextView.setAllCaps(false);
-            tomorrowTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        }
-        else
-            tomorrowTextView.setText("Tomorrow");
-
-        if(expireSoon.isEmpty())
-        {
-            soonTextView.setText("There are no products expiring soon!");
-            soonTextView.setAllCaps(false);
-            soonTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        }
-        else
-            soonTextView.setText("Soon");
-
-
-
-
-
-        ArrayList<FridgeItem> products = fridge.checkForExpiredAtDate(dateText);
-        for (FridgeItem product: products)
-        {
-            if(!fridge.getExpiredItems().contains(product))
-                fridge.AddExpired(product);
-        }
-
-
-        for (FridgeItem fridgeItem:fridge.getFridgeItems())
-        {
-            System.out.println("Fridge Items");
-            System.out.println(fridgeItem.getName());
-        }
-
-
-        for (FridgeItem fridgeItem:fridge.getExpiredItems())
-        {
-            System.out.println("Expired Items");
-            System.out.println(fridgeItem.getName());
-        }
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.cancel, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
 
     }
 
-     */
-
-
-    /*
-    public Fridge GetFridge()
-    {
-        return fridge;
-    }
-
-    public String GetCurrentDate()
-    {
-        return currentDate.format(formatter);
-    }
-
-     */
 
     @Override
     public void UpdateData(Fridge fridge)
     {
         //HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("HomeFragment");
         System.out.println("FRIDGE UPDATED");
-
-        for (FridgeItem product:fridge.getFridgeItems())
-        {
-            System.out.println(product.getName());
-        }
-
         this.fridge = fridge;
     }
 
@@ -591,7 +414,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // set Fragmentclass Arguments
         ExpiredFragment expiredFragment = new ExpiredFragment();
         expiredFragment.setArguments(bundle);
-
+        currentFragment = expiredFragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
     }
 
@@ -610,10 +433,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         fridge.removeItem(id);
     }
 
-    public void MoveUp(Fragment fromFragment)
+   /* public void switchFragment(Fragment toFragment)
     {
-
+        currentFragment =
     }
+
+    */
 
 
     //public void editProduct(int id)

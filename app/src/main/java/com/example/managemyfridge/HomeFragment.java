@@ -27,6 +27,9 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
     private String currentDate;
+    private String tomorrowDate;
+
+
     private static final String FRIDGE = "fridge";
     private static final String DATE = "date";
     HomeFragmentListener activityCallback; //For communication with the activity
@@ -95,6 +98,7 @@ public class HomeFragment extends Fragment {
 
         LocalDate today = LocalDate.parse(currentDate, MainScreen.formatter);
         LocalDate tomorrow = today.plusDays(1);
+        tomorrowDate = tomorrow.format(MainScreen.formatter);
         LocalDate soon = today.plusDays(2); //two and three days later (will be implemented later)
 
         fridge = new Fridge(); //Placeholder -> It will derive the fridge's insides from the database
@@ -105,24 +109,24 @@ public class HomeFragment extends Fragment {
         FridgeItem product5 = new FridgeItem();
 
         product1.setName("Milk"); //Placeholder for testing
-        product1.setExpiry("25/05/2021");
+        product1.setExpiry("29/05/2021");
         product1.setOpened(true);
         product1.setDayOpened("22/05/2021");
 
         product2.setName("Eggs"); //Placeholder for testing
-        product2.setExpiry("26/05/2021");
+        product2.setExpiry("29/05/2021");
         product2.setOpened(false);
         product3.setName("Salami"); //Placeholder for testing
-        product3.setExpiry("26/05/2021");
+        product3.setExpiry("31/05/2021");
         product3.setOpened(true);
         product3.setDayOpened("15/05/2021");
 
 
         product4.setName("Sweet Yoghurt"); //Placeholder for testing
-        product4.setExpiry("27/05/2021");
+        product4.setExpiry("30/05/2021");
         product4.setOpened(false);
         product5.setName("Chicken"); //Placeholder for testing
-        product5.setExpiry("24/05/2021");
+        product5.setExpiry("31/05/2021");
         product5.setOpened(true);
         product5.setDayOpened("20/05/2021");
 
@@ -244,7 +248,7 @@ public class HomeFragment extends Fragment {
         }
         else
         {
-            todayTextView.setText("Today");
+            todayTextView.setText("Today to Expire " + "("+ currentDate + ")");
             todayTextView.setAllCaps(true);
             expiredItems = true;
             //fridge.AddExpired(expireToday);
@@ -258,7 +262,7 @@ public class HomeFragment extends Fragment {
         }
         else {
             tomorrowTextView.setAllCaps(true);
-            tomorrowTextView.setText("Tomorrow");
+            tomorrowTextView.setText("Tomorrow to expire " + "("+ tomorrowDate + ")");
         }
 
         if(expireSoon.isEmpty())
@@ -269,7 +273,7 @@ public class HomeFragment extends Fragment {
         }
         else {
             soonTextView.setAllCaps(true);
-            soonTextView.setText("Soon");
+            soonTextView.setText("Soon to expire");
         }
 
         if(products.size() > 0) //fridge.getExpiredItems().size() > 0
@@ -281,7 +285,7 @@ public class HomeFragment extends Fragment {
         else
         {
             expiredItems = false;
-            expiredWarning.setVisibility(View.INVISIBLE);
+            expiredWarning.setVisibility(View.GONE);
         }
         //expiredWarning.setVisibility(View.INVISIBLE);
 

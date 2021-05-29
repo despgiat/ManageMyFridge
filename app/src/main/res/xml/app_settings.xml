@@ -10,6 +10,9 @@
         <SwitchPreference
             android:defaultValue="false"
             android:icon="@drawable/ic_baseline_dark_mode_24"
+            android:key="darkMode"
+            android:switchTextOff="OFF"
+            android:switchTextOn="ON"
             android:title="Dark Mode" />
         <PreferenceCategory android:title="Notifications">
 

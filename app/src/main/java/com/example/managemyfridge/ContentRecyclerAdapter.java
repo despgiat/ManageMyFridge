@@ -13,6 +13,11 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * ContentRecyclerAdapter is the Adapter which helps the recipes and the tips in the fragments RecipesOverviewFragment and
+ * TipsOverviewFragment to be displayed as clickable cards.
+ */
+
 public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecyclerAdapter.ViewHolder>{
 
     //We will get the recipes from the database
@@ -29,18 +34,15 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
         this.fromFragment = fromFragment;
     }
 
-
     @NonNull
     @Override
     public ContentRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tips_card_layout, parent, false);
-
         return new ContentRecyclerAdapter.ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContentRecyclerAdapter.ViewHolder holder, int position) {
-
         holder.title.setText(recipeNames[position]);
         holder.description.setText(recipeDescriptions[position]);
     }
@@ -60,7 +62,7 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
             title = itemView.findViewById(R.id.tip_title);
             description = itemView.findViewById(R.id.tip_subtitle);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() { //When a card is clicked, a new fragment is added to the stack
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
@@ -70,15 +72,16 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
 
                     //replace screen and get to the recipe fragment
 
-                    RecipesFragment fragment = new RecipesFragment();
-                    //Bundle args = new Bundle();
-                    //args.putString("data", "This data has sent to FragmentTwo");
-                    //fragment.setArguments(args);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", recipeNames[position]);
+                    bundle.putString("instructions", recipeDescriptions[position]);
+                    //Add the image and the ingredients list and we're set
+
+
+                    RecipesFragment fragment = new RecipesFragment(); //Shows the content fragment, whether is it recipes or tips
+                    fragment.setArguments(bundle);
 
                     fromFragment.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.screen, fragment).addToBackStack(null).commit();
-                    //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    //transaction.addToBackStack(null);
-                    //transaction.commit();
 
                 }
             });

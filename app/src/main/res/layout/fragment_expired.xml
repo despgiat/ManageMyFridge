@@ -15,7 +15,7 @@
             android:id="@+id/expiredTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expired"
+            android:text="@string/expired"
             android:textAllCaps="true"
             android:textSize="36sp"
             android:textStyle="bold"
@@ -29,14 +29,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/expiredProductsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="447dp"
+            android:layout_height="wrap_content"
             android:paddingBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/noExpiredTextView"
-            app:layout_constraintVertical_bias="0.16000003" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/noExpiredTextView"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="#00FFC107"
-            android:text="There are currently no expired items in your fridge! Add more products or just wait a couple days!"
+            android:text="@string/no_expired_in_fridge_warning"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

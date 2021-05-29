@@ -2,51 +2,49 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recipesOverviewFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipesOverviewFragment">
+    tools:context=".TipsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="@android:dimen/thumbnail_height"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
         <TextView
-            android:id="@+id/recipesFoundTitle"
+            android:id="@+id/tipTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/recipes_found"
+            android:layout_marginTop="16dp"
+            android:text="Zero Waste Tip Title"
             android:textAllCaps="true"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/recipesWarningTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
-            android:id="@+id/recipesWarningTextView"
+            android:id="@+id/tipText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/no_recipes_found_warning"
-            android:textAlignment="center"
+            android:text="[Insert tip tect here]"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipesFoundTitle" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipesFoundRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipesWarningTextView" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tipTitle"
+            app:layout_constraintVertical_bias="0.07999998" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
