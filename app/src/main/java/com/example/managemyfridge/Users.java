@@ -4,12 +4,19 @@ public class Users {
 
         private int _id;
         private String username;
+        private String email;
         private String password;
         private String img;
         private Product[] fridgeItems;
 
-        public Users(){
-
+        public Users()
+        {
+            //empty constructor
+        }
+        public Users(String username, String password)
+        {
+            this.username = username;
+            this.password = password;
         }
 
         public Users(String username, String password, Product[] fridgeItems)
@@ -50,4 +57,12 @@ public class Users {
         public void setImg(String img) {
             this.img = img;
         }
-    }
+
+        public String getEmail() {
+            return email;
+        }
+        public void setEmail(String email)
+        {
+            this.email=email;
+        }
+}
