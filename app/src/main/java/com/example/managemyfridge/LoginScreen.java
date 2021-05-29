@@ -2,6 +2,7 @@ package com.example.managemyfridge;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -57,7 +58,9 @@ public class LoginScreen extends AppCompatActivity {
             String usernameValue = username.getText().toString();
             String passwordValue = password.getText().toString();
             if (usernameValue.equals("dev") && passwordValue.equals("1234")) {//we need to check from db
-                //move to next screen
+                Intent i = new Intent(getApplicationContext(), MainScreen.class);
+                startActivity(i);
+                finish(); //So that we don't go back to the login activity on back pressed
             } else {
                 Toast t = Toast.makeText(this, "Wrong Username or password", Toast.LENGTH_SHORT);
                 t.show();
