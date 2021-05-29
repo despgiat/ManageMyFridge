@@ -23,7 +23,6 @@ public class MyFridge extends Fragment {
     HomeFragment.HomeFragmentListener activityCallback; //For communication with the activity
     RecyclerView.Adapter adapterFridgeItems;
 
-
     public static MyFridge newInstance(Fridge fridge) {
         MyFridge fragment = new MyFridge();
 

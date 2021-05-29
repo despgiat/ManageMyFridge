@@ -67,6 +67,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
     //Μέθοδος για προσθήκη ενός προϊόντος στη ΒΔ
     public void addProduct(Product product) {
         //added: exdate, isopened, prodtype, dateofopening, img, unit

@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * the user's actions on the products.
  */
 
+
 public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<EditableProductRecyclerAdapter.ViewHolder>{
     private ArrayList<FridgeItem> productData;
     private int cardColor;  //We want to control the card's color (ex. in the ExpiredFragment, the cards appear mustard yellow)

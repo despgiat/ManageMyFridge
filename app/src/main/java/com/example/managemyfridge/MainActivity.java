@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     //private FridgeItem fridgeItem;
     DateTimeFormatter formatter;
     LocalDate currentDate;
-
     String isOpened;
     String openedDateText;
 

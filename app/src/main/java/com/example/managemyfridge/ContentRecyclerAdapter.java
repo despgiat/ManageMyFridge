@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * TipsOverviewFragment to be displayed as clickable cards.
  */
 
+
 public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecyclerAdapter.ViewHolder>{
 
     //We will get the recipes from the database

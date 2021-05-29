@@ -264,6 +264,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         inflater.inflate(R.menu.new_profile_pic_floating_menu, menu);
     }
 
+
     @Override
     public boolean onContextItemSelected(MenuItem item) { //Profile picture choices handler
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();

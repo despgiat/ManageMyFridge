@@ -16,6 +16,7 @@ public class Ingredient implements Serializable {
         this.name = name;
     }
 
+
     public String getAmount() {
         return amount;
     }

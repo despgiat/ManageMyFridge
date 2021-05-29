@@ -95,4 +95,5 @@ public class LoginScreen extends AppCompatActivity {
         register = findViewById(R.id.button3);
         login = findViewById(R.id.button2);
     }
+
 }

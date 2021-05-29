@@ -121,7 +121,6 @@ public class HomeFragment extends Fragment {
         product3.setOpened(true);
         product3.setDayOpened("15/05/2021");
 
-
         product4.setName("Sweet Yoghurt"); //Placeholder for testing
         product4.setExpiry("30/05/2021");
         product4.setOpened(false);
