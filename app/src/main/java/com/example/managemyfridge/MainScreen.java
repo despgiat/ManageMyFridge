@@ -94,10 +94,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
-
-
         inflatedView = navigationView.inflateHeaderView(R.layout.header_navigation_drawer);
+
+
         profilePicture = (ImageView) inflatedView.findViewById(R.id.imageViewProfilePic);
         registerForContextMenu(profilePicture);
 
@@ -172,7 +171,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         startActivityForResult(i, 2);
         */
 
-        Intent i = new Intent(this, AddItemActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
 
     }
@@ -286,6 +285,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             default:
                 return super.onContextItemSelected(item);
         }
+
     }
 
 
@@ -385,13 +385,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //Implement Logout
+                        Intent i = new Intent(getApplicationContext(), LoginScreen.class);
+                        startActivity(i);
+                        finish(); //So that we don't go back to the login activity on back pressed
                     }
                 })
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.cancel, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_warning)
                 .show();
 
     }
@@ -417,6 +419,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         currentFragment = expiredFragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
     }
+
 
     public void openProduct(int id)
     {

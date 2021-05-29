@@ -7,7 +7,8 @@ public class Product {
 
 
     private String _exdate;
-    private boolean _opened;
+    //private boolean _opened;
+    private String _opened;
     private String _prodtype;
     private String _DateofOpening;
     private String _img;
@@ -16,16 +17,42 @@ public class Product {
     public Product() {
     }
 
-    public Product(int id, String productname, int quantity) {
+    //Added to product: exDate, isitopen, type, dateofopening, unit
+    public Product(int id, String productname, int quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit) {
         this.setID(id);
         this._productname = productname;
         this._quantity = quantity;
+        this._exdate = expirationdate;
+        this._opened = isitopen;
+        this._prodtype = productType;
+        this._DateofOpening = dateofopening;
+        this._unit = unit;
+    }
+
+    public Product(String productname, int quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit) {
+        this._productname = productname;
+        this._quantity = quantity;
+        this._exdate = expirationdate;
+        this._opened = isitopen;
+        this._prodtype = productType;
+        this._DateofOpening = dateofopening;
+        this._unit = unit;
+    }
+
+   /* public Product(int id, String productname, int quantity) {
+        this.setID(id);
+        this._productname = productname;
+        this._quantity = quantity;
+
     }
 
     public Product(String productname, int quantity) {
         this._productname = productname;
         this._quantity = quantity;
-    }
+
+    }*/
+
+
 
     public int getID() {
         return _id;
@@ -59,11 +86,19 @@ public class Product {
         this._exdate = _exdate;
     }
 
-    public boolean isOpened() {
+    /*public boolean isOpened() {
         return _opened;
     }
 
     public void setOpened(boolean _opened) {
+        this._opened = _opened;
+    }*/
+
+    public String get_opened() {
+        return _opened;
+    }
+
+    public void set_opened(String _opened) {
         this._opened = _opened;
     }
 

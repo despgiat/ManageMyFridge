@@ -87,7 +87,6 @@ public class MyFridge extends Fragment {
          */
 
 
-
         warning = view.findViewById(R.id.noProductsTextView);
 
         if(fridge.getFridgeItems().size() == 0)

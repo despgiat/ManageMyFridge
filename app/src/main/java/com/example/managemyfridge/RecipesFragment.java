@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -28,11 +30,15 @@ public class RecipesFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TITLE = "title";
     private static final String INSTRUCTIONS = "instructions";
+    private static final String INGREDIENTS = "ingredients";
 
 
     // TODO: Rename and change types of parameters
     private String recipeTitle;
     private String recipeInstructions;
+    private Ingredient[] ingredients;
+    RecyclerView.Adapter ingredientsAdapter;
+
     boolean favourite; //We will check from the database if it was marked as favourite by the user and we will display it as such
     MenuItem fave;
 
@@ -51,11 +57,12 @@ public class RecipesFragment extends Fragment {
      * @return A new instance of fragment RecipesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RecipesFragment newInstance(String param1, String param2) {
+    public static RecipesFragment newInstance(String param1, String param2, Ingredient[] param3) {
         RecipesFragment fragment = new RecipesFragment();
         Bundle args = new Bundle();
         args.putString(TITLE, param1);
         args.putString(INSTRUCTIONS, param2);
+        args.putSerializable(INGREDIENTS, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,6 +73,11 @@ public class RecipesFragment extends Fragment {
         if (getArguments() != null) {
             recipeTitle = getArguments().getString(TITLE);
             recipeInstructions = getArguments().getString(INSTRUCTIONS);
+            ingredients = (Ingredient[]) getArguments().getSerializable(INGREDIENTS);
+
+            for (Ingredient ingredient : ingredients) {
+                System.out.println(ingredient.getName());
+            }
 
             setHasOptionsMenu(true);
         }
@@ -82,6 +94,13 @@ public class RecipesFragment extends Fragment {
 
         TextView instructions = view.findViewById(R.id.instructionsTextView);
         instructions.setText(recipeInstructions);
+
+        RecyclerView ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerView);
+        LinearLayoutManager linearLayoutManagerIngredients = new LinearLayoutManager(this.getContext());
+
+        ingredientsRecyclerView.setLayoutManager(linearLayoutManagerIngredients);
+        ingredientsAdapter = new IngredientAdapter(ingredients);
+        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
         return view;
     }

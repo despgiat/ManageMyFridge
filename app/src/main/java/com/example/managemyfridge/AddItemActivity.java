@@ -46,8 +46,8 @@ public class AddItemActivity extends AppCompatActivity {
         if (!productName.equals("") &&  !quantity.equals("")){
             Product found = dbHandler.findProduct(productName);
             if (found == null){
-                Product product = new Product(productName, Integer.parseInt(quantity));
-                dbHandler.addProduct(product);
+                //Product product = new Product(productName, Integer.parseInt(quantity));
+                //dbHandler.addProduct(product);
                 productBox.setText("");
                 quantityBox.setText("");
 

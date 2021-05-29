@@ -5,56 +5,89 @@
     android:id="@+id/profileFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:src="@tools:sample/avatars" />
+        android:id="@+id/profilePic"
+        android:layout_width="@android:dimen/thumbnail_height"
+        android:layout_height="@android:dimen/thumbnail_width"
+        app:srcCompat="@drawable/ic_fave_filled" />
 
     <TextView
-        android:id="@+id/usernameTextView"
-        android:layout_width="wrap_content"
+        android:id="@+id/changePic"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username" />
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:text="Change Picture"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="14sp"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="username@gmail.com" />
+        android:layout_marginTop="8dp"
+        android:text="username@gmail.com"
+        android:textAlignment="center"
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/changeEmailButton"
+        android:id="@+id/usernameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Email" />
+        android:layout_marginTop="8dp"
+        android:text="Username"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/changeUsernameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:text="@string/change_username"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="14sp"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/passwordTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="*********" />
 
     <TextView
         android:id="@+id/changePasswordButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Password" />
+        android:layout_marginTop="8dp"
+        android:text="@string/change_password"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimaryVariant" />
 
     <TextView
         android:id="@+id/clearAppData"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wipe App Data" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginTop="16dp"
+        android:text="@string/wipe_app_data"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimaryVariant" />
 
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout" />
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/log_out" />
 
 </LinearLayout>

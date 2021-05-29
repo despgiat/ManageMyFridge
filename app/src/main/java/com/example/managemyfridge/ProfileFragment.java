@@ -1,13 +1,20 @@
 package com.example.managemyfridge;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,6 +24,8 @@ import android.widget.Button;
 public class ProfileFragment extends Fragment {
 
     Button logoutButton;
+    TextView changePic;
+    ImageView profilePicture;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,6 +61,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -63,6 +73,10 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        //profilePicture = view.findViewById(R.id.profilePic);
+
+
         logoutButton = view.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,8 +85,54 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        /*changePic = view.findViewById(R.id.changePic);
+        changePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerForContextMenu(changePic);
+            }
+        });
+
+
+         */
         return view;
 
+    }
+    /*
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, //Stays as it is
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.new_profile_pic_floating_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) { //Profile picture choices handler
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.from_gallery:
+                System.out.println("CHOOSE PIC FROM GALLERY");
+                Intent i = new Intent();
+                i.setType("image/*");
+                i.setAction(Intent.ACTION_GET_CONTENT);
+                // pass the constant to compare it
+                // with the returned requestCode
+                startActivityForResult(Intent.createChooser(i, "Select Picture"), 22);
+                return true;
+            case R.id.remove_photo:
+                System.out.println("REMOVE PHOTO");
+                profilePicture.setImageResource(R.drawable.ic_profile_pic);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+        //changeProfilePic(item);
 
     }
+
+     */
+
 }

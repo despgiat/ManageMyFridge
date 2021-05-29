@@ -27,6 +27,7 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
 
     String[] recipeNames = {"Porkchops with honey", "Ceasar's Salad", "Chocolate Cake"};
     String[] recipeDescriptions = {"Delicious porkchops with honey and chili sauce", "Ceasar's Salad with chicken and lettuce", "Decadent chocolate Cake with vanilla buttercream"};
+    Ingredient[] ingredients = {new Ingredient("3 1/4", "cup", "flour"), new Ingredient("3 1/4", "cup", "flour"),new Ingredient("3 1/4", "cup", "flour")};
 
     public ContentRecyclerAdapter(Context context, Fragment fromFragment)
     {
@@ -75,8 +76,9 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
                     Bundle bundle = new Bundle();
                     bundle.putString("title", recipeNames[position]);
                     bundle.putString("instructions", recipeDescriptions[position]);
-                    //Add the image and the ingredients list and we're set
+                    bundle.putSerializable("ingredients", ingredients);
 
+                    //Add the image and the ingredients list and we're set
 
                     RecipesFragment fragment = new RecipesFragment(); //Shows the content fragment, whether is it recipes or tips
                     fragment.setArguments(bundle);
