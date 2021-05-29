@@ -56,7 +56,7 @@ public class LoginScreen extends AppCompatActivity {
         if (isValid) {
             String usernameValue = username.getText().toString();
             String passwordValue = password.getText().toString();
-            if (usernameValue.equals("0")) {//we need to check from db
+            if (usernameValue.equals("dev") && passwordValue.equals("1234")) {//we need to check from db
                 //move to next screen
             } else {
                 Toast t = Toast.makeText(this, "Wrong Username or password", Toast.LENGTH_SHORT);
