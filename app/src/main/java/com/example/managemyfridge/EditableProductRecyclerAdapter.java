@@ -14,9 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * EditableProductsRecyclerAdapter is the Adapter which helps user's products in the fragments MyFridge and
+ * ExpiredFragment to be displayed as cards containing the products' information and having three buttons which control
+ * the user's actions on the products.
+ */
+
 public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<EditableProductRecyclerAdapter.ViewHolder>{
     private ArrayList<FridgeItem> productData;
-    private int cardColor;
+    private int cardColor;  //We want to control the card's color (ex. in the ExpiredFragment, the cards appear mustard yellow)
 
     public EditableProductRecyclerAdapter(ArrayList<FridgeItem> products, int cardColor)
     {
@@ -42,7 +48,7 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
         holder.itemType.setText("(" + "Other" + ")");
         holder.cardView.setBackgroundColor(cardColor);
 
-        holder.deleteItem.setOnClickListener(new View.OnClickListener() {
+        holder.deleteItem.setOnClickListener(new View.OnClickListener() { //The product gets deleted
             @Override
             public void onClick(View v) {
                 //Remove the item from the list -> And the fridge in general
@@ -51,14 +57,14 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
             }
         });
 
-        holder.openItem.setOnClickListener(new View.OnClickListener() {
+        holder.openItem.setOnClickListener(new View.OnClickListener() { //The product is marked as opened and the current Date is stored as the opening Date
             @Override
             public void onClick(View v) {
 
             }
         });
 
-        holder.editItem.setOnClickListener(new View.OnClickListener() {
+        holder.editItem.setOnClickListener(new View.OnClickListener() { //The AddItemActivity is launched with its fields already filled with the products' information and the user is able to alter them.
             @Override
             public void onClick(View v)
             {

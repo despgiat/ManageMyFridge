@@ -14,8 +14,9 @@
         <ImageView
             android:id="@+id/recipeImage"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            android:layout_height="@android:dimen/thumbnail_height"
+            tools:src="@tools:sample/backgrounds/scenic"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/recipeTitle"
@@ -23,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="Recipe Title"
+            android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -30,20 +32,26 @@
             android:id="@+id/ingredientsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ingredients"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/ingredients"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
         <TextView
             android:id="@+id/instructionsTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Instructions"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/instructions"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -51,6 +59,8 @@
             android:id="@+id/instructionsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:text="[Instructions text here]" />
 
     </LinearLayout>

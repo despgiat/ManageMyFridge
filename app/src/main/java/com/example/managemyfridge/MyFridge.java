@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,12 +66,27 @@ public class MyFridge extends Fragment {
         activityCallback.UpdateData(fridge);
 
         addItemButton = view.findViewById(R.id.addItemButton);
+
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainScreen) getActivity()).addNewItem();
             }
         });
+
+
+
+        /*
+        addItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AddItemActivity) getActivity()).newProduct();
+            }
+        });
+
+         */
+
+
 
         warning = view.findViewById(R.id.noProductsTextView);
 
@@ -86,8 +102,11 @@ public class MyFridge extends Fragment {
         RecyclerView productsRecyclerView = view.findViewById(R.id.fridgeProductsRecyclerView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
+        TypedValue value = new TypedValue(); //To retrieve the secondary color variant
+        getContext().getTheme().resolveAttribute(R.attr.colorPrimary, value, true); //https://stackoverflow.com/questions/45218271/how-to-get-an-attr-value-programmatically
+
         productsRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.getFridgeItems(), getResources().getColor((R.color.teal_200)));
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.getFridgeItems(), value.data);
         productsRecyclerView.setAdapter(adapterFridgeItems);
 
         return  view;

@@ -18,6 +18,10 @@ import android.widget.TextView;
  */
 public class RecipesOverviewFragment extends Fragment {
 
+    //here we load everything from the database
+    //String[] recipeNames = {"Porkchops with honey", "Ceasar's Salad", "Chocolate Cake"};
+    //String[] recipeDescriptions = {"Delicious porkchops with honey and chili sauce", "Ceasar's Salad with chicken and lettuce", "Decadent chocolate Cake with vanilla buttercream"};
+
     TextView warning;
     RecyclerView.Adapter recipesAdapter;
 

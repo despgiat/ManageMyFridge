@@ -15,24 +15,23 @@
             android:id="@+id/expiredTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My fridge"
+            android:text="@string/my_fridge"
             android:textAllCaps="true"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.008" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fridgeProductsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="447dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:paddingBottom="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/addItemButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/noProductsTextView"
             app:layout_constraintVertical_bias="0.0" />
@@ -41,10 +40,11 @@
             android:id="@+id/noProductsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your fridge is empty! Press the button below to add a new product!"
+            android:layout_marginTop="20dp"
+            android:text="@string/empty_fridge_warning"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expiredTitleTextView" />
 
@@ -56,17 +56,16 @@
             android:adjustViewBounds="true"
             android:elevation="8dp"
             android:focusableInTouchMode="true"
-            android:onClick="addNewItem"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_add_item"
-            app:icon="@drawable/ic_add_item"
             app:iconPadding="0dp"
             app:iconSize="80dip"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fridgeProductsRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/fridgeProductsRecyclerView"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

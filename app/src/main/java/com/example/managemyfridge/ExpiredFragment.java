@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.security.keystore.StrongBoxUnavailableException;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,6 @@ import android.widget.TextView;
 
 import java.time.LocalDate;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ExpiredFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ExpiredFragment extends Fragment {
 
     private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
@@ -60,6 +56,8 @@ public class ExpiredFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //((MainScreen) getActivity()).getSupportActionBar().setTitle("Expired Products");
+
         LocalDate now = LocalDate.now();
         currentDate = now.format(MainScreen.formatter);
 
@@ -91,11 +89,13 @@ public class ExpiredFragment extends Fragment {
         }
 
         RecyclerView productsRecyclerView = view.findViewById(R.id.expiredProductsRecyclerView);
-
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
-
         productsRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate), Color.parseColor("#FFFFC107"));
+
+        TypedValue value = new TypedValue(); //To retrieve the secondary color variant
+        getContext().getTheme().resolveAttribute(R.attr.colorSecondaryVariant, value, true);
+
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate), value.data);
         productsRecyclerView.setAdapter(adapterFridgeItems);
 
         return  view;

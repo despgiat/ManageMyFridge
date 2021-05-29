@@ -8,17 +8,20 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String DARK_MODE_SWITCH = "darkMode";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Preference darkMode;
 
     Preference feedback;
     Preference version;
@@ -39,7 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public static SettingsFragment newInstance(String param1, String param2) {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -52,7 +55,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         //addPreferencesFromResource(R.xml.app_settings);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+          //  mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -74,6 +77,26 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Toast.makeText(getContext(), R.string.app_version, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        darkMode = (SwitchPreference) findPreference("darkMode");
+        darkMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                if ((boolean) newValue)
+                {
+                    //DarkMode method()
+                }
+                else
+                {
+                    //Light mode method()
+                }
+                System.out.println(newValue);
+
+                System.out.println("Switch!");
                 return true;
             }
         });
