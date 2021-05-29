@@ -35,10 +35,6 @@ public class SignUpScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkDataEntered();
-                Intent i = new Intent(getApplicationContext(), MainScreen.class);
-                startActivity(i);
-                finish(); //So that we don't go back to the login activity on back pressed
-
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
@@ -53,31 +49,44 @@ public class SignUpScreen extends AppCompatActivity {
     }
 
     private void checkDataEntered() {
+        boolean proceed = true;
         if (isEmpty(username)) {
-            Toast t = Toast.makeText(this, "You must enter a username or email address to register!", Toast.LENGTH_SHORT);
-            t.show();
+            username.setError("You must enter a username to register!");
+            proceed = false;
         }
         if (isEmpty(password)) {
-            Toast t = Toast.makeText(this, "You must enter a password to register!", Toast.LENGTH_SHORT);
-            t.show();
+            password.setError("You must enter a password to register!");
+            proceed = false;
+        }
+        if (isEmpty(email)) {
+            email.setError("You must enter an email address to register!");
+            proceed = false;
+
         }
         if (isEmpty(confirmpassword)) {
-            Toast t = Toast.makeText(this, "You must re-enter your password to register!", Toast.LENGTH_SHORT);
-            t.show();
+            confirmpassword.setError("You must re-enter your password to register!");
+            proceed = false;
         }
-        if (!confirmpassword.equals(password)) {
-            Toast t = Toast.makeText(this, "The passwords you have entered are not matching, please re-enter them to register!", Toast.LENGTH_SHORT);
-            t.show();
-        }
-        if(isEmail(username))
-            LoginScreen.user.setEmail(username.toString());
-        else
-            LoginScreen.user.setUsername(username.toString());
-        LoginScreen.user.setPassword(password.toString());
-        /**TODO: Add the user to database!
-         *
-         */
+        if (!(confirmpassword.getText().toString().equals(password.getText().toString()))) {
+            confirmpassword.setError("The passwords you have entered are not matching, please re-enter them to register!");
+            proceed = false;
 
+        }
+        if (!isEmail(email)){
+            email.setError("Please make sure you enter a valid email format (username@example.com)");
+        proceed = false;
+        }
+        if (proceed) {
+            LoginScreen.user.setUsername(username.getText().toString());
+            LoginScreen.user.setPassword(password.getText().toString());
+            LoginScreen.user.setEmail(email.getText().toString());
+            /**TODO: Add the user to database!
+             *
+             */
+            Intent i = new Intent(getApplicationContext(), MainScreen.class);
+            startActivity(i);
+            finish(); //So that we don't go back to the login activity on back pressed
+        }
     }
     boolean isEmail(EditText text) {
         CharSequence email = text.getText().toString();
