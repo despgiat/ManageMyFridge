@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManageMyFridge">
         <activity android:name=".MyFridge"></activity>
-        <activity android:name=".MainScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainScreen"/>
         <activity android:name=".SignUpScreen" />
-        <activity android:name=".LoginScreen" />
+        <activity android:name=".LoginScreen" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".MainActivity"></activity>
     </application>
 
