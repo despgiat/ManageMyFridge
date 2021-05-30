@@ -26,8 +26,6 @@ import android.widget.Toast;
  */
 public class RecipesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TITLE = "title";
     private static final String INSTRUCTIONS = "instructions";
     private static final String INGREDIENTS = "ingredients";
@@ -41,22 +39,13 @@ public class RecipesFragment extends Fragment {
 
     boolean favourite; //We will check from the database if it was marked as favourite by the user and we will display it as such
     MenuItem fave;
-
     Menu toolbar;
 
     public RecipesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecipesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static RecipesFragment newInstance(String param1, String param2, Ingredient[] param3) {
         RecipesFragment fragment = new RecipesFragment();
         Bundle args = new Bundle();
@@ -74,10 +63,6 @@ public class RecipesFragment extends Fragment {
             recipeTitle = getArguments().getString(TITLE);
             recipeInstructions = getArguments().getString(INSTRUCTIONS);
             ingredients = (Ingredient[]) getArguments().getSerializable(INGREDIENTS);
-
-            for (Ingredient ingredient : ingredients) {
-                System.out.println(ingredient.get_ingredientname());
-            }
 
             setHasOptionsMenu(true);
         }

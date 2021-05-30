@@ -1,9 +1,10 @@
 package com.example.managemyfridge;
 
+import java.util.ArrayList;
+
 public class Recipe {
 
     private int _id;
-
     private String _recipename;
     private String _recipetype;
     private String _instructions;
@@ -11,16 +12,19 @@ public class Recipe {
     private String _img;
 
 
+    private ArrayList<Ingredient> listofIngr;
+
+
     public Recipe() {
     }
 
-    //Added to product: exDate, isitopen, type, dateofopening, unit
     public Recipe(int id, String recipename, String recipeType, String instructions, String isitfav) {
         this.set_id(id);
         this._recipename = recipename;
         this._recipetype = recipeType;
         this._instructions = instructions;
         this._favoured = isitfav;
+        this.listofIngr = new ArrayList<>();
     }
 
     public int get_id() {
@@ -69,6 +73,15 @@ public class Recipe {
 
     public void set_img(String _img) {
         this._img = _img;
+    }
+
+
+    public ArrayList<Ingredient> getListofIngr() {
+        return listofIngr;
+    }
+
+    public void setListofIngr(ArrayList<Ingredient> listofIngr) {
+        this.listofIngr = listofIngr;
     }
 
 }

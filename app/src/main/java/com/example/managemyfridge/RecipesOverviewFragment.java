@@ -11,34 +11,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  *Upon entering the desired products and clicking "Find recipes!", this fragment gets displayed in the screen.
- * It contains all of the
+ * Some of the recipes' basic information are displayed as clickable cards. Upon clicking, the user can see the whole recipe, as it is the RecipeFragment gets displayed
  */
 public class RecipesOverviewFragment extends Fragment {
 
-    TextView warning;
+    //The recipes are retrieved here.
+    ArrayList<Recipe> recipes;
+
+    TextView warning; //No recipes found
     RecyclerView.Adapter recipesAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "recipes";
+    //private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ArrayList<Recipe> mParam1;
+    //private String mParam2;
 
     public RecipesOverviewFragment() {
         // Required empty public constructor
     }
 
 
-    public static RecipesOverviewFragment newInstance(String param1, String param2) {
+    public static RecipesOverviewFragment newInstance(ArrayList<Recipe> recipes) {
         RecipesOverviewFragment fragment = new RecipesOverviewFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(ARG_PARAM1, recipes);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,8 +52,8 @@ public class RecipesOverviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = (ArrayList<Recipe>) getArguments().getSerializable(ARG_PARAM1);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -63,6 +68,8 @@ public class RecipesOverviewFragment extends Fragment {
         recipesRecyclerView.setLayoutManager(linearLayoutManagerToday);
         recipesAdapter = new ContentRecyclerAdapter(getContext(), this);
         recipesRecyclerView.setAdapter(recipesAdapter);
+
+
         // Inflate the layout for this fragment
         return view;
     }

@@ -1,17 +1,16 @@
 package com.example.managemyfridge;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-public class Product implements Serializable{
+public class Product {
     private int _id;
     private String _productname;
     private String _quantity;
+
+
     private String _exdate;
+    //private boolean _opened;
     private String _opened;
     private String _prodtype;
     private String _DateofOpening;
@@ -42,6 +41,20 @@ public class Product implements Serializable{
         this._DateofOpening = dateofopening;
         this._unit = unit;
     }
+
+   /* public Product(int id, String productname, int quantity) {
+        this.setID(id);
+        this._productname = productname;
+        this._quantity = quantity;
+
+    }
+
+    public Product(String productname, int quantity) {
+        this._productname = productname;
+        this._quantity = quantity;
+
+    }*/
+
 
 
     public int getID() {
@@ -76,6 +89,13 @@ public class Product implements Serializable{
         this._exdate = _exdate;
     }
 
+    /*public boolean isOpened() {
+        return _opened;
+    }
+
+    public void setOpened(boolean _opened) {
+        this._opened = _opened;
+    }*/
 
     public String get_opened() {
         return _opened;
@@ -134,11 +154,6 @@ public class Product implements Serializable{
                 '}';
     }
 
-    /**
-     * Checks whether the product has expired, depending on the date given
-     * @param date the date given to compare with the product's expiration date
-     * @return boolean which indicates if the given date is greater or equal than the expiration date, thus indicating that the product is expired
-     */
     public boolean productExpired(String date)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

@@ -43,60 +43,45 @@ import java.util.ArrayList;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.HomeFragmentListener{
 
-    /**TODO: Make products appear as lists under the Text Views. If the lists are empty, the text views' text
-     * will be "There are no products expriring today/tomorrow/soon." (DONE)
-     * TODO: If there are not any expired products in the fridge, the yellow text view shall not appear (DONE)
-     * TODO: If there are expired products in the fridge, in the navigation drawer the "expired items" choice will have
-     * the "danger" icon displayed
-     * TODO: If there are products expiring in the following days, display the crockpot message and the crockpot -> Which will lead to the recipes page
-     **/
-
-
-    private Fridge fridge; //--> We do not need this then (it will be loaded in the fragment) (Or we do, to pass it to other fragments)
-
+    private Fridge fridge;
     LocalDate currentDate;
-    public static DateTimeFormatter formatter;
+    public static DateTimeFormatter formatter; //the date formatter, used by different fragments in the app
 
+    //Views
     DrawerLayout drawerLayout;
-    NavigationView navigationView; //The navigation drawer panel
-
+    NavigationView navigationView;
     View inflatedView;
     ImageView profilePicture;
-    //private Menu navigationDrawer;
 
     Fragment currentFragment;
     MyDBHandler dbHandler;
-    SharedPreferences sharedPreferences; //Geeks for geeks
-
-    //Fragments:
-    //Fragment activeScreen;
+    //SharedPreferences sharedPreferences; //Geeks for geeks
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
         currentDate = LocalDate.now();
 
-        /**----------Finding view IDs-------------**/
+        /**----------Finding View IDs-------------**/
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawerLayout);
 
         /**----------END OF Finding view IDs-------**/
 
+        //Setting up the custom Toolbar
         Toolbar myToolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        inflatedView = navigationView.inflateHeaderView(R.layout.header_navigation_drawer);
-
-
+        inflatedView = navigationView.inflateHeaderView(R.layout.header_navigation_drawer); //inflates the header of the navigation drawer (the section containing the user's profile picture
+        // username and email )
         profilePicture = (ImageView) inflatedView.findViewById(R.id.imageViewProfilePic);
-        registerForContextMenu(profilePicture);
+        registerForContextMenu(profilePicture); //When the profile picture on the navigation drawer header gets long-clicked, a context menu will appear
 
+        //Setting up the navigation drawer - See Android Material Design on creating the Navigation Drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -104,29 +89,27 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         navigationView.bringToFront();
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        //When the activity is created it will search for the expired items in the fridge and make them appear in the recyclerview on the front screen
-        //First get the currect date
-
+        //Desired date formatter
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        //Load the database:
-
+        //Loads the databases:
         dbHandler = new MyDBHandler(this, null, null, 1);
         ArrayList<Product> products = dbHandler.showallProducts();
         fridge = new Fridge(products);
 
+        //Some fragments in the app get added to the backstack, and we want the "burger" button in the navigation drawer to become the arrow, and to allow the navigation only backward
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
                 if(getSupportFragmentManager().getBackStackEntryCount() > 0){
-                    toggle.setDrawerIndicatorEnabled(false);
+                    toggle.setDrawerIndicatorEnabled(false); //disables the drawer icon and sets it as the back arrow
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
                     toggle.setToolbarNavigationClickListener(new View.OnClickListener() { //https://stackoverflow.com/questions/17258020/switching-between-android-navigation-drawer-image-and-up-caret-when-using-fragme
                         @Override
                         public void onClick(View v) {
                             getSupportFragmentManager().popBackStack();
-                        }
+                        } //When the arrow is clicked, the back stack is popped and the "older" fragment gets displayed again
                     });
 
                 }
@@ -137,62 +120,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             }
         });
 
-        sharedPreferences = this.getSharedPreferences("com.example.managemyfridge", MODE_PRIVATE);
 
-        boolean isDarkModeOn = false;
-       /* switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
-            case Configuration.UI_MODE_NIGHT_YES:
-                System.out.println("DARK MODE");
-                isDarkModeOn = true;
-                break;
-            case Configuration.UI_MODE_NIGHT_NO:
-                System.out.println("LIGHT MODE");
-                isDarkModeOn = false;
-                break;
-        }
-
-        */
-
-        boolean darkModeEnabled = sharedPreferences.getBoolean("com.example.darkModeEnabled", false);
-        //final SharedPreferences.Editor editor = sharedPreferences.edit();
-
-
-       /* if (isDarkModeOn) {
-            AppCompatDelegate
-                    .setDefaultNightMode(
-                            AppCompatDelegate
-                                    .MODE_NIGHT_YES);
-            btnToggleDark.setText(
-                    "Disable Dark Mode");
-        }
-        else {
-            AppCompatDelegate
-                    .setDefaultNightMode(
-                            AppCompatDelegate
-                                    .MODE_NIGHT_NO);
-            btnToggleDark
-                    .setText(
-                            "Enable Dark Mode");
-        }
-
-        */
-
-
-
-
-
-        /**
-         * When there are expired products, the HomeFragment will send the expires Items arraylist to this activity,
-         * and this activity will send the ExpiredFragment the data
-         */
-
-        if(savedInstanceState == null)
+        if(savedInstanceState == null) //The Home Fragment is the default fragment when where is no saved Instance state
         {
             HomeFragment home = new HomeFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable("fridge", fridge);
             home.setArguments(bundle);
-            //homeFragment = new HomeFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.screen, home).commit();
             navigationView.setCheckedItem(R.id.homeItem);
             currentFragment = home;
@@ -201,16 +135,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-    }
-
-    //This will be accessed from the Home Fragment and the MyFridge Fragment, so it should be implemented here
+    //Starts the MainActivity, which adds new items to the product database
     public void addNewItem()
     {
-
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("Fridge", fridge);
         startActivityForResult(i, 2);
@@ -227,8 +154,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             fridge.setFridgeItems(dbHandler.showallProducts());
 
             //Updates the Home Fragment with the new fridge and displays it
-
-            Bundle bundle = new Bundle(); //Sends the fridge back to the fragment (It doesn't unfortunately...) Let's fix that real quick
+            Bundle bundle = new Bundle();
             bundle.putSerializable("fridge", fridge);
             MyFridge myFridge = new MyFridge();
             myFridge.setArguments(bundle);
@@ -237,10 +163,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         }
 
-        if (resultCode == RESULT_OK) { //For changing the profile picture
+        if (resultCode == RESULT_OK) { //https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
 
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
             if (requestCode == 22) {
                 // Get the url of the image from data
                 Uri selectedImageUri = data.getData();
@@ -253,25 +177,29 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
     @Override
-    public void onBackPressed() { //Stays
-        // 5 - Handle back click to close menu
+    public void onBackPressed() {
+
+        //When the drawer is open, clicking back causes it to close
         if (this.drawerLayout.isDrawerOpen(GravityCompat.START))
         {
             this.drawerLayout.closeDrawer(GravityCompat.START);
         }
+
+        //If the fragment backstack isn't empty, pop the top fragment
         else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         }
+
+        //if the current fragment displayed is not the home fragment and there are no other fragments in the backstack -> for ex. when the user is at the myfridge screen
         else if(getSupportFragmentManager().getBackStackEntryCount() == 0 && !(currentFragment instanceof HomeFragment))
         {
             Bundle bundle = new Bundle();
             bundle.putSerializable("fridge", fridge);
-            //bundle.putString("date", currentDate.format(formatter));
             HomeFragment homeFragment = new HomeFragment();
             homeFragment.setArguments(bundle);
             currentFragment = homeFragment;
             navigationView.setCheckedItem(R.id.homeItem);
-            getSupportFragmentManager().beginTransaction().replace(R.id.screen, homeFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.screen, homeFragment).commit(); //"returns to the home page", the home fragment gets displayed
         }
         else
         {
@@ -280,8 +208,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
+    //Context menu for changing the user's profile picture
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, //Stays as it is
+    public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
@@ -293,8 +222,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
-        // pass the constant to compare it
-        // with the returned requestCode
         startActivityForResult(Intent.createChooser(i, "Select Picture"), 22);
     }
 
@@ -320,6 +247,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
+    /**Navigation drawer menu choices handler
+     * On click on each menu item, the appropriate fragment is displayed in the main screen (thus the user navigated to the app's different screens)
+     *
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) { //Navigation drawer choices handler
         item.setChecked(true);
@@ -342,14 +273,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 homeFragment.setArguments(bundle);
                 currentFragment = homeFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, homeFragment).commit();
-
-                //getSupportFragmentManager().beginTransaction().replace(R.id.screen, new HomeFragment()).commit();
                 break;
 
             case R.id.expiredItem:
                 bundle.putSerializable("fridge", fridge);
-// set Fragmentclass Arguments
-                //ExpiredFragment expiredFragment = new ExpiredFragment();
                 ExpiredFragment expiredFragment = new ExpiredFragment();
                 expiredFragment.setArguments(bundle);
                 currentFragment = expiredFragment;
@@ -357,12 +284,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
 
             case R.id.recipesItem:
-                RecipeSearchFragment recipesSearchFragment = new RecipeSearchFragment();
-                bundle.putSerializable("fridge", fridge);
-                recipesSearchFragment.setArguments(bundle);
-
-                currentFragment = recipesSearchFragment;
-                getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipesSearchFragment).commit();
+                RecipesOverviewFragment recipesOverviewFragment = new RecipesOverviewFragment();
+                //bundle.putSerializable("recipes" );
+                recipesOverviewFragment.setArguments(bundle);
+                currentFragment = recipesOverviewFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipesOverviewFragment).commit();
                 break;
 
             case R.id.zeroWasteItem:
@@ -390,7 +316,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
         }
 
-        drawerLayout.close();
+        drawerLayout.close(); //when the user makes the choice, the navigation drawer closes
         return true;
     }
 
@@ -401,17 +327,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 .setTitle("Log out")
                 .setMessage("Are you sure you want to logout?")
 
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(getApplicationContext(), LoginScreen.class);
+                        Intent i = new Intent(getApplicationContext(), LoginScreen.class); //Starts the LoginScreen Activity
                         startActivity(i);
                         finish(); //So that we don't go back to the login activity on back pressed
                     }
                 })
 
-                // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.cancel, null)
                 .setIcon(R.drawable.ic_warning)
                 .show();
@@ -422,24 +345,28 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void UpdateData(Fridge fridge)
     {
-        //HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("HomeFragment");
         System.out.println("FRIDGE UPDATED");
         this.fridge = fridge;
     }
 
+    /**
+     * The onClick method when the user clicks the yellow warning sign on the HomeFragment, when there are expired products in the fridge.
+     * The user immediately gets transfered to the Expired Products screen
+     * @param view
+     */
     public void goToExpired(View view)
     {
         navigationView.getMenu().findItem(R.id.expiredItem).setChecked(true);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("fridge", fridge);
-        // set Fragmentclass Arguments
         ExpiredFragment expiredFragment = new ExpiredFragment();
         expiredFragment.setArguments(bundle);
         currentFragment = expiredFragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
     }
 
+    //Opens a product of id in the database
     public void openProduct(int id, Fragment fromFragment)
     {
         boolean opened = dbHandler.makeProductOpen(id, currentDate.format(formatter));
@@ -448,12 +375,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             Toast.makeText(this, "You opened this product!", Toast.LENGTH_SHORT).show();
             fridge.setFridgeItems(dbHandler.showallProducts()); //Updates the fridge from the database
-            /*Bundle bundle = new Bundle();
-            bundle.putSerializable("fridge", fridge);
-            fromFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.screen, fromFragment).commit();
-
-             */
         }
         else
         {
@@ -462,6 +383,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
+    //Deletes a product from the database
     public void deleteProduct(String productName, Fragment fromFragment)
     {
         boolean deleted = dbHandler.deleteProduct(productName);
@@ -469,20 +391,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             Toast.makeText(this, productName + " was successfully deleted", Toast.LENGTH_SHORT).show();
             fridge.setFridgeItems(dbHandler.showallProducts());
-           /* Bundle bundle = new Bundle();
-            bundle.putSerializable("fridge", fridge);
-            fromFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.screen, fromFragment).commit();
-
-            */
         }
         else
         {
             Toast.makeText(this, "Could not delete " + productName, Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 
 
