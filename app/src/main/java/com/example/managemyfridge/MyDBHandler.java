@@ -263,8 +263,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
             LoginScreen.user.setID(Integer.parseInt(cursor.getString(0)));
             LoginScreen.user.setUsername(cursor.getString(1));
-            LoginScreen.user.setPassword(cursor.getString(2));
-            LoginScreen.user.setImg(cursor.getString(3));
+            LoginScreen.user.setEmail(cursor.getString(2));
+            LoginScreen.user.setPassword(cursor.getString(3));
+            LoginScreen.user.setImg(cursor.getString(4));
             cursor.close();
             flag = true;
         } else {

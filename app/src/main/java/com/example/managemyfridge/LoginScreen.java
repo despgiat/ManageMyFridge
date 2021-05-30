@@ -72,8 +72,9 @@ public class LoginScreen extends AppCompatActivity {
             /**TODO: Check if the username/email exists in our data base, if it does, check if the password is matching and create the user!
              *
              */
-            if(dbHandlerlog.findUser(usernameValue)) //checks if the username exists
-                if(user.getPassword().equals(passwordValue)) { //checks if the password is correct
+            boolean f = dbHandlerlog.findUser(usernameValue);
+            if(f) //checks if the username exists
+                if(password.getText().toString().equals(user.getPassword())) { //checks if the password is correct
                     Intent i = new Intent(getApplicationContext(), MainScreen.class); //moves to mainscreen
                     startActivity(i);
                     finish(); //So that we don't go back to the login activity on back pressed
