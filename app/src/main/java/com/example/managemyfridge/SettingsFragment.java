@@ -1,6 +1,7 @@
 package com.example.managemyfridge;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -46,6 +48,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
      */
     // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(String param1, String param2) {
+
+        //This will accept the preferences sent by the main activity
+
+
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);
@@ -70,6 +76,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.app_settings, rootKey);
 
+      /*  SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        //SharedPreferences.Editor editor = preferences.edit();
+        editor.getBoolean("com.example.darkModeEnabled", darkModeEnabled);
+        editor.apply();
+
+        return true;
+
         feedback = (Preference) findPreference("send_feedback");
         feedback.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
@@ -77,6 +90,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+
+       */
 
         version = findPreference("version");
         version.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -89,7 +104,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         darkMode = (SwitchPreference) findPreference("darkMode");
 
-        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
+       /* switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
             case Configuration.UI_MODE_NIGHT_YES:
                 System.out.println("DARK MODE");
                 darkModeEnabled = true;
@@ -100,9 +115,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 break;
         }
 
-        darkMode.setDefaultValue(darkModeEnabled); //The default value will be the value in the SharedPreferences!
+        */
 
-
+        //darkMode.setDefaultValue(darkModeEnabled); //The default value will be the value in the SharedPreferences!
 
         darkMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -120,6 +135,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     darkModeEnabled = false;
                 }
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("com.example.darkModeEnabled", darkModeEnabled);
+                editor.apply();
 
                 return true;
             }

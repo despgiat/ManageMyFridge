@@ -1,20 +1,31 @@
 package com.example.managemyfridge;
 
 public class Ingredient {
+
+    private int _id;
     private int _idofRECIPE;
     private String _ingredientname;
-    private int _quantity;
+    private String _quantity;
     private String _unit;
 
     public Ingredient() {
     }
 
     //Added to product: exDate, isitopen, type, dateofopening, unit
-    public Ingredient(int idofRECIPE, String ingredientname, int quantity, String unit) {
+    public Ingredient(int id, int idofRECIPE, String ingredientname, String quantity, String unit) {
+        this.set_id(id);
         this._idofRECIPE = idofRECIPE;
         this._ingredientname = ingredientname;
         this._quantity = quantity;
         this._unit = unit;
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
     public int get_idofRECIPE() {
@@ -33,11 +44,11 @@ public class Ingredient {
         this._ingredientname = _ingredientname;
     }
 
-    public int get_quantity() {
+    public String get_quantity() {
         return _quantity;
     }
 
-    public void set_quantity(int _quantity) {
+    public void set_quantity(String _quantity) {
         this._quantity = _quantity;
     }
 

@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -64,6 +66,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     Fragment currentFragment;
     MyDBHandler dbHandler;
+    SharedPreferences sharedPreferences; //Geeks for geeks
 
     //Fragments:
     //Fragment activeScreen;
@@ -133,6 +136,49 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 }
             }
         });
+
+        sharedPreferences = this.getSharedPreferences("com.example.managemyfridge", MODE_PRIVATE);
+
+        boolean isDarkModeOn = false;
+       /* switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
+            case Configuration.UI_MODE_NIGHT_YES:
+                System.out.println("DARK MODE");
+                isDarkModeOn = true;
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                System.out.println("LIGHT MODE");
+                isDarkModeOn = false;
+                break;
+        }
+
+        */
+
+        boolean darkModeEnabled = sharedPreferences.getBoolean("com.example.darkModeEnabled", false);
+        //final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+       /* if (isDarkModeOn) {
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+            btnToggleDark.setText(
+                    "Disable Dark Mode");
+        }
+        else {
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+            btnToggleDark
+                    .setText(
+                            "Enable Dark Mode");
+        }
+
+        */
+
+
+
 
 
         /**
@@ -247,29 +293,35 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         inflater.inflate(R.menu.new_profile_pic_floating_menu, menu);
     }
 
+    public void changeProfilePic()
+    {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        // pass the constant to compare it
+        // with the returned requestCode
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), 22);
+    }
+
+    public void removeProfilePic()
+    {
+        profilePicture.setImageResource(R.drawable.ic_profile_pic);
+    }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) { //Profile picture choices handler
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.from_gallery:
-                System.out.println("CHOOSE PIC FROM GALLERY");
-                Intent i = new Intent();
-                i.setType("image/*");
-                i.setAction(Intent.ACTION_GET_CONTENT);
-                // pass the constant to compare it
-                // with the returned requestCode
-                startActivityForResult(Intent.createChooser(i, "Select Picture"), 22);
+                changeProfilePic();
                 return true;
 
             case R.id.remove_photo:
-                System.out.println("REMOVE PHOTO");
-                profilePicture.setImageResource(R.drawable.ic_profile_pic);
+                removeProfilePic();
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
-
     }
 
 
@@ -310,7 +362,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
 
             case R.id.recipesItem:
-                RecipesOverviewFragment recipesSearchFragment = new RecipesOverviewFragment();
+                RecipeSearchFragment recipesSearchFragment = new RecipeSearchFragment();
+                bundle.putSerializable("fridge", fridge);
+                recipesSearchFragment.setArguments(bundle);
+
                 currentFragment = recipesSearchFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipesSearchFragment).commit();
                 break;

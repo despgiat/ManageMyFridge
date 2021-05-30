@@ -86,6 +86,7 @@
     <string name="your_favourite_zero_waste_tips">Your favourite zero waste tips:</string>
     <string name="your_favourite_recipes">Your favourite recipes:</string>
     <string name="favourites_description">Here you can easily find your favourite recipes and zero waste tips!</string>
+    <string name="change_picture">Change Picture</string>
 
     <string-array name="units">
         <item>ml</item>
@@ -103,6 +104,14 @@
         <item>Meat</item>
         <item>Sweet</item>
         <item>Other</item>
+        <item>Milk</item>
+        <item>Eggs</item>
+        <item>Flour</item>
+        <item>Poultry</item>
+        <item>Tomato</item>
+        <item>Sausage</item>
+        <item>Spinach</item>
+        <item>Fish</item>
     </string-array>
 
 </resources>

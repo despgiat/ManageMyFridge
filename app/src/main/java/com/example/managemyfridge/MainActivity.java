@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 Product found = dbHandler.findProduct(itemNameText);
                 if (found == null){
                     //added: exDateBox in product, isitopen, productTypeBox, dateofOpeningBox, unitsBox
-                    Product product = new Product(itemNameText, Integer.parseInt(quantity), expiryText, isOpened, productType, openedDateText, unit);
+                    Product product = new Product(itemNameText, quantity, expiryText, isOpened, productType, openedDateText, unit);
                     //Product product = new Product(productName, Integer.parseInt(quantity));
                     dbHandler.addProduct(product);
 

@@ -20,21 +20,18 @@ import java.time.LocalDate;
 
 public class ExpiredFragment extends Fragment {
 
-    private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
+    private Fridge fridge; //We need to access the fridge products
     private static final String FRIDGE = "fridge";
-    TextView warning;
+    TextView warning; //warning that displays that there are no expired products in the fridge at the moment
     HomeFragment.HomeFragmentListener activityCallback; //For communication with the activity
     RecyclerView.Adapter adapterFridgeItems;
-    CardView cardView;
     String currentDate;
 
 
     public static ExpiredFragment newInstance(Fridge fridge) {
         ExpiredFragment fragment = new ExpiredFragment();
-
         Bundle args = new Bundle();
         args.putSerializable(FRIDGE, fridge);
-        //args.putString(DATE, currentDate);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,14 +53,11 @@ public class ExpiredFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //((MainScreen) getActivity()).getSupportActionBar().setTitle("Expired Products");
-
         LocalDate now = LocalDate.now();
         currentDate = now.format(MainScreen.formatter);
 
-        if (getArguments() != null) {
+        if (getArguments() != null) { //Gets the fridge from the MainScreen Activity
             fridge = (Fridge) getArguments().getSerializable(FRIDGE);
-            //currentDate = getArguments().getString(DATE);
 
         }
     }
@@ -73,12 +67,10 @@ public class ExpiredFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_expired, container, false);
-       // activityCallback.UpdateData(fridge);
 
         warning = view.findViewById(R.id.noExpiredTextView);
-        //cardView = (CardView) view.findViewById(R.id.productEditableCardLayout);
 
-        if(fridge.checkForExpiredAtDate(currentDate).size() == 0) //We need to pass the currentDate to the fragment too
+        if(fridge.checkForExpiredAtDate(currentDate).size() == 0) //if there are no expired products at the moment, the warning will be displayed
         {
             warning.setVisibility(View.VISIBLE);
         }
@@ -87,14 +79,14 @@ public class ExpiredFragment extends Fragment {
             warning.setVisibility(View.GONE);
         }
 
-        RecyclerView productsRecyclerView = view.findViewById(R.id.expiredProductsRecyclerView);
+        RecyclerView productsRecyclerView = view.findViewById(R.id.expiredProductsRecyclerView); //The recycler view for the products to be displayed as cards
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
         productsRecyclerView.setLayoutManager(linearLayoutManagerToday);
 
-        TypedValue value = new TypedValue(); //To retrieve the secondary color variant
+        TypedValue value = new TypedValue(); //To retrieve the secondary color variant from the attributes: https://stackoverflow.com/questions/17277618/get-color-value-programmatically-when-its-a-reference-theme
         getContext().getTheme().resolveAttribute(R.attr.colorSecondaryVariant, value, true);
 
-        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate), value.data, this);
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate), value.data, this); //value.data is the color we want each card in the card view to be
         productsRecyclerView.setAdapter(adapterFridgeItems);
 
         return  view;

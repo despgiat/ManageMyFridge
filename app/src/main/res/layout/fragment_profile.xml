@@ -22,10 +22,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:clickable="true"
-        android:text="Change Picture"
+        android:focusable="true"
+        android:text="@string/change_picture"
         android:textColor="?attr/colorPrimaryVariant"
         android:textSize="14sp"
-        android:focusable="true" />
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/removePicButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Remove Picture"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorSecondary"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/emailTextView"
@@ -51,11 +62,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/change_username"
         android:textAlignment="center"
         android:textColor="?attr/colorPrimaryVariant"
         android:textSize="14sp"
-        android:focusable="true" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/passwordTextView"
@@ -71,7 +83,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/change_password"
         android:textAlignment="center"
-        android:textColor="?attr/colorPrimaryVariant" />
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/clearAppData"
@@ -80,7 +93,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/wipe_app_data"
         android:textAlignment="center"
-        android:textColor="?attr/colorPrimaryVariant" />
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/logoutButton"

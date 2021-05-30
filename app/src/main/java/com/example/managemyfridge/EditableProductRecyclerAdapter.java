@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<EditableProductRecyclerAdapter.ViewHolder>{
     private ArrayList<Product> productData;
     private int cardColor;  //We want to control the card's color (ex. in the ExpiredFragment, the cards appear mustard yellow)
-    Fragment fromFragment;
+    Fragment fromFragment; //the fragment that is using the adapter.
 
     public EditableProductRecyclerAdapter(ArrayList<Product> products, int cardColor, Fragment fromFragment)
     {
@@ -51,34 +51,36 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
 
         holder.itemName.setText(productData.get(position).getProductName());
         holder.itemExpiry.setText(productData.get(position).get_exdate());
-        holder.itemOpened.setText(productData.get(position).get_opened().equals("yes") ? "Opened at " + (productData.get(position).get_DateofOpening()) : "");
+        holder.itemOpened.setText(productData.get(position).get_opened().equals("yes") ? "Opened at " + (productData.get(position).get_DateofOpening()) : ""); //If the product is opened, it also displays the date it was opened,
+        //otherwise displays nothing on this field
         holder.itemType.setText("(" + productData.get(position).get_prodtype() + ")");
         holder.cardView.setCardBackgroundColor(cardColor);
 
-        holder.deleteItem.setOnClickListener(new View.OnClickListener() { //The product gets deleted
+        /**
+         * On click listeners for each of the card's three buttons
+         */
+
+        holder.deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Remove the item from the list -> And the fridge in general
                 // RemoveItem(position);
 
-                new AlertDialog.Builder(fromFragment.getContext())
+                new AlertDialog.Builder(fromFragment.getContext()) //When deleting a product, an alert dialogue is displayed to the user.
                         .setTitle("Delete Product")
                         .setMessage("Are you sure you want to delete " + productData.get(position).getProductName() + "?")
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
+
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                ((MainScreen) fromFragment.getActivity()).deleteProduct(productData.get(position).getProductName(), fromFragment);
+                                ((MainScreen) fromFragment.getActivity()).deleteProduct(productData.get(position).getProductName(), fromFragment); //Implemented in the MainScreen Activity
 
                                 productData.remove(position); //To remove each card immediately
-                                notifyDataSetChanged();
-
-                                //Send the data to the fragment that called it
+                                notifyDataSetChanged(); //So that the recyclerView will be displayed again with the updated data
 
                             }
                         })
 
-                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        //Dismisses the dialog and does nothing else
                         .setNegativeButton(android.R.string.cancel, null)
                         .setIcon(R.drawable.ic_warning)
                         .show();
@@ -93,7 +95,6 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
                 System.out.println(productData.get(position).getID());
                 ((MainScreen) fromFragment.getActivity()).openProduct(productData.get(position).getID(), fromFragment);
                 notifyDataSetChanged();
-
             }
         });
 
@@ -133,18 +134,6 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
             openItem = itemView.findViewById(R.id.openButton);
             itemType = itemView.findViewById(R.id.editableItemType);
             cardView = itemView.findViewById(R.id.productEditableCardLayout);
-
-            /*int position = getAdapterPosition();
-            openItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((MainScreen) fromFragment.getActivity()).openProduct(productData.get(position).getID());
-                }
-            });
-
-             */
-
-
 
         }
     }

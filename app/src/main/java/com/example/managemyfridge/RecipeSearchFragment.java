@@ -11,7 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import static android.widget.AbsListView.CHOICE_MODE_MULTIPLE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,20 +23,20 @@ import java.util.ArrayList;
  */
 public class RecipeSearchFragment extends Fragment {
 
-    ArrayList<String> ingredients;
-    ArrayList<String> fridge;
+    String[] ingredients;
+    //ArrayList<String> fridge;
     //String[] ingredients = new String[]{"Eggs", "Bacon", "Chicken", "Milk", "Yogurt", "Apples", "Feta cheese", "Chocolate Milk", "Juice", "Bell Peppers"};
     //String[] fridge = new String[]{"Mayonaise", "Mustard", "Chicken", "Yogurt", "Juice"};
 
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "fridge";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Fridge fridge;
+
     ListView listView;
     Button clearButton;
     Button importfromfridge;
@@ -41,38 +44,21 @@ public class RecipeSearchFragment extends Fragment {
     public RecipeSearchFragment() {
         // Required empty public constructor
 
-        ingredients = new ArrayList<>();
-        fridge = new ArrayList<>();
-        ingredients.add("Eggs");
-        ingredients.add("Bacon");
-        ingredients.add("Yogurt");
-        ingredients.add("Chicken");
-        ingredients.add("Beef");
-        ingredients.add("Juice");
-        ingredients.add("Apples");
-        ingredients.add("Milk");
-
-        fridge.add("Mustard");
-        fridge.add("Mayonaise");
-        fridge.add("Chicken");
-        fridge.add("Yogurt");
-        fridge.add("Bacon");
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+
      * @return A new instance of fragment Recipes.
      */
     // TODO: Rename and change types and number of parameters
-    public static RecipeSearchFragment newInstance(String param1, String param2) {
+    public static RecipeSearchFragment newInstance(Fridge fridge) {
         RecipeSearchFragment fragment = new RecipeSearchFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(ARG_PARAM1, fridge);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -81,8 +67,9 @@ public class RecipeSearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            fridge = (Fridge) getArguments().getSerializable(ARG_PARAM1);
+
+            ingredients = getResources().getStringArray(R.array.types);
 
         }
     }
@@ -97,9 +84,8 @@ public class RecipeSearchFragment extends Fragment {
         importfromfridge = view.findViewById(R.id.fromFridgeButton);
 
         listView = view.findViewById(R.id.ingredient_list);
-        //listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
-        listView.setAdapter(new ArrayAdapter<String>(this.getContext(),
-                android.R.layout.simple_list_item_multiple_choice, ingredients));
+//        listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
+        listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, ingredients));
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +101,6 @@ public class RecipeSearchFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
@@ -125,12 +110,22 @@ public class RecipeSearchFragment extends Fragment {
     }
 
     public void ImportFromFridge() {
-        //Check which items are in the fridge
-        for (int i = 0; i < ingredients.size(); i++) {
-            if (fridge.contains(ingredients.get(i))) {
-                listView.setItemChecked(i, true);
+
+        //We get all of the fridge's products and for every ingredient type, we check if there is one instance (product) of that type.
+
+        ArrayList<Product> products = fridge.getFridgeItems();
+
+        for (int i = 0; i < ingredients.length; i++) {
+
+            for(Product product : products)
+            {
+                if(product.get_prodtype().equals(ingredients[i]))
+                {
+                    listView.setItemChecked(i, true);
+                }
             }
         }
         listView.requestLayout();
+
     }
 }

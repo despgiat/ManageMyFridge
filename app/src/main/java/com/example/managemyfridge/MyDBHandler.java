@@ -28,6 +28,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public static final String TABLE_USERS = "USERS";
     public static final String COLUMN_USERNAME = "Username";
+    public static final String COLUMN_EMAIL = "Email";
     public static final String COLUMN_PASSWORD = "User_Password";
 
     public static final String TABLE_RECIPES = "RECIPE";
@@ -66,7 +67,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 TABLE_PRODUCTS + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_PRODUCTNAME + " TEXT NOT NULL," +
-                COLUMN_QUANTITY + " INTEGER NOT NULL," +
+                COLUMN_QUANTITY + " TEXT NOT NULL," + //QUANTINY no longer integer
                 COLUMN_EXDATE + " TEXT," +
                 COLUMN_IS_IT_OPEN + " TEXT," +
                 COLUMN_TYPE + " TEXT  ," + //NOT NULL Here
@@ -79,9 +80,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
         //create ingredients table
         String CREATE_INGREDIENTS_TABLE = "CREATE TABLE " +
                 TABLE_INGREDIENTS + "(" +
-                COLUMN_ID_OF_RECIPE + " INTEGER PRIMARY KEY ," +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_ID_OF_RECIPE + " INTEGER NOT NULL," +
                 COLUMN_INGREDIENTNAME + " TEXT NOT NULL," +
-                COLUMN_QUANTITY + " INTEGER NOT NULL," +
+                COLUMN_QUANTITY + " TEXT NOT NULL," +
                 COLUMN_UNIT + " TEXT" +
                 ")";
         db.execSQL(CREATE_INGREDIENTS_TABLE);
@@ -109,6 +111,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_IMAGE + " TEXT" +
                 ")";
         db.execSQL(CREATE_TIPS_TABLE);
+
+        //create users table
+        String CREATE_USERS_TABLE = "CREATE TABLE " +
+                TABLE_USERS + "(" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_USERNAME + " TEXT ," +
+                COLUMN_EMAIL + " TEXT  ," +
+                COLUMN_PASSWORD + " TEXT  ," +
+                COLUMN_IMAGE + " TEXT" +
+                ")";
+        db.execSQL(CREATE_USERS_TABLE);
     }
 
 
@@ -122,6 +135,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
 
@@ -169,8 +183,35 @@ public class MyDBHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
             product.setID(Integer.parseInt(cursor.getString(0)));
             product.setProductName(cursor.getString(1));
-            product.setQuantity(Integer.parseInt(cursor.getString(2)));
+            product.setQuantity(cursor.getString(2));
             cursor.close();
+        } else {
+            product = null;
+        }
+        db.close();
+        return product;
+    }
+
+    //Μέθοδος για εύρεση προϊόντος βάσει ονομασίας του
+    public Product newfindProduct(String productname) {
+        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " +
+                COLUMN_PRODUCTNAME + " = '" + productname + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Product product = new Product();
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            product.setID(Integer.parseInt(cursor.getString(0)));
+            product.setProductName(cursor.getString(1));
+            product.setQuantity(cursor.getString(2));
+            product.set_exdate(cursor.getString(3));
+            product.set_opened(cursor.getString(4));
+            product.set_prodtype(cursor.getString(5));
+            product.set_DateofOpening(cursor.getString(6));
+            //product.set_img(cursor.getString(7)); //the img changes based on type, not user's choice.
+            product.set_unit(cursor.getString(8));
+            cursor.close();
+
         } else {
             product = null;
         }
@@ -267,7 +308,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 // on below line we are adding the data from cursor to our array list.
                 fridgeProducts.add(new Product(cursor.getInt(0), //id
                         cursor.getString(1), //name
-                        cursor.getInt(2), //quantity
+                        cursor.getString(2), //quantity
                         cursor.getString(3), //expiration date
                         cursor.getString(4), //is_it_open
                         cursor.getString(5), //type
@@ -318,6 +359,29 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
 
+    //method to update product properties
+    //FIRST IN MAINACTIVITY A findProduct METHOD NEEDS TO BE CALLED TO SHOW ALL PRODUCT PROPERTIES. THEN CALL THIS METHOD  WITH THAT FOUND PRODUCT AS THE VARIABLE
+    public void updateProduct(Product product){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCTNAME, product.getProductName());
+        values.put(COLUMN_QUANTITY, product.getQuantity());
+        values.put(COLUMN_EXDATE, product.get_exdate());
+        //values.put(COLUMN_IS_IT_OPEN, product.isOpened());
+        values.put(COLUMN_IS_IT_OPEN, product.get_opened());
+        values.put(COLUMN_TYPE, product.get_prodtype());
+        values.put(COLUMN_DATE_OF_OPENING, product.get_DateofOpening());
+        values.put(COLUMN_IMAGE, product.get_img());
+        values.put(COLUMN_UNIT, product.get_unit());
+        SQLiteDatabase db = this.getWritableDatabase();
+        //original
+        db.update(TABLE_PRODUCTS, values ,COLUMN_ID + " = ?", new String[] { String.valueOf(product.getID()) });
+        db.close();
+
+
+    }
+
+
     //INGREDIENT METHODS
 
     // we have created a new method that returns all the ingredients of a recipe.
@@ -336,10 +400,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 // on below line we are adding the data from cursor to our array list.
-                listofIngredients.add(new Ingredient(cursor.getInt(0), //idofRECIPE
-                        cursor.getString(1), //ingredientname
-                        cursor.getInt(2), //quantity
-                        cursor.getString(3) //unit
+                listofIngredients.add(new Ingredient(cursor.getInt(0), //id
+                        cursor.getInt(1), //idofRECIPE
+                        cursor.getString(2), //ingredientname
+                        cursor.getString(3), //quantity
+                        cursor.getString(4) //unit
 
                 ));
             } while (cursor.moveToNext());

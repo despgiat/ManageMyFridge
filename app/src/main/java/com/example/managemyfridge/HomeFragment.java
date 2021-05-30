@@ -21,59 +21,47 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The app's home screen. When the user logs into the app, the Home Fragment is displayed to them.
+ */
+
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
+    private Fridge fridge; //We need to access all of the fridge items
     private String currentDate;
     private String tomorrowDate;
 
 
     private static final String FRIDGE = "fridge";
-    private static final String DATE = "date";
     HomeFragmentListener activityCallback; //For communication with the activity
 
-    ArrayList<Product> expireToday;
+    ArrayList<Product> expireToday; //We want to show the user which of the products in their fridge expire at the current date, one day later and two days later
     ArrayList<Product> expireTomorrow;
     ArrayList<Product> expireSoon;
-    boolean expiredItems;
+    boolean expiredItems; //whether there are expired products in the fridge
 
-    // TODO: Rename and change types of parameters
     TextView todayTextView;
     TextView tomorrowTextView;
     TextView soonTextView;
-    //ImageView warningSign;
-    LinearLayout expiredWarning;
-    //Button warning;
+    LinearLayout expiredWarning; //A warning on top of the screen to warn about expired products already in the fridge that need to be taken out
 
-    RecyclerView.Adapter adapterToday;
+    RecyclerView.Adapter adapterToday; //Adapters for the recycler views to display the above ArrayLists of products
     RecyclerView.Adapter adapterTomorrow;
     RecyclerView.Adapter adapterSoon;
-
-    ImageButton addItemButton;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param fridge Parameter 1.
-     * @return A new instance of fragment BlankFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(Fridge fridge) {
         HomeFragment fragment = new HomeFragment();
 
         Bundle args = new Bundle();
-        args.putSerializable(FRIDGE, fridge);
-        //args.putString(DATE, currentDate);
+        args.putSerializable(FRIDGE, fridge); //retrieves the fridge from the MainScreen
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onAttach(Context context)
     {

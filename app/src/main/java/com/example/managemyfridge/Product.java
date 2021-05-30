@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Product implements Serializable {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Product implements Serializable{
     private int _id;
     private String _productname;
-    private int _quantity;
+    private String _quantity;
 
 
     private String _exdate;
@@ -18,12 +21,11 @@ public class Product implements Serializable {
     private String _img;
     private String _unit;
 
-
     public Product() {
     }
 
     //Added to product: exDate, isitopen, type, dateofopening, unit
-    public Product(int id, String productname, int quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit) {
+    public Product(int id, String productname, String quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit) {
         this.setID(id);
         this._productname = productname;
         this._quantity = quantity;
@@ -34,7 +36,7 @@ public class Product implements Serializable {
         this._unit = unit;
     }
 
-    public Product(String productname, int quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit) {
+    public Product(String productname, String quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit) {
         this._productname = productname;
         this._quantity = quantity;
         this._exdate = expirationdate;
@@ -75,11 +77,11 @@ public class Product implements Serializable {
         return this._productname;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this._quantity = quantity;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return this._quantity;
     }
 
@@ -164,5 +166,4 @@ public class Product implements Serializable {
 
         return localDate.compareTo(expDate) >= 0;
     }
-
 }

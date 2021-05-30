@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileFragment#newInstance} factory method to
@@ -25,6 +27,7 @@ public class ProfileFragment extends Fragment {
 
     Button logoutButton;
     TextView changePic;
+    TextView removePic;
     ImageView profilePicture;
 
 
@@ -77,7 +80,6 @@ public class ProfileFragment extends Fragment {
 
         //profilePicture = view.findViewById(R.id.profilePic);
 
-
         logoutButton = view.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,19 +88,26 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        /*changePic = view.findViewById(R.id.changePic);
+        changePic = view.findViewById(R.id.changePic);
         changePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerForContextMenu(changePic);
+                ((MainScreen) getActivity()).changeProfilePic();
             }
         });
 
+        removePic = view.findViewById(R.id.removePicButton);
+        removePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainScreen) getActivity()).removeProfilePic();
+            }
+        });
 
-         */
         return view;
 
     }
+
     /*
 
     @Override
