@@ -18,6 +18,7 @@
             android:text="@string/zero_waste_tips"
             android:textAlignment="center"
             android:textAllCaps="true"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

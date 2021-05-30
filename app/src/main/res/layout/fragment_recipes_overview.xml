@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@string/recipes_found"
             android:textAllCaps="true"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/recipesWarningTextView"

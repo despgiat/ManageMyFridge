@@ -49,16 +49,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
      * TODO: If there are products expiring in the following days, display the crockpot message and the crockpot -> Which will lead to the recipes page
      **/
 
-    //Ok, let's make it all over again, from scratch!
-    //We want the MainActivty (MainScreen as it is called here, to handle the communication between the fragments
-    // and the navigation drawer choices (and other general things in the app))
 
     private Fridge fridge; //--> We do not need this then (it will be loaded in the fragment) (Or we do, to pass it to other fragments)
-    /*new Fridge(new ArrayList<FridgeItem>(){{add(new FridgeItem("Milk", false, "19/05/2021", ""));
-            add(new FridgeItem("Eggs", false, "19/05/2021", "")); new FridgeItem("Salami", true, "20/05/2021", "13/05/2021");}} , new ArrayList<FridgeItem>(){{add(new FridgeItem("Milk", false, "19/05/2021", ""));
-            add(new FridgeItem("Eggs", false, "19/05/2021", ""));}});
 
-     */
     LocalDate currentDate;
     public static DateTimeFormatter formatter;
 
@@ -172,18 +165,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public void addNewItem()
     {
 
-        System.out.println("ADD NEW ITEM!!!");
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("Fridge", fridge);
         startActivityForResult(i, 2);
-
-
-        /*
-         Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-         */
-
-
     }
 
 
@@ -210,22 +194,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             currentFragment = myFridge;
             getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
 
-            //HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.homeFragment);
-            //homeFragment.GetFridgeFromMain(fridge);
-
-           /* System.out.println("Fridge Items");
-            for (FridgeItem fridgeItem:fridge.getFridgeItems())
-            {
-                System.out.println(fridgeItem.getName());
-            }
-
-            System.out.println("Expired Items");
-            for (FridgeItem fridgeItem:fridge.checkForExpiredAtDate(currentDate.format(formatter)))
-            {
-                System.out.println(fridgeItem.getName());
-            }
-
-            */
         }
 
         if (resultCode == RESULT_OK) { //For changing the profile picture
@@ -332,7 +300,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
 
             case R.id.expiredItem:
-                bundle.putSerializable("fridge_from_Activity", fridge);
+                bundle.putSerializable("fridge", fridge);
 // set Fragmentclass Arguments
                 //ExpiredFragment expiredFragment = new ExpiredFragment();
                 ExpiredFragment expiredFragment = new ExpiredFragment();
@@ -359,6 +327,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, settingsFragment).commit();
                 break;
 
+            case R.id.favouritesItem:
+                FavouritesFragment favouritesFragment = new FavouritesFragment();
+                currentFragment = favouritesFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.screen, favouritesFragment).commit();
+                break;
+
             case R.id.profileItem:
                 ProfileFragment profileFragment = new ProfileFragment();
                 currentFragment = profileFragment;
@@ -370,26 +344,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
-
-   /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.navigation_drawer, menu);
-        return true;
-    }
-
-
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        if(expiredItems)
-        {
-            menu.getItem(2).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_warning));
-        }
-        return true;
-    }
-
-    */
 
     public void LogOut()
     {
@@ -428,12 +382,58 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         navigationView.getMenu().findItem(R.id.expiredItem).setChecked(true);
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("fridge_from_Activity", fridge);
+        bundle.putSerializable("fridge", fridge);
         // set Fragmentclass Arguments
         ExpiredFragment expiredFragment = new ExpiredFragment();
         expiredFragment.setArguments(bundle);
         currentFragment = expiredFragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
     }
+
+    public void openProduct(int id, Fragment fromFragment)
+    {
+        boolean opened = dbHandler.makeProductOpen(id, currentDate.format(formatter));
+
+        if(opened)
+        {
+            Toast.makeText(this, "You opened this product!", Toast.LENGTH_SHORT).show();
+            fridge.setFridgeItems(dbHandler.showallProducts()); //Updates the fridge from the database
+            /*Bundle bundle = new Bundle();
+            bundle.putSerializable("fridge", fridge);
+            fromFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.screen, fromFragment).commit();
+
+             */
+        }
+        else
+        {
+            Toast.makeText(this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void deleteProduct(String productName, Fragment fromFragment)
+    {
+        boolean deleted = dbHandler.deleteProduct(productName);
+        if (deleted)
+        {
+            Toast.makeText(this, productName + " was successfully deleted", Toast.LENGTH_SHORT).show();
+            fridge.setFridgeItems(dbHandler.showallProducts());
+           /* Bundle bundle = new Bundle();
+            bundle.putSerializable("fridge", fridge);
+            fromFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.screen, fromFragment).commit();
+
+            */
+        }
+        else
+        {
+            Toast.makeText(this, "Could not delete " + productName, Toast.LENGTH_SHORT).show();
+        }
+
+
+
+    }
+
 
 }

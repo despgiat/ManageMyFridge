@@ -82,6 +82,10 @@
     <string name="product_type">Product Type</string>
     <string name="type">Type</string>
     <string name="log_out">Log out</string>
+    <string name="favourites">Favourites</string>
+    <string name="your_favourite_zero_waste_tips">Your favourite zero waste tips:</string>
+    <string name="your_favourite_recipes">Your favourite recipes:</string>
+    <string name="favourites_description">Here you can easily find your favourite recipes and zero waste tips!</string>
 
     <string-array name="units">
         <item>ml</item>

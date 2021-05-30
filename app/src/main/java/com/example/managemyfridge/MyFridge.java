@@ -111,13 +111,12 @@ public class MyFridge extends Fragment {
         getContext().getTheme().resolveAttribute(R.attr.colorPrimary, value, true); //https://stackoverflow.com/questions/45218271/how-to-get-an-attr-value-programmatically
 
         productsRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.getFridgeItems(), value.data);
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.getFridgeItems(), value.data, this);
         productsRecyclerView.setAdapter(adapterFridgeItems);
 
         return  view;
     }
 
-    //public void openProduct(int id)
     //public void editProduct(int id)
     //public void deleteProduct(int id)
 

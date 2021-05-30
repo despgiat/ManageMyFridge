@@ -26,6 +26,7 @@
             android:layout_marginTop="16dp"
             android:text="Zero Waste Tip Title"
             android:textAllCaps="true"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

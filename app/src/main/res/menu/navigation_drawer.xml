@@ -27,15 +27,14 @@
         android:id="@+id/group2"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/favouritesItem"
+            android:title="@string/favourites" />
+        <item
             android:id="@+id/profileItem"
             android:title="@string/profile" />
         <item
             android:id="@+id/settingsItem"
             android:title="@string/settings" />
-        <item
-            android:id="@+id/logoutItem"
-            android:title="@string/logout"
-            android:visible="false" />
     </group>
 
 </menu>

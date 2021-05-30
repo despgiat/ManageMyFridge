@@ -125,10 +125,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
-
-
     }
-
 
     public void composeEmail(String[] addresses, String subject) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);

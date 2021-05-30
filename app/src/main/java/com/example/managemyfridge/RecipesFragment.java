@@ -76,7 +76,7 @@ public class RecipesFragment extends Fragment {
             ingredients = (Ingredient[]) getArguments().getSerializable(INGREDIENTS);
 
             for (Ingredient ingredient : ingredients) {
-                System.out.println(ingredient.getName());
+                System.out.println(ingredient.get_ingredientname());
             }
 
             setHasOptionsMenu(true);

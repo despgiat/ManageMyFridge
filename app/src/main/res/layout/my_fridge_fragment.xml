@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/my_fridge"
             android:textAllCaps="true"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

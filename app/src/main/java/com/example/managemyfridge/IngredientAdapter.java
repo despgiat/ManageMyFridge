@@ -28,9 +28,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.ViewHolder holder, int position) {
 
-        holder.name.setText(ingredients[position].getName());
-        holder.amount.setText(ingredients[position].getAmount());
-        holder.unit.setText(ingredients[position].getUnit());
+        holder.name.setText(ingredients[position].get_ingredientname());
+        holder.amount.setText(ingredients[position].get_quantity());
+        holder.unit.setText(ingredients[position].get_unit());
     }
 
     @Override

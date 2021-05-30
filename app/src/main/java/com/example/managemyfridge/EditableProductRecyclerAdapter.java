@@ -1,5 +1,6 @@
 package com.example.managemyfridge;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -24,11 +28,13 @@ import java.util.ArrayList;
 public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<EditableProductRecyclerAdapter.ViewHolder>{
     private ArrayList<Product> productData;
     private int cardColor;  //We want to control the card's color (ex. in the ExpiredFragment, the cards appear mustard yellow)
+    Fragment fromFragment;
 
-    public EditableProductRecyclerAdapter(ArrayList<Product> products, int cardColor)
+    public EditableProductRecyclerAdapter(ArrayList<Product> products, int cardColor, Fragment fromFragment)
     {
         productData = products;
         this.cardColor = cardColor;
+        this.fromFragment = fromFragment;
     }
 
     @NonNull
@@ -54,13 +60,39 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
             public void onClick(View v) {
                 //Remove the item from the list -> And the fridge in general
                 // RemoveItem(position);
-                //productData.remove(position);
+
+                new AlertDialog.Builder(fromFragment.getContext())
+                        .setTitle("Delete Product")
+                        .setMessage("Are you sure you want to delete " + productData.get(position).getProductName() + "?")
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ((MainScreen) fromFragment.getActivity()).deleteProduct(productData.get(position).getProductName(), fromFragment);
+
+                                productData.remove(position); //To remove each card immediately
+                                notifyDataSetChanged();
+
+                                //Send the data to the fragment that called it
+
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setIcon(R.drawable.ic_warning)
+                        .show();
+
+
             }
         });
 
         holder.openItem.setOnClickListener(new View.OnClickListener() { //The product is marked as opened and the current Date is stored as the opening Date
             @Override
             public void onClick(View v) {
+                System.out.println(productData.get(position).getID());
+                ((MainScreen) fromFragment.getActivity()).openProduct(productData.get(position).getID(), fromFragment);
+                notifyDataSetChanged();
 
             }
         });
@@ -101,6 +133,18 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
             openItem = itemView.findViewById(R.id.openButton);
             itemType = itemView.findViewById(R.id.editableItemType);
             cardView = itemView.findViewById(R.id.productEditableCardLayout);
+
+            /*int position = getAdapterPosition();
+            openItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainScreen) fromFragment.getActivity()).openProduct(productData.get(position).getID());
+                }
+            });
+
+             */
+
+
 
         }
     }

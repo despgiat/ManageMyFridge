@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class ExpiredFragment extends Fragment {
 
     private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
-    private static final String FRIDGE = "fridge_from_Activity";
+    private static final String FRIDGE = "fridge";
     TextView warning;
     HomeFragment.HomeFragmentListener activityCallback; //For communication with the activity
     RecyclerView.Adapter adapterFridgeItems;
@@ -78,7 +78,6 @@ public class ExpiredFragment extends Fragment {
         warning = view.findViewById(R.id.noExpiredTextView);
         //cardView = (CardView) view.findViewById(R.id.productEditableCardLayout);
 
-
         if(fridge.checkForExpiredAtDate(currentDate).size() == 0) //We need to pass the currentDate to the fragment too
         {
             warning.setVisibility(View.VISIBLE);
@@ -95,7 +94,7 @@ public class ExpiredFragment extends Fragment {
         TypedValue value = new TypedValue(); //To retrieve the secondary color variant
         getContext().getTheme().resolveAttribute(R.attr.colorSecondaryVariant, value, true);
 
-        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate), value.data);
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.checkForExpiredAtDate(currentDate), value.data, this);
         productsRecyclerView.setAdapter(adapterFridgeItems);
 
         return  view;
