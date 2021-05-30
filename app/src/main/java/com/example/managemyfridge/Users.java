@@ -15,19 +15,6 @@ public class Users {
 
     }
 
-    public Users(String username, String password)
-    {
-        this.username = username;
-        this.password = password;
-
-    }
-
-    public Users(String username, String password, Product[] fridgeItems)
-    {
-        this.username = username;
-        this.password = password;
-        this.fridgeItems = fridgeItems;
-    }
 
     public int getID() {
         return _id;

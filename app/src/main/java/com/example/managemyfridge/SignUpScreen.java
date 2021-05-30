@@ -69,6 +69,7 @@ public class SignUpScreen extends AppCompatActivity {
             username.setError("You must enter a username to register!");
             proceed = false;
         }
+
         if (isEmpty(password)) {
             password.setError("You must enter a password to register!");
             proceed = false;
@@ -78,6 +79,7 @@ public class SignUpScreen extends AppCompatActivity {
             proceed = false;
 
         }
+
         if (isEmpty(confirmpassword)) {
             confirmpassword.setError("You must re-enter your password to register!");
             proceed = false;
@@ -96,6 +98,16 @@ public class SignUpScreen extends AppCompatActivity {
         proceed = false;
         }
         if (proceed) {
+            /*/checking if username is available
+            if(LoginScreen.dbHandlerlog.findUser(username)){
+                username.setError("The username you have entered is not available, please try something else!");
+                proceed = false;
+            }
+            //checking if email is taken
+            if(LoginScreen.dbHandlerlog.findUser(email)){
+                email.setError("The email you have entered is not available, please try something else!");
+                proceed = false;
+            }*/
             //creating the user
             LoginScreen.user.setUsername(username.getText().toString());
             LoginScreen.user.setPassword(password.getText().toString());

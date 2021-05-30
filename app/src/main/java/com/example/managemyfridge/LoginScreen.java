@@ -72,7 +72,7 @@ public class LoginScreen extends AppCompatActivity {
             /**TODO: Check if the username/email exists in our data base, if it does, check if the password is matching and create the user!
              *
              */
-            boolean f = dbHandlerlog.findUser(usernameValue);
+            boolean f = dbHandlerlog.findUser(username);
             if(f) //checks if the username exists
                 if(password.getText().toString().equals(user.getPassword())) { //checks if the password is correct
                     Intent i = new Intent(getApplicationContext(), MainScreen.class); //moves to mainscreen
@@ -107,11 +107,7 @@ public class LoginScreen extends AppCompatActivity {
         }
 
     }
-    //checks if the text entered is email format
-    boolean isEmail(EditText text) {
-        CharSequence email = text.getText().toString();
-        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
-    }
+
     //checks if the edit textis empty or not
     boolean isEmpty(EditText text) {
         CharSequence str = text.getText().toString();

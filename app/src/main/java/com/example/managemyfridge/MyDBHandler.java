@@ -6,7 +6,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
+import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -239,7 +242,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return result;
     }
-    //add user
+    //adding user to data base
     public void addUser(){
         ContentValues values = new ContentValues();
         values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
@@ -252,15 +255,24 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
 
     }
-    //user
-    public boolean findUser(String username) {
-        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
-                COLUMN_USERNAME + " = '" + username + "'";
+    //finding user from database
+    public boolean findUser(EditText name) {
+        String username = name.getText().toString();
+        String query;
+        //if the text field had an email address the is searching by email, otherwise is searching by username
+        if(isEmail(name)){
+             query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                    COLUMN_EMAIL + " = '" + username + "'";
+        }
+        else{
+             query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                    COLUMN_USERNAME + " = '" + username + "'";
+        }
         SQLiteDatabase db = this.getWritableDatabase();
         boolean flag=false;
         Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) { //if we found a matching to the text field user then we create the user in the programm
+            cursor.moveToFirst();   //so we can use later on for checks
             LoginScreen.user.setID(Integer.parseInt(cursor.getString(0)));
             LoginScreen.user.setUsername(cursor.getString(1));
             LoginScreen.user.setEmail(cursor.getString(2));
@@ -269,7 +281,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             cursor.close();
             flag = true;
         } else {
-            LoginScreen.user = null;
+            LoginScreen.user = null; //otherwise we delete everything from user object
         }
         db.close();
         return flag;
@@ -307,6 +319,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.update(TABLE_USERS, values ,COLUMN_ID + " = ?", new String[] { String.valueOf(LoginScreen.user.getID()) });
         db.close();
 
+    }
+
+    //checks if the text entered is email format
+    boolean isEmail(EditText text) {
+        CharSequence email = text.getText().toString();
+        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
     // we have created a new method that returns all the products in the fridge.
