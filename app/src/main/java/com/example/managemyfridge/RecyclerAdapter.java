@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    private ArrayList<FridgeItem> productData;
+    private ArrayList<Product> productData;
 
-    public RecyclerAdapter(ArrayList<FridgeItem> products)
+    public RecyclerAdapter(ArrayList<Product> products)
     {
         productData = products;
     }
@@ -36,8 +36,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         //String dateText = date.format(formatter);
          */
 
-        holder.itemName.setText(productData.get(position).getName());
-        holder.itemOpened.setText(productData.get(position).isOpened() ? "Opened at " + (productData.get(position).getDayOpened()) : "");
+        holder.itemName.setText(productData.get(position).getProductName());
+        holder.itemOpened.setText(productData.get(position).get_opened().equals("yes") ? "Opened at " + (productData.get(position).get_DateofOpening()) : "");
         /*holder.deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

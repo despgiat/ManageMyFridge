@@ -70,6 +70,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     //private Menu navigationDrawer;
 
     Fragment currentFragment;
+    MyDBHandler dbHandler;
 
     //Fragments:
     //Fragment activeScreen;
@@ -112,6 +113,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+        //Load the database:
+
+        dbHandler = new MyDBHandler(this, null, null, 1);
+        ArrayList<Product> products = dbHandler.showallProducts();
+        fridge = new Fridge(products);
 
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -144,7 +150,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         if(savedInstanceState == null)
         {
             HomeFragment home = new HomeFragment();
-            //home.setArguments(bundle);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("fridge", fridge);
+            home.setArguments(bundle);
             //homeFragment = new HomeFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.screen, home).commit();
             navigationView.setCheckedItem(R.id.homeItem);
@@ -158,21 +166,23 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public void onResume()
     {
         super.onResume();
-
     }
 
     //This will be accessed from the Home Fragment and the MyFridge Fragment, so it should be implemented here
     public void addNewItem()
     {
-        /*
+
         System.out.println("ADD NEW ITEM!!!");
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("Fridge", fridge);
         startActivityForResult(i, 2);
-        */
 
-        Intent i = new Intent(this, MainActivity.class);
+
+        /*
+         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+         */
+
 
     }
 
@@ -185,10 +195,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             //Create toast when new item has been added
             Toast.makeText(this, "You have added a new product in your fridge", Toast.LENGTH_SHORT).show();
-            fridge = (Fridge) data.getExtras().getSerializable("Fridge");
+            //Update the fridge from the database:
+
+            //fridge = (Fridge) data.getExtras().getSerializable("Fridge");
+            fridge.setFridgeItems(dbHandler.showallProducts());
 
             //Updates all of the fragments with the new fridge
-            //Since it will be called only from MyFridge, it will return there
+            //The Expired Products, HomeFragment and the MyFridge fragment need to have it updates
 
             Bundle bundle = new Bundle(); //Sends the fridge back to the fragment (It doesn't unfortunately...) Let's fix that real quick
             bundle.putSerializable("fridge", fridge);
@@ -200,7 +213,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.homeFragment);
             //homeFragment.GetFridgeFromMain(fridge);
 
-            System.out.println("Fridge Items");
+           /* System.out.println("Fridge Items");
             for (FridgeItem fridgeItem:fridge.getFridgeItems())
             {
                 System.out.println(fridgeItem.getName());
@@ -211,6 +224,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             {
                 System.out.println(fridgeItem.getName());
             }
+
+            */
         }
 
         if (resultCode == RESULT_OK) { //For changing the profile picture
@@ -421,32 +436,4 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
     }
 
-
-    public void openProduct(int id)
-    {
-        if(!fridge.getFridgeItems().get(id).isOpened())
-        {
-            fridge.getFridgeItems().get(id).setOpened(true);
-            fridge.getFridgeItems().get(id).setDayOpened(currentDate.format(formatter));
-        }
-
-    }
-
-    public void deleteProduct(int id)
-    {
-        fridge.removeItem(id);
-    }
-
-   /* public void switchFragment(Fragment toFragment)
-    {
-        currentFragment =
-    }
-
-    */
-
-
-    //public void editProduct(int id)
-    //{
-
-    //}
 }

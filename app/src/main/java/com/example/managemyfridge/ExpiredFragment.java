@@ -73,7 +73,7 @@ public class ExpiredFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_expired, container, false);
-        activityCallback.UpdateData(fridge);
+       // activityCallback.UpdateData(fridge);
 
         warning = view.findViewById(R.id.noExpiredTextView);
         //cardView = (CardView) view.findViewById(R.id.productEditableCardLayout);

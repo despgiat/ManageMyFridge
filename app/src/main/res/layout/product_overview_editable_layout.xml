@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/productEditableCardLayout"
@@ -8,20 +9,13 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:clipToPadding="true"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp"
-    android:paddingBottom="8dp"
     app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:cardPreventCornerOverlap="true"
-    app:contentPadding="4dp"
-    app:contentPaddingLeft="4dp"
-    app:contentPaddingRight="0dp">
+    app:contentPadding="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="82dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/buttonsLinearLayout"
@@ -44,8 +38,8 @@
                 android:backgroundTint="#00009688"
                 android:drawableTop="@drawable/ic_product_opened"
                 android:text="@string/open_product"
-                android:textSize="10sp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="10sp" />
 
             <Button
                 android:id="@+id/editButton"
@@ -56,8 +50,8 @@
                 android:backgroundTint="#00FFFFFF"
                 android:drawableTop="@drawable/ic_edit"
                 android:text="@string/edit"
-                android:textSize="10sp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="10sp" />
 
             <Button
                 android:id="@+id/deleteButton"
@@ -68,8 +62,8 @@
                 android:backgroundTint="#00FFFFFF"
                 android:drawableTop="@drawable/ic_delete_item"
                 android:text="@string/delete"
-                android:textSize="10sp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="10sp" />
 
         </LinearLayout>
 

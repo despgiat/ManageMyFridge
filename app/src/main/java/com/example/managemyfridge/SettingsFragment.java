@@ -1,10 +1,15 @@
 package com.example.managemyfridge;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -22,9 +27,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private String mParam2;
 
     Preference darkMode;
-
     Preference feedback;
     Preference version;
+
+    boolean darkModeEnabled;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -60,7 +66,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
     }
 
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.app_settings, rootKey);
@@ -83,34 +88,47 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
 
         darkMode = (SwitchPreference) findPreference("darkMode");
+
+        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
+            case Configuration.UI_MODE_NIGHT_YES:
+                System.out.println("DARK MODE");
+                darkModeEnabled = true;
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                System.out.println("LIGHT MODE");
+                darkModeEnabled = false;
+                break;
+        }
+
+        darkMode.setDefaultValue(darkModeEnabled); //The default value will be the value in the SharedPreferences!
+
+
+
         darkMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(Preference preference, Object newValue) { //Check which theme is currently the system using
 
-                if ((boolean) newValue)
+                if ((boolean) newValue) //if it is checked
                 {
-                    //DarkMode method()
+                    //Switch to Dark Mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    darkModeEnabled = true;
                 }
-                else
+                else //if not
                 {
-                    //Light mode method()
+                    //Switch to Light Mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    darkModeEnabled = false;
                 }
-                System.out.println(newValue);
 
-                System.out.println("Switch!");
                 return true;
             }
         });
 
+
+
     }
 
-    /*public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout., container, false);
-    }
-
-     */
 
     public void composeEmail(String[] addresses, String subject) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);

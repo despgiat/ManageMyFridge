@@ -1,6 +1,10 @@
 package com.example.managemyfridge;
 
-public class Product {
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Product implements Serializable {
     private int _id;
     private String _productname;
     private int _quantity;
@@ -151,4 +155,14 @@ public class Product {
                 ", unit='" + _unit +
                 '}';
     }
+
+    public boolean productExpired(String date)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate expDate = LocalDate.parse(_exdate, formatter);
+
+        return localDate.compareTo(expDate) >= 0;
+    }
+
 }

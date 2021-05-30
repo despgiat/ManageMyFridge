@@ -22,10 +22,10 @@ import java.util.ArrayList;
 
 
 public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<EditableProductRecyclerAdapter.ViewHolder>{
-    private ArrayList<FridgeItem> productData;
+    private ArrayList<Product> productData;
     private int cardColor;  //We want to control the card's color (ex. in the ExpiredFragment, the cards appear mustard yellow)
 
-    public EditableProductRecyclerAdapter(ArrayList<FridgeItem> products, int cardColor)
+    public EditableProductRecyclerAdapter(ArrayList<Product> products, int cardColor)
     {
         productData = products;
         this.cardColor = cardColor;
@@ -43,11 +43,11 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.itemName.setText(productData.get(position).getName());
-        holder.itemExpiry.setText(productData.get(position).getExpiry());
-        holder.itemOpened.setText(productData.get(position).isOpened() ? "Opened at " + (productData.get(position).getDayOpened()) : "");
-        holder.itemType.setText("(" + "Other" + ")");
-        holder.cardView.setBackgroundColor(cardColor);
+        holder.itemName.setText(productData.get(position).getProductName());
+        holder.itemExpiry.setText(productData.get(position).get_exdate());
+        holder.itemOpened.setText(productData.get(position).get_opened().equals("yes") ? "Opened at " + (productData.get(position).get_DateofOpening()) : "");
+        holder.itemType.setText("(" + productData.get(position).get_prodtype() + ")");
+        holder.cardView.setCardBackgroundColor(cardColor);
 
         holder.deleteItem.setOnClickListener(new View.OnClickListener() { //The product gets deleted
             @Override

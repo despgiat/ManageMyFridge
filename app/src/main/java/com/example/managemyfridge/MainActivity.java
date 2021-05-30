@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -43,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
     //String currentDate;
 
     boolean customOpenedDate;
-    //ConstraintLayout openedLayout;
-    //RadioGroup radioGroupOpened;
+    LinearLayout openedLayout;
+    RadioGroup radioGroupOpened;
     Intent i;
-    //Fridge fridge;
+    Fridge fridge;
     //private FridgeItem fridgeItem;
     DateTimeFormatter formatter;
     LocalDate currentDate;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         formatter = MainScreen.formatter;
         currentDate = LocalDate.now();
 
@@ -65,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
         expiry = findViewById(R.id.editTextDate);
         openedDate = findViewById(R.id.editTextDateOpened);
 
-        //openedLayout = findViewById(R.id.constraintLayout);
-        //openedLayout.setVisibility(View.INVISIBLE);
-        //radioGroupOpened = findViewById(R.id.radioGroup);
+        openedLayout = findViewById(R.id.openedLayout);
+        openedLayout.setVisibility(View.GONE);
+        radioGroupOpened = findViewById(R.id.radioGroup);
 
         //Get references to view objects
         //idView = findViewById(R.id.productID);
@@ -100,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         typeSpinner.setAdapter(typeAdapter);
 
 
-        //i = getIntent();
-        //fridge = (Fridge) i.getSerializableExtra("Fridge");
+        i = getIntent();
+        fridge = (Fridge) i.getSerializableExtra("Fridge");
         //fridgeItem = new FridgeItem();
 
         if (savedInstanceState != null) {
@@ -240,9 +242,9 @@ public class MainActivity extends AppCompatActivity {
 
             //Check the expiration date here and if it is equal to the current system date or lower, add it to the expired items
 
-           // Intent returnData = new Intent();
-           // returnData.putExtra("Fridge", fridge);
-           // setResult(RESULT_OK , returnData);
+            Intent returnData = new Intent();
+            //returnData.putExtra("Fridge", fridge);
+            setResult(RESULT_OK , returnData);
             finish();
         }
 
@@ -256,14 +258,14 @@ public class MainActivity extends AppCompatActivity {
         switch (checked)
         {
             case R.id.yesButton:
-                //openedLayout.setVisibility(View.VISIBLE);
+                openedLayout.setVisibility(View.VISIBLE);
                 isOpened = "yes";
 
                 //fridgeItem.setOpened(true);
                 break;
 
             case R.id.noButton:
-                //openedLayout.setVisibility(View.GONE);
+                openedLayout.setVisibility(View.GONE);
                 //fridgeItem.setOpened(false);
                 isOpened = "no";
                 break;

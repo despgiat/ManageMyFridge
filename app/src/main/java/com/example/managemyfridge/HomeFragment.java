@@ -34,9 +34,9 @@ public class HomeFragment extends Fragment {
     private static final String DATE = "date";
     HomeFragmentListener activityCallback; //For communication with the activity
 
-    ArrayList<FridgeItem> expireToday;
-    ArrayList<FridgeItem> expireTomorrow;
-    ArrayList<FridgeItem> expireSoon;
+    ArrayList<Product> expireToday;
+    ArrayList<Product> expireTomorrow;
+    ArrayList<Product> expireSoon;
     boolean expiredItems;
 
     // TODO: Rename and change types of parameters
@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
         tomorrowDate = tomorrow.format(MainScreen.formatter);
         LocalDate soon = today.plusDays(2); //two and three days later (will be implemented later)
 
-        fridge = new Fridge(); //Placeholder -> It will derive the fridge's insides from the database
+        /*fridge = new Fridge(); //Placeholder -> It will derive the fridge's insides from the database
         FridgeItem product1 = new FridgeItem();
         FridgeItem product2 = new FridgeItem();
         FridgeItem product3 = new FridgeItem();
@@ -135,6 +135,8 @@ public class HomeFragment extends Fragment {
         fridge.addItem(product3);
         fridge.addItem(product4);
         fridge.addItem(product5);
+
+         */
 
         if (getArguments() != null) {
             fridge = (Fridge) getArguments().getSerializable(FRIDGE);
@@ -227,7 +229,7 @@ public class HomeFragment extends Fragment {
 
     public void CheckFridge()
     {
-        ArrayList<FridgeItem> products = fridge.checkForExpiredAtDate(currentDate);
+        ArrayList<Product> products = fridge.checkForExpiredAtDate(currentDate);
         /*for (FridgeItem product: products)
         {
             if(!fridge.getExpiredItems().contains(product))

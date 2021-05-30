@@ -14,14 +14,18 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MyFridge extends Fragment {
 
-    private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
+    //private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
+    Fridge fridge;
     private static final String FRIDGE = "fridge";
     ImageButton addItemButton;
     TextView warning;
     HomeFragment.HomeFragmentListener activityCallback; //For communication with the activity
     RecyclerView.Adapter adapterFridgeItems;
+    MyDBHandler dbHandler;
 
     public static MyFridge newInstance(Fridge fridge) {
         MyFridge fragment = new MyFridge();
@@ -62,7 +66,9 @@ public class MyFridge extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.my_fridge_fragment, container, false);
-        activityCallback.UpdateData(fridge);
+
+        //fridge = dbHandler.showallProducts();
+        //activityCallback.UpdateData(fridge);
 
         addItemButton = view.findViewById(R.id.addItemButton);
 
@@ -96,6 +102,7 @@ public class MyFridge extends Fragment {
         {
             warning.setVisibility(View.GONE);
         }
+
 
         RecyclerView productsRecyclerView = view.findViewById(R.id.fridgeProductsRecyclerView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Fridge implements Serializable {
 
-    private ArrayList<FridgeItem> fridgeItems;
+    private ArrayList<Product> fridgeItems;
     //private ArrayList<FridgeItem> expiredItems;
 
     public Fridge()
@@ -17,18 +17,18 @@ public class Fridge implements Serializable {
         //setExpiredItems(new ArrayList<>());
     }
 
-    public Fridge(ArrayList<FridgeItem> fridgeItems, ArrayList<FridgeItem> expiredItems )
+    public Fridge(ArrayList<Product> fridgeItems)
     {
         this.setFridgeItems(fridgeItems);
         //this.setExpiredItems(expiredItems);
     }
 
-    public void addItem(FridgeItem item)
+    public void addItem(Product item)
     {
         getFridgeItems().add(item);
     }
 
-    public void addItems(ArrayList<FridgeItem> products)
+    public void addItems(ArrayList<Product> products)
     {
         fridgeItems.addAll(products);
     }
@@ -40,15 +40,15 @@ public class Fridge implements Serializable {
 
     public void openItem(int id)
     {
-        getFridgeItems().get(id).setOpened(true);
+        //getFridgeItems().get(id).setOpened(true);
         //getExpiredItems().get(getFridgeItems().get(id)).setOpened(true);
     }
 
-    public ArrayList<FridgeItem> checkForExpiredAtDate(String date)
+    public ArrayList<Product> checkForExpiredAtDate(String date)
     {
-        ArrayList<FridgeItem> products = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
 
-        for (FridgeItem product: fridgeItems)
+        for (Product product: fridgeItems)
         {
             if(product.productExpired(date)) //Not just the .equals, it is deemed at expired if it is EQUAL OR LESS
             {
@@ -58,13 +58,13 @@ public class Fridge implements Serializable {
         return products;
     }
 
-    public ArrayList<FridgeItem> expiresAtDate(String date)
+    public ArrayList<Product> expiresAtDate(String date)
     {
-        ArrayList<FridgeItem> products = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
 
-        for (FridgeItem product: fridgeItems)
+        for (Product product: fridgeItems)
         {
-            if(product.getExpiry().equals(date)) //Not just the .equals, it is deemed at expired if it is EQUAL OR LESS
+            if(product.get_exdate().equals(date)) //Not just the .equals, it is deemed at expired if it is EQUAL OR LESS
             {
                 products.add(product);
             }
@@ -82,11 +82,11 @@ public class Fridge implements Serializable {
      //   expiredItems.addAll(products);
    // }
 
-    public ArrayList<FridgeItem> getFridgeItems() {
+    public ArrayList<Product> getFridgeItems() {
         return fridgeItems;
     }
 
-    public void setFridgeItems(ArrayList<FridgeItem> fridgeItems) {
+    public void setFridgeItems(ArrayList<Product> fridgeItems) {
         this.fridgeItems = fridgeItems;
     }
 
