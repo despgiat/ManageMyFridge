@@ -139,6 +139,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
+
     //PRODUCT METHODS
 
     //Μέθοδος για προσθήκη ενός προϊόντος στη ΒΔ
@@ -237,58 +239,74 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return result;
     }
-
-    //add user, needs changes
-   /* public void addUser(Users user){
+    //add user
+    public void addUser(){
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PRODUCTNAME, product.getProductName());
-        values.put(COLUMN_QUANTITY, product.getQuantity());
+        values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
+        values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
+        values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
+
         SQLiteDatabase db = this.getWritableDatabase();
         //original
-        db.insert(TABLE_PRODUCTS, null, values);
+        db.insert(TABLE_USERS, null, values);
         db.close();
 
     }
-
-    //find user, needs changes (query)
-    public Users findUser(String username) {
-        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " +
-                COLUMN_PRODUCTNAME + " = '" + username + "'";
+    //user
+    public boolean findUser(String username) {
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = '" + username + "'";
         SQLiteDatabase db = this.getWritableDatabase();
+        boolean flag=false;
         Cursor cursor = db.rawQuery(query, null);
-        Users user = new Users();
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            user.setID(Integer.parseInt(cursor.getString(0)));
-            user.setUsername(cursor.getString(1));
-            user.setPassword(cursor.getString(2));
-            user.setImg(cursor.getString(3));
+            LoginScreen.user.setID(Integer.parseInt(cursor.getString(0)));
+            LoginScreen.user.setUsername(cursor.getString(1));
+            LoginScreen.user.setPassword(cursor.getString(2));
+            LoginScreen.user.setImg(cursor.getString(3));
             cursor.close();
+            flag = true;
         } else {
-            user = null;
+            LoginScreen.user = null;
         }
         db.close();
-        return user;
+        return flag;
     }
 
-    //delete user, needs changes
+
+    //delete user
     public boolean deleteUser(String username) {
         boolean result = false;
-        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " +
-                COLUMN_PRODUCTNAME + " = '" + username + "'";
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = '" + username + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        Users user = new Users();
         if (cursor.moveToFirst()) {
-            user.setID(Integer.parseInt(cursor.getString(0)));
+            LoginScreen.user.setID(Integer.parseInt(cursor.getString(0)));
             db.delete(TABLE_PRODUCTS, COLUMN_ID + " = ?",
-                    new String[] { String.valueOf(user.getID()) });
+                    new String[] { String.valueOf(LoginScreen.user.getID()) });
             cursor.close();
             result = true;
         }
         db.close();
         return result;
-    } */
+    }
+
+    //update user
+    public void updateUser (){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
+        values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
+        values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        //original
+        db.update(TABLE_USERS, values ,COLUMN_ID + " = ?", new String[] { String.valueOf(LoginScreen.user.getID()) });
+        db.close();
+
+    }
 
     // we have created a new method that returns all the products in the fridge.
     public ArrayList<Product> showallProducts() {
