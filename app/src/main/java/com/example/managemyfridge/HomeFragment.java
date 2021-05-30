@@ -31,7 +31,6 @@ public class HomeFragment extends Fragment {
     private String currentDate;
     private String tomorrowDate;
 
-
     private static final String FRIDGE = "fridge";
     HomeFragmentListener activityCallback; //For communication with the activity
 
@@ -57,7 +56,7 @@ public class HomeFragment extends Fragment {
         HomeFragment fragment = new HomeFragment();
 
         Bundle args = new Bundle();
-        args.putSerializable(FRIDGE, fridge); //retrieves the fridge from the MainScreen
+        args.putSerializable(FRIDGE, fridge);
         fragment.setArguments(args);
         return fragment;
     }
@@ -84,52 +83,8 @@ public class HomeFragment extends Fragment {
         LocalDate now = LocalDate.now();
         currentDate = now.format(MainScreen.formatter);
 
-        LocalDate today = LocalDate.parse(currentDate, MainScreen.formatter);
-        LocalDate tomorrow = today.plusDays(1);
-        tomorrowDate = tomorrow.format(MainScreen.formatter);
-        LocalDate soon = today.plusDays(2); //two and three days later (will be implemented later)
-
-        /*fridge = new Fridge(); //Placeholder -> It will derive the fridge's insides from the database
-        FridgeItem product1 = new FridgeItem();
-        FridgeItem product2 = new FridgeItem();
-        FridgeItem product3 = new FridgeItem();
-        FridgeItem product4 = new FridgeItem();
-        FridgeItem product5 = new FridgeItem();
-
-        product1.setName("Milk"); //Placeholder for testing
-        product1.setExpiry("29/05/2021");
-        product1.setOpened(true);
-        product1.setDayOpened("22/05/2021");
-
-        product2.setName("Eggs"); //Placeholder for testing
-        product2.setExpiry("29/05/2021");
-        product2.setOpened(false);
-        product3.setName("Salami"); //Placeholder for testing
-        product3.setExpiry("31/05/2021");
-        product3.setOpened(true);
-        product3.setDayOpened("15/05/2021");
-
-        product4.setName("Sweet Yoghurt"); //Placeholder for testing
-        product4.setExpiry("30/05/2021");
-        product4.setOpened(false);
-        product5.setName("Chicken"); //Placeholder for testing
-        product5.setExpiry("31/05/2021");
-        product5.setOpened(true);
-        product5.setDayOpened("20/05/2021");
-
-
-        fridge.addItem(product1);
-        fridge.addItem(product2);
-        fridge.addItem(product3);
-        fridge.addItem(product4);
-        fridge.addItem(product5);
-
-         */
-
         if (getArguments() != null) {
-            fridge = (Fridge) getArguments().getSerializable(FRIDGE);
-            //currentDate = getArguments().getString(DATE);
-
+            fridge = (Fridge) getArguments().getSerializable(FRIDGE); //retrieves the fridge from the MainScreen
         }
 
     }
@@ -139,22 +94,22 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.home_fragment_layout, container, false);
-        //warning = view.findViewById(R.id.warningExpiredButton);
 
         activityCallback.UpdateData(fridge);
-        view.requestLayout();
 
+        //Retrieves the system date and computes the next couple of days.
         LocalDate today = LocalDate.parse(currentDate, MainScreen.formatter);
         LocalDate tomorrow = today.plusDays(1);
-        LocalDate soon = today.plusDays(2); //two and three days later (will be implemented later)
-        expireToday = fridge.expiresAtDate(currentDate); //Only the ones which expire at the currect Date will be added to the expired products
+        tomorrowDate = tomorrow.format(MainScreen.formatter);
+        LocalDate soon = today.plusDays(2); //two days later
+
+        //Assigning the ArrayLists
+        expireToday = fridge.expiresAtDate(currentDate);
         expireTomorrow = fridge.expiresAtDate(tomorrow.format(MainScreen.formatter)); //Those that expire the next day
         expireSoon = fridge.expiresAtDate(soon.format(MainScreen.formatter)); //Products that expire in 2 days
 
 
-        //fridge = (Fridge) getArguments().getSerializable(FRIDGE);
-        //currentDate = getArguments().getString(DATE);
-
+        //Assigning the layout's views
         expiredWarning = view.findViewById(R.id.linearLayoutWarning);
         todayTextView = view.findViewById(R.id.todayTextView);
         tomorrowTextView = view.findViewById(R.id.tomorrowTextView);
@@ -162,6 +117,7 @@ public class HomeFragment extends Fragment {
 
         CheckFridge();
 
+        //Reclaring the Recycler Views and Adapters for the products to be displayed
         RecyclerView expiredRecyclerView = view.findViewById(R.id.todayExpireRecyclerView);
         RecyclerView tomorrowRecyclerView = view.findViewById(R.id.tomorrowExpireRecyclerView);
         RecyclerView soonRecyclerView = view.findViewById(R.id.soonExpireRecyclerView);
@@ -169,18 +125,14 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
         LinearLayoutManager linearLayoutManagerTomorrow = new LinearLayoutManager(this.getContext());
         LinearLayoutManager linearLayoutManagerSoon = new LinearLayoutManager(this.getContext());
+
         // set LayoutManager to RecyclerView
         expiredRecyclerView.setLayoutManager(linearLayoutManagerToday);
         tomorrowRecyclerView.setLayoutManager(linearLayoutManagerTomorrow);
         soonRecyclerView.setLayoutManager(linearLayoutManagerSoon);
 
-        /*for (FridgeItem product: fridge.getFridgeItems()) {
-            System.out.println(product.getName());
-        }
 
-         */
-
-        //Set my Adapter for the RecyclerView
+        //Sets my Adapters for the RecyclerView
         adapterToday = new RecyclerAdapter(expireToday);
         expiredRecyclerView.setAdapter(adapterToday);
 
@@ -190,46 +142,24 @@ public class HomeFragment extends Fragment {
         adapterSoon = new RecyclerAdapter(expireSoon);
         soonRecyclerView.setAdapter(adapterSoon);
 
-        /*addItemButton = view.findViewById(R.id.itemActions);
-        addItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainScreen) getActivity()).addNewItem();
-            }
-        });
-
-         */
-
 
         // Inflate the layout for this fragment
         return view;
 
     }
 
-   /* public void addNewItem(View view)
-    {
-        Intent i = new Intent(this.getActivity(), MainActivity.class);
-        i.putExtra("Fridge", fridge);
-        startActivityForResult(i, 2);
-    }
 
-    */
+    /**
+     * Checks for expiring products at the current date, at the next day and two days later.
+     * If there aren't any, displays the appropriate text to the user.
+     */
+
 
     public void CheckFridge()
     {
-        ArrayList<Product> products = fridge.checkForExpiredAtDate(currentDate);
-        /*for (FridgeItem product: products)
-        {
-            if(!fridge.getExpiredItems().contains(product))
-                fridge.AddExpired(product);
-        }
+        ArrayList<Product> products = fridge.checkForExpiredAtDate(currentDate); //The products that have expired up until the current date
 
-         */
-
-        //expiredItems = false;
-        //fridge.AddExpired(fridge.checkForExpiredAtDate(currentDate));
-
-        if(expireToday.isEmpty())
+        if(expireToday.isEmpty()) //Controls the views' appearance and text depending on if there are products in the ArrayLists that expire today, tomorrow or soon
         {
             todayTextView.setText("There are no products expiring today!");
             todayTextView.setAllCaps(false);
@@ -239,8 +169,6 @@ public class HomeFragment extends Fragment {
         {
             todayTextView.setText("Today to Expire " + "("+ currentDate + ")");
             todayTextView.setAllCaps(true);
-            expiredItems = true;
-            //fridge.AddExpired(expireToday);
         }
 
         if(expireTomorrow.isEmpty())
@@ -265,35 +193,15 @@ public class HomeFragment extends Fragment {
             soonTextView.setText("Soon to expire");
         }
 
-        if(products.size() > 0) //fridge.getExpiredItems().size() > 0
+        if(products.size() > 0) //if there are expired products in the fridge, the linear layout containing the warning and the button become visible
         {
-            expiredItems = true;
             expiredWarning.setVisibility(View.VISIBLE);
-            //expriredProductsWarning();
         }
         else
         {
-            expiredItems = false;
             expiredWarning.setVisibility(View.GONE);
         }
-        //expiredWarning.setVisibility(View.INVISIBLE);
 
-
-/*
-        for (FridgeItem fridgeItem:fridge.getFridgeItems())
-        {
-            System.out.println("Fridge Items");
-            System.out.println(fridgeItem.getName());
-        }
-
-
-        for (FridgeItem fridgeItem:fridge.getExpiredItems())
-        {
-            System.out.println("Expired Items");
-            System.out.println(fridgeItem.getName());
-        }
-
- */
     }
 
 
@@ -301,36 +209,5 @@ public class HomeFragment extends Fragment {
         public void UpdateData(Fridge fridge);
     }
 
-    /*
-    @Override
-    public void onActivityResult( int requestCode , int resultCode , Intent data ) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == 2) && resultCode == getActivity().RESULT_OK) {
-            //Create toast when new item has been added
-            Toast.makeText(this.getContext(), "You have added a new product in your fridge", Toast.LENGTH_SHORT).show();
-            fridge = (Fridge) data.getExtras().getSerializable("Fridge");
-
-            System.out.println("Fridge Items");
-            for (FridgeItem fridgeItem : fridge.getFridgeItems()) {
-                System.out.println(fridgeItem.getName());
-            }
-
-            System.out.println("Expired Items");
-            for (FridgeItem fridgeItem : fridge.getExpiredItems()) {
-                System.out.println(fridgeItem.getName());
-            }
-        }
-        else
-        {
-            System.out.println("Something went wrong");
-        }
-    }
-
-     */
-
-    public void GetFridgeFromMain(Fridge fridge)
-    {
-        this.fridge = fridge;
-    }
 
 }

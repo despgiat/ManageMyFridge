@@ -223,15 +223,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == 2) && resultCode == RESULT_OK)
         {
-            //Create toast when new item has been added
-            Toast.makeText(this, "You have added a new product in your fridge", Toast.LENGTH_SHORT).show();
             //Update the fridge from the database:
-
-            //fridge = (Fridge) data.getExtras().getSerializable("Fridge");
             fridge.setFridgeItems(dbHandler.showallProducts());
 
-            //Updates all of the fragments with the new fridge
-            //The Expired Products, HomeFragment and the MyFridge fragment need to have it updates
+            //Updates the Home Fragment with the new fridge and displays it
 
             Bundle bundle = new Bundle(); //Sends the fridge back to the fragment (It doesn't unfortunately...) Let's fix that real quick
             bundle.putSerializable("fridge", fridge);

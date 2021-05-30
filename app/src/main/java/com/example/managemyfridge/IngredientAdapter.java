@@ -9,6 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * The IngredientAdapter helps the ingredients be displayed at the corrent format in the RecipeFragment.
+ */
+
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
     Ingredient[] ingredients;

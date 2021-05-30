@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link TipsOverviewFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * In the TipsOverviewFragment the user is able to see the array of tips saved in the database in the form of clickable cards.
  */
 public class TipsOverviewFragment extends Fragment {
 
@@ -35,14 +33,6 @@ public class TipsOverviewFragment extends Fragment {
     }
 
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TipsOverviewFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static TipsOverviewFragment newInstance(String param1, String param2) {
         TipsOverviewFragment fragment = new TipsOverviewFragment();
@@ -67,6 +57,8 @@ public class TipsOverviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tips_overview, container, false);
+
+        //Recycler view for the display of tips
         RecyclerView recipesRecyclerView = view.findViewById(R.id.tipsCardView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 

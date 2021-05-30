@@ -19,7 +19,6 @@ import androidx.preference.SwitchPreference;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String DARK_MODE_SWITCH = "darkMode";
     private static final String ARG_PARAM2 = "param2";
@@ -38,19 +37,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(String param1, String param2) {
-
-        //This will accept the preferences sent by the main activity
-
 
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
@@ -76,22 +65,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.app_settings, rootKey);
 
-      /*  SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        //SharedPreferences.Editor editor = preferences.edit();
-        editor.getBoolean("com.example.darkModeEnabled", darkModeEnabled);
-        editor.apply();
 
-        return true;
 
         feedback = (Preference) findPreference("send_feedback");
         feedback.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                composeEmail(new String[]{"despoinayatagana@gmail.com", "despgiat@csd.auth.gr"} , "Manage My Fridge Feedback");
+                composeEmail(new String[]{"despgiat@csd.auth.gr", "aftzalanc@csd.auth.gr", "alexandrak@csd.auth.gr"} , "Manage My Fridge Feedback");
                 return true;
             }
         });
 
-       */
 
         version = findPreference("version");
         version.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -104,7 +87,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         darkMode = (SwitchPreference) findPreference("darkMode");
 
-       /* switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
+        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
             case Configuration.UI_MODE_NIGHT_YES:
                 System.out.println("DARK MODE");
                 darkModeEnabled = true;
@@ -114,10 +97,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 darkModeEnabled = false;
                 break;
         }
-
-        */
-
-        //darkMode.setDefaultValue(darkModeEnabled); //The default value will be the value in the SharedPreferences!
+        darkMode.setDefaultValue(darkModeEnabled); //The default value is the theme that the system is currently using
 
         darkMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -136,6 +116,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     darkModeEnabled = false;
                 }
 
+                //TODO: The user's choice is saved in the SharedPreferences and will be retrieved upon starting the application
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putBoolean("com.example.darkModeEnabled", darkModeEnabled);
@@ -147,14 +128,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     }
 
-    public void composeEmail(String[] addresses, String subject) {
+    public void composeEmail(String[] addresses, String subject) { //See Android Developer Guides on the most used intents - Compose Email intent
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, addresses);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        //if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(Intent.createChooser(intent, "Send feedback"));
-        //}
+
+        startActivity(Intent.createChooser(intent, "Send feedback"));
+
     }
 
 }

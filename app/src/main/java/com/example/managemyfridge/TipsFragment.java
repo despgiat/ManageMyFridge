@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link TipsFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * The TipsFragment contains all of the information regarding a tip -> A header image, a title, and the text.
  */
 public class TipsFragment extends Fragment {
 

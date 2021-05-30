@@ -12,15 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipesOverviewFragment#newInstance} factory method to
- * create an instance of this fragment.
+ *Upon entering the desired products and clicking "Find recipes!", this fragment gets displayed in the screen.
+ * It contains all of the
  */
 public class RecipesOverviewFragment extends Fragment {
-
-    //here we load everything from the database
-    //String[] recipeNames = {"Porkchops with honey", "Ceasar's Salad", "Chocolate Cake"};
-    //String[] recipeDescriptions = {"Delicious porkchops with honey and chili sauce", "Ceasar's Salad with chicken and lettuce", "Decadent chocolate Cake with vanilla buttercream"};
 
     TextView warning;
     RecyclerView.Adapter recipesAdapter;
@@ -39,15 +34,6 @@ public class RecipesOverviewFragment extends Fragment {
     }
 
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecipesOverviewFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static RecipesOverviewFragment newInstance(String param1, String param2) {
         RecipesOverviewFragment fragment = new RecipesOverviewFragment();
         Bundle args = new Bundle();

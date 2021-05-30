@@ -16,23 +16,23 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * The MyFridge fragment, which displays all of the user's fridge products as cards.
+ */
+
 public class MyFridge extends Fragment {
 
-    //private Fridge fridge; //We need to access all of the fridge items and we need to know the current Date
     Fridge fridge;
     private static final String FRIDGE = "fridge";
     ImageButton addItemButton;
-    TextView warning;
+    TextView warning; //The warning that there are no items in the fridge
     HomeFragment.HomeFragmentListener activityCallback; //For communication with the activity
     RecyclerView.Adapter adapterFridgeItems;
-    MyDBHandler dbHandler;
 
     public static MyFridge newInstance(Fridge fridge) {
         MyFridge fragment = new MyFridge();
-
         Bundle args = new Bundle();
         args.putSerializable(FRIDGE, fridge);
-        //args.putString(DATE, currentDate);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,8 +56,6 @@ public class MyFridge extends Fragment {
 
         if (getArguments() != null) {
             fridge = (Fridge) getArguments().getSerializable(FRIDGE);
-            //currentDate = getArguments().getString(DATE);
-
         }
     }
 
@@ -67,34 +65,17 @@ public class MyFridge extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.my_fridge_fragment, container, false);
 
-        //fridge = dbHandler.showallProducts();
-        //activityCallback.UpdateData(fridge);
-
         addItemButton = view.findViewById(R.id.addItemButton);
-
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainScreen) getActivity()).addNewItem();
-            }
+            } //Calls the addNewItem implemented at the MainScreen
         });
-
-
-
-        /*
-        addItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((AddItemActivity) getActivity()).newProduct();
-            }
-        });
-
-         */
-
 
         warning = view.findViewById(R.id.noProductsTextView);
 
-        if(fridge.getFridgeItems().size() == 0)
+        if(fridge.getFridgeItems().size() == 0) //The warning is shown when there are no products in the fridge
         {
             warning.setVisibility(View.VISIBLE);
         }
@@ -103,21 +84,18 @@ public class MyFridge extends Fragment {
             warning.setVisibility(View.GONE);
         }
 
-
+        //The RecyclerView so that the products are displayed at cards
         RecyclerView productsRecyclerView = view.findViewById(R.id.fridgeProductsRecyclerView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
-        TypedValue value = new TypedValue(); //To retrieve the secondary color variant
+        TypedValue value = new TypedValue(); //To retrieve the primary color from the attributes
         getContext().getTheme().resolveAttribute(R.attr.colorPrimary, value, true); //https://stackoverflow.com/questions/45218271/how-to-get-an-attr-value-programmatically
 
         productsRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.getFridgeItems(), value.data, this);
+        adapterFridgeItems = new EditableProductRecyclerAdapter(fridge.getFridgeItems(), value.data, this); //value.data is the card's background color
         productsRecyclerView.setAdapter(adapterFridgeItems);
 
         return  view;
     }
-
-    //public void editProduct(int id)
-    //public void deleteProduct(int id)
 
 }
