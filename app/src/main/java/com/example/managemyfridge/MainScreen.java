@@ -152,7 +152,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             //Update the fridge from the database:
             fridge.setFridgeItems(dbHandler.showallProducts());
-
             //Updates the Home Fragment with the new fridge and displays it
             Bundle bundle = new Bundle();
             bundle.putSerializable("fridge", fridge);

@@ -1,9 +1,10 @@
 package com.example.managemyfridge;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Product {
+public class Product implements Serializable {
     private int _id;
     private String _productname;
     private String _quantity;
