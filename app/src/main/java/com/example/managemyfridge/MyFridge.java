@@ -1,5 +1,6 @@
 package com.example.managemyfridge;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,6 +57,7 @@ public class MyFridge extends Fragment {
 
         if (getArguments() != null) {
             fridge = (Fridge) getArguments().getSerializable(FRIDGE);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My Fridge");
         }
     }
 

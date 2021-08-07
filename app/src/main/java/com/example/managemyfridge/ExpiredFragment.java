@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -66,6 +67,9 @@ public class ExpiredFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Expired");
+
         View view = inflater.inflate(R.layout.fragment_expired, container, false);
 
         warning = view.findViewById(R.id.noExpiredTextView);

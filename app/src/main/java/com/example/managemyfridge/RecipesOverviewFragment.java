@@ -2,6 +2,7 @@ package com.example.managemyfridge;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,6 +54,8 @@ public class RecipesOverviewFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = (ArrayList<Recipe>) getArguments().getSerializable(ARG_PARAM1);
+
+            //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recipes");
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -61,6 +64,8 @@ public class RecipesOverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recipes");
+
         View view = inflater.inflate(R.layout.fragment_recipes_overview, container, false);
         RecyclerView recipesRecyclerView = view.findViewById(R.id.recipesFoundRecyclerView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
@@ -68,6 +73,7 @@ public class RecipesOverviewFragment extends Fragment {
         recipesRecyclerView.setLayoutManager(linearLayoutManagerToday);
         recipesAdapter = new ContentRecyclerAdapter(getContext(), this);
         recipesRecyclerView.setAdapter(recipesAdapter);
+
 
 
         // Inflate the layout for this fragment

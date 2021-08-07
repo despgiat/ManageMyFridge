@@ -2,6 +2,7 @@ package com.example.managemyfridge;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -68,8 +69,8 @@ public class RecipeSearchFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             fridge = (Fridge) getArguments().getSerializable(ARG_PARAM1);
-
             ingredients = getResources().getStringArray(R.array.types);
+
 
         }
     }
@@ -100,6 +101,8 @@ public class RecipeSearchFragment extends Fragment {
                 ImportFromFridge();
             }
         });
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recipes");
 
         return view;
     }

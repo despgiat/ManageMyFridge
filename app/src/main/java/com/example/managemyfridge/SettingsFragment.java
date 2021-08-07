@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
@@ -52,20 +53,21 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Load the preferences from an XML resource
         //addPreferencesFromResource(R.xml.app_settings);
 
         if (getArguments() != null) {
           //  mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Settings");
         }
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.app_settings, rootKey);
-
-
 
         feedback = (Preference) findPreference("send_feedback");
         feedback.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

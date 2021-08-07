@@ -2,6 +2,7 @@ package com.example.managemyfridge;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,6 +67,9 @@ public class TipsOverviewFragment extends Fragment {
         tipsAdapter = new ContentRecyclerAdapter(getContext(), this);
         recipesRecyclerView.setAdapter(tipsAdapter);
         // Inflate the layout for this fragment
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Zero Waste Tips");
+
         return view;
     }
 }

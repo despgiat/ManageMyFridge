@@ -30,20 +30,28 @@ public class MainActivity extends AppCompatActivity {
     Spinner typeSpinner;
     LinearLayout openedLayout;
     RadioGroup radioGroupOpened;
+    RadioGroup dateRadioGroup;
+    TextView dateFormat;
+    Button button;
 
     Intent i;
     Fridge fridge; //The fridge is retrieved from the MainScreen
+    Product product;
     DateTimeFormatter formatter;
     LocalDate currentDate;
     String isOpened;
     String openedDateText;
     boolean customOpenedDate;
 
+    //boolean edit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         formatter = MainScreen.formatter; //Gets the date formatter from the MainScreen
         currentDate = LocalDate.now();
@@ -55,9 +63,13 @@ public class MainActivity extends AppCompatActivity {
         openedLayout = findViewById(R.id.openedLayout);
         openedLayout.setVisibility(View.GONE);
         radioGroupOpened = findViewById(R.id.radioGroup);
+        dateRadioGroup = findViewById(R.id.radioGroup2);
+        //otherDate = findViewById(R.id.editTextDateOpened);
+        dateFormat = findViewById(R.id.textViewDateFormat);
         quantityBox = findViewById(R.id.productQuantityEditText);
         typeSpinner = findViewById(R.id.typeSpinner);
         unitSpinner = findViewById(R.id.unitSpinner);
+        button = findViewById(R.id.button);
 
         //Array Adapters for the spinners (to display the product units and type)
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.units));
@@ -71,24 +83,63 @@ public class MainActivity extends AppCompatActivity {
         isOpened = "";
         i = getIntent();
         fridge = (Fridge) i.getSerializableExtra("Fridge"); //retrieves the fridge from the MainScreen that called it
+        product = (Product) i.getSerializableExtra("Product"); //if the product is not null, this means that we are currently editing a product instead of adding a new one
+        if(product != null)
+            button.setText("SAVE");
+        else
+            button.setText("ADD PRODUCT");
 
 
+        //For the changing of the phone's settings (rotation, dark mode and such)
+        //if the fields are already filled we want them to stay that way
         if (savedInstanceState != null) {
             //Retrieve data from the Bundle (other methods include getInt(), getBoolean() etc)
-            CharSequence userText = savedInstanceState.getCharSequence("savedUserText");
-            //CharSequence displayText = savedInstanceState.getCharSequence("savedDisplayText");
-            int userChoice = savedInstanceState.getInt("savedUserChoice");
+           // Product product = (Product) savedInstanceState.getSerializable("Product");
+            CharSequence displayText = savedInstanceState.getCharSequence("savedDisplayText");
+           // int userChoice = savedInstanceState.getInt("savedUserChoice");
 
             //Restore the dynamic state of the UI
-            itemName.setText(userText);
+            //itemName.setText(product.getProductName());
 
         } else {
             //Initialize the UI
-            itemName.setText("");
+            if(product != null)
+            {
+                itemName.setText(product.getProductName());
+                expiry.setText(product.get_exdate());
+                if(product.get_opened().equals("no"))
+                {
+                    openedLayout.setVisibility(View.GONE);
+                    radioGroupOpened.check(R.id.noButton);
+                }
+                else
+                {
+                    openedLayout.setVisibility(View.VISIBLE);
+                    radioGroupOpened.check(R.id.yesButton);
+
+                    if(currentDate.format(formatter).equals(product.get_DateofOpening()))
+                    {
+                        dateRadioGroup.check(R.id.todayButton);
+                    }
+                    else
+                    {
+                        dateRadioGroup.check(R.id.otherDateButton);
+                        openedDate.setVisibility(View.VISIBLE);
+                        openedDate.setText(product.get_DateofOpening());
+                    }
+
+                }
+
+                quantityBox.setText(product.getQuantity());
+                typeSpinner.setSelection(typeAdapter.getPosition(product.get_prodtype()));
+                unitSpinner.setSelection(unitAdapter.getPosition(product.get_unit()));
+                button = findViewById(R.id.button);
+            }
 
         }
     }
 
+    //saves the current state
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -159,8 +210,19 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Product added", Toast.LENGTH_SHORT).show();
                 }
                 else {
+
+                    found.setProductName(itemNameText);
+                    found.setQuantity(quantity);
+                    found.set_exdate(expiryText);
+                    found.set_opened(isOpened);
+                    found.set_prodtype(productType);
+                    found.set_DateofOpening(openedDateText);
+                    found.set_unit(unit);
+
+                    dbHandler.updateProduct(found);
+
                     //adding toast if product was not added
-                    Toast.makeText(MainActivity.this, "Error. Product was not added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Changes saved", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -203,22 +265,19 @@ public class MainActivity extends AppCompatActivity {
      */
     public void dayOpened(View view)
     {
-        RadioGroup dateRadioGroup = findViewById(R.id.radioGroup2);
         int choiceId = dateRadioGroup.getCheckedRadioButtonId();
-        EditText otherDate = findViewById(R.id.editTextDateOpened);
-        TextView dateFormat = findViewById(R.id.textViewDateFormat);
 
         switch (choiceId)
         {
             case R.id.todayButton:
                 String text = currentDate.format(formatter);
                 openedDateText = text;
-                otherDate.setVisibility(View.GONE);
+                openedDate.setVisibility(View.GONE);
                 dateFormat.setVisibility(View.GONE);
                 customOpenedDate = false;
                 break;
             case R.id.otherDateButton:
-                otherDate.setVisibility(View.VISIBLE);
+                openedDate.setVisibility(View.VISIBLE);
                 dateFormat.setVisibility(View.VISIBLE);
                 customOpenedDate = true;
                 break;

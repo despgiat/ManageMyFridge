@@ -2,6 +2,7 @@ package com.example.managemyfridge;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -51,6 +52,8 @@ public class TipsFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+           // ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle();
         }
     }
 

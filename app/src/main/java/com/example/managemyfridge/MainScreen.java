@@ -130,6 +130,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             getSupportFragmentManager().beginTransaction().replace(R.id.screen, home).commit();
             navigationView.setCheckedItem(R.id.homeItem);
             currentFragment = home;
+           // getSupportActionBar().setTitle("Home");
         }
 
     }
@@ -143,36 +144,65 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         startActivityForResult(i, 2);
     }
 
+    public void editProduct(Product product)
+    {
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("Fridge", fridge);
+        i.putExtra("Product", product);
+        //i.putExtra("Edit", true);
+        startActivityForResult(i, 3);
+    }
+
 
 
     @Override
     protected void onActivityResult( int requestCode , int resultCode , Intent data ) {
         super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == 2) && resultCode == RESULT_OK)
+
+        if(resultCode == RESULT_OK)
         {
-            //Update the fridge from the database:
-            fridge.setFridgeItems(dbHandler.showallProducts());
-            //Updates the Home Fragment with the new fridge and displays it
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("fridge", fridge);
-            MyFridge myFridge = new MyFridge();
-            myFridge.setArguments(bundle);
-            currentFragment = myFridge;
-            getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
+            switch(requestCode)
+            {
+                case 2: //case 2 and case 3 merged
+                case 3:
+                    //Update the fridge from the database:
+                    fridge.setFridgeItems(dbHandler.showallProducts());
+                    //Updates the Home Fragment with the new fridge and displays it
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("fridge", fridge);
+                    MyFridge myFridge = new MyFridge();
+                    myFridge.setArguments(bundle);
+                    currentFragment = myFridge;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
+                    break;
+                //Updates the Home Fragment with the new fridge and displays it
+
+                case 22:
+                    // Get the url of the image from data
+                    Uri selectedImageUri = data.getData();
+                    if (null != selectedImageUri) {
+                        // update the preview image in the layout
+                        profilePicture.setImageURI(selectedImageUri);
+                    }
+                    break;
+            }
+        }
+
+
+        /*if ((requestCode == 2) && resultCode == RESULT_OK)
+        {
+
+
 
         }
 
         if (resultCode == RESULT_OK) { //https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
 
             if (requestCode == 22) {
-                // Get the url of the image from data
-                Uri selectedImageUri = data.getData();
-                if (null != selectedImageUri) {
-                    // update the preview image in the layout
-                    profilePicture.setImageURI(selectedImageUri);
-                }
+
             }
         }
+         */
     }
 
     @Override
@@ -262,6 +292,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 myFridge.setArguments(bundle);
                 currentFragment = myFridge;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
+                //getSupportActionBar().setTitle("My Fridge");
                 break;
 
             case R.id.homeItem:
@@ -272,6 +303,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 homeFragment.setArguments(bundle);
                 currentFragment = homeFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, homeFragment).commit();
+                //getSupportActionBar().setTitle("Home");
                 break;
 
             case R.id.expiredItem:
@@ -280,6 +312,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 expiredFragment.setArguments(bundle);
                 currentFragment = expiredFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
+                //getSupportActionBar().setTitle("Expired");
                 break;
 
             case R.id.recipesItem:
@@ -288,30 +321,35 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 recipesOverviewFragment.setArguments(bundle);
                 currentFragment = recipesOverviewFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipesOverviewFragment).commit();
+                //getSupportActionBar().setTitle("Recipes");
                 break;
 
             case R.id.zeroWasteItem:
                 TipsOverviewFragment tipsOverviewFragment = new TipsOverviewFragment();
                 currentFragment = tipsOverviewFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, tipsOverviewFragment).commit();
+                //getSupportActionBar().setTitle("Zero Waste Tips");
                 break;
 
             case R.id.settingsItem:
                 SettingsFragment settingsFragment = new SettingsFragment();
                 currentFragment = settingsFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, settingsFragment).commit();
+                //getSupportActionBar().setTitle("Settings");
                 break;
 
             case R.id.favouritesItem:
                 FavouritesFragment favouritesFragment = new FavouritesFragment();
                 currentFragment = favouritesFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, favouritesFragment).commit();
+               // getSupportActionBar().setTitle("Favourites");
                 break;
 
             case R.id.profileItem:
                 ProfileFragment profileFragment = new ProfileFragment();
                 currentFragment = profileFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, profileFragment).commit();
+                //getSupportActionBar().setTitle("Profile");
                 break;
         }
 
@@ -379,7 +417,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             Toast.makeText(this, "Something went wrong...", Toast.LENGTH_SHORT).show();
         }
-
+        //getSupportFragmentManager().beginTransaction().replace(R.id.screen, fromFragment).commit();
     }
 
     //Deletes a product from the database

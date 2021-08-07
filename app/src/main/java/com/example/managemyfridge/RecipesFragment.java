@@ -4,6 +4,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -86,6 +87,8 @@ public class RecipesFragment extends Fragment {
         ingredientsRecyclerView.setLayoutManager(linearLayoutManagerIngredients);
         ingredientsAdapter = new IngredientAdapter(ingredients);
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(recipeTitle);
 
         return view;
     }

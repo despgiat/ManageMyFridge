@@ -85,7 +85,6 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
                         .setIcon(R.drawable.ic_warning)
                         .show();
 
-
             }
         });
 
@@ -102,7 +101,8 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
             @Override
             public void onClick(View v)
             {
-
+                ((MainScreen) fromFragment.getActivity()).editProduct(productData.get(position));
+                notifyDataSetChanged();
             }
         });
 
