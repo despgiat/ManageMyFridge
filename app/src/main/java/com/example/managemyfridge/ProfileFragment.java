@@ -1,6 +1,8 @@
 package com.example.managemyfridge;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +32,11 @@ public class ProfileFragment extends Fragment {
     TextView changePic;
     TextView removePic;
     ImageView profilePicture;
+    TextView username;
+    TextView email;
+    ImageButton changeUsername;
+    EditText editTextUsername;
+    boolean editMode = false;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -72,6 +81,55 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         //profilePicture = view.findViewById(R.id.profilePic);
+
+        username = view.findViewById(R.id.usernameTextView);
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String name = sharedPreferences.getString("username", "Username");
+        username.setText(name);
+
+        changeUsername = view.findViewById(R.id.editUsernameButton);
+        changeUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //String usernameText = (String) username.getText();
+
+                editMode = !editMode;
+                if(editMode)
+                {
+                    username.setVisibility(View.GONE);
+                    editTextUsername = view.findViewById(R.id.editTextUsername);
+                    editTextUsername.setVisibility(View.VISIBLE);
+                    editTextUsername.setText(username.getText());
+                }
+                else
+                {
+                    if(editTextUsername.getText() != null)
+                    {
+                        username.setText(editTextUsername.getText());
+                        editTextUsername.setVisibility(View.GONE);
+                        username.setVisibility(View.VISIBLE);
+
+                        //set this as the general username
+
+                        editor.putString("username", String.valueOf(editTextUsername.getText()));
+                        editor.apply();
+
+                        //change the Username everywhere
+
+                        ((MainScreen)getActivity()).usernameChange();
+
+                    }
+
+                }
+
+            }
+        });
+
+
+        email = view.findViewById(R.id.emailTextView);
 
         logoutButton = view.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {

@@ -38,6 +38,8 @@ public class RecipesFragment extends Fragment {
     private Ingredient[] ingredients;
     RecyclerView.Adapter ingredientsAdapter;
 
+    //Recipe recipe //The recipe in question, it will be retrieved from the database
+
     boolean favourite; //We will check from the database if it was marked as favourite by the user and we will display it as such
     MenuItem fave;
     Menu toolbar;
@@ -128,6 +130,7 @@ public class RecipesFragment extends Fragment {
         fave.setIcon(R.drawable.ic_fave_filled);
 
         //Database stuff
+        //recipe will be marked as favourite (and it will be saved in the database
 
         Toast.makeText(getContext(), "This recipe has been added to your favorites!", Toast.LENGTH_SHORT).show();
         favourite = true;

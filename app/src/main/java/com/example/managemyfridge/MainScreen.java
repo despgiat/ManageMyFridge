@@ -89,6 +89,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         navigationView.bringToFront();
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        //To change the username in the header
+        SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
+        String headerUsername = sharedPreferences.getString("username", "Username");
+        TextView header = inflatedView.findViewById(R.id.headerUsername);
+        header.setText(headerUsername);
+
+
         //Desired date formatter
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -133,6 +140,28 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
            // getSupportActionBar().setTitle("Home");
         }
 
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        //read preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
+        //SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String headerUsername = sharedPreferences.getString("username", "Username");
+        //int a = sharedPreferences.getInt("age", 0);
+
+        // Setting the fetched data
+        // in the EditTexts
+
+        TextView header = inflatedView.findViewById(R.id.headerUsername);
+        header.setText(headerUsername);
+
+        //name.setText(s1);
+        //age.setText(String.valueOf(a));
     }
 
 
@@ -433,6 +462,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             Toast.makeText(this, "Could not delete " + productName, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void usernameChange()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
+        String headerUsername = sharedPreferences.getString("username", "Username");
+        TextView header = inflatedView.findViewById(R.id.headerUsername);
+        header.setText(headerUsername);
     }
 
 

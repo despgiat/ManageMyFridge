@@ -114,4 +114,12 @@
         <item>Fish</item>
     </string-array>
 
+    <string-array name="categories">
+        <item>ml</item>
+        <item>kg</item>
+        <item>whole</item>
+        <item>packet</item>
+    </string-array>
+
+
 </resources>

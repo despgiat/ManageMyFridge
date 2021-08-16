@@ -21,11 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecyclerAdapter.ViewHolder>{
 
-    //We will get the recipes from the database
-
+    //Content from the database
     Context context;
     Fragment fromFragment;
 
+    //The below will be derived from the database
     String[] recipeNames = {"Porkchops with honey", "Ceasar's Salad", "Chocolate Cake"};
     String[] recipeDescriptions = {"Delicious porkchops with honey and chili sauce", "Ceasar's Salad with chicken and lettuce", "Decadent chocolate Cake with vanilla buttercream"};
     Ingredient[] ingredients = {new Ingredient(1,1,  "flour", "3 1/4", "cups"), new Ingredient(2,1,  "flour", "3 1/4", "cups"), new Ingredient(3,1,  "flour", "3 1/4", "cups")};

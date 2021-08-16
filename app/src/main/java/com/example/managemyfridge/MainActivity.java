@@ -106,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
             if(product != null)
             {
                 itemName.setText(product.getProductName());
+                itemName.setFocusable(false); //To make it non editable
+                itemName.setClickable(false);
+
                 expiry.setText(product.get_exdate());
                 if(product.get_opened().equals("no"))
                 {
