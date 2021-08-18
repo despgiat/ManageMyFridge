@@ -9,18 +9,31 @@ public class Tip {
     private String _tipname;
     private String _description;
     private String _related_product;
-    private String _favoured;
+    //private String _favoured;
+    private String _source;
     private String _img;
 
     public Tip() {
     }
 
-    public Tip(int id, String tipname, String description, String related_product, String isitfav) {
+
+    //old constructor
+    /*public Tip(int id, String tipname, String description, String related_product, String isitfav) {
         this.set_id(id);
         this._tipname = tipname;
         this._description = description;
         this._related_product = related_product;
         this._favoured = isitfav;
+    }*/
+
+
+    //new constr. with source
+    public Tip(int id, String tipname, String description, String related_product, String source) {
+        this.set_id(id);
+        this._tipname = tipname;
+        this._description = description;
+        this._related_product = related_product;
+        this._source = source;
     }
 
     public int get_id() {
@@ -55,12 +68,20 @@ public class Tip {
         this._related_product = _related_product;
     }
 
-    public String get_favoured() {
+   /* public String get_favoured() {
         return _favoured;
     }
 
     public void set_favoured(String _favoured) {
         this._favoured = _favoured;
+    } */
+
+    public String get_source() {
+        return _source;
+    }
+
+    public void set_source(String _source) {
+        this._source = _source;
     }
 
     public String get_img() {
