@@ -8,8 +8,9 @@ public class Recipe {
     private String _recipename;
     private String _recipetype;
     private String _instructions;
-    private String _favoured;
+    //private String _favoured;
     private String _img;
+    private String _source;
 
 
     private ArrayList<Ingredient> listofIngr;
@@ -18,12 +19,21 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(int id, String recipename, String recipeType, String instructions, String isitfav) {
+   /* public Recipe(int id, String recipename, String recipeType, String instructions, String isitfav) {
         this.set_id(id);
         this._recipename = recipename;
         this._recipetype = recipeType;
         this._instructions = instructions;
         this._favoured = isitfav;
+        this.listofIngr = new ArrayList<>();
+    }*/
+
+    public Recipe(int id, String recipename, String recipeType, String instructions, String source) {
+        this.set_id(id);
+        this._recipename = recipename;
+        this._recipetype = recipeType;
+        this._instructions = instructions;
+        this._source = source;
         this.listofIngr = new ArrayList<>();
     }
 
@@ -59,13 +69,13 @@ public class Recipe {
         this._instructions = _instructions;
     }
 
-    public String get_favoured() {
+   /* public String get_favoured() {
         return _favoured;
     }
 
     public void set_favoured(String _favoured) {
         this._favoured = _favoured;
-    }
+    }*/
 
     public String get_img() {
         return _img;
@@ -83,5 +93,15 @@ public class Recipe {
     public void setListofIngr(ArrayList<Ingredient> listofIngr) {
         this.listofIngr = listofIngr;
     }
+
+
+     public String get_source() {
+        return _source;
+    }
+
+    public void set_source(String _source) {
+        this._source = _source;
+    }
+
 
 }

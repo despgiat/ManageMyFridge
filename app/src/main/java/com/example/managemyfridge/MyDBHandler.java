@@ -40,6 +40,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_INSTRUCTIONS = "Instructions";
     public static final String COLUMN_IS_IT_FAV = "Is_it_fav";
 
+    public static final String COLUMN_SOURCE = "Source"; //NEWLY ADDED
+
 
     public static final String TABLE_TIPS = "TIP";
     public static final String COLUMN_TIPNAME = "Name";
@@ -98,7 +100,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_RECIPENAME + " TEXT NOT NULL," +
                 COLUMN_RECIPE_TYPE + " TEXT  ," +
                 COLUMN_INSTRUCTIONS + " TEXT  ," +
-                COLUMN_IS_IT_FAV + " TEXT  ," +
+                //COLUMN_IS_IT_FAV + " TEXT  ," +
+                COLUMN_SOURCE + " TEXT  ," +
                 COLUMN_IMAGE + " TEXT" +
                 ")";
         db.execSQL(CREATE_RECIPES_TABLE);
@@ -110,7 +113,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_TIPNAME + " TEXT NOT NULL," +
                 COLUMN_DESCRIPTION + " TEXT  ," +
                 COLUMN_RELATED_PRODUCT + " TEXT  ," +
-                COLUMN_IS_IT_FAV + " TEXT  ," +
+                //COLUMN_IS_IT_FAV + " TEXT  ," +
+                COLUMN_SOURCE + " TEXT  ," + //NEWLY ADDED
                 COLUMN_IMAGE + " TEXT" +
                 ")";
         db.execSQL(CREATE_TIPS_TABLE);
@@ -242,90 +246,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return result;
     }
-    //adding user to data base
-    public void addUser(){
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
-        values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
-        values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        //original
-        db.insert(TABLE_USERS, null, values);
-        db.close();
-
-    }
-    //finding user from database
-    public boolean findUser(EditText name) {
-        String username = name.getText().toString();
-        String query;
-        //if the text field had an email address the is searching by email, otherwise is searching by username
-        if(isEmail(name)){
-             query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
-                    COLUMN_EMAIL + " = '" + username + "'";
-        }
-        else{
-             query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
-                    COLUMN_USERNAME + " = '" + username + "'";
-        }
-        SQLiteDatabase db = this.getWritableDatabase();
-        boolean flag=false;
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()) { //if we found a matching to the text field user then we create the user in the programm
-            cursor.moveToFirst();   //so we can use later on for checks
-            LoginScreen.user.setID(Integer.parseInt(cursor.getString(0)));
-            LoginScreen.user.setUsername(cursor.getString(1));
-            LoginScreen.user.setEmail(cursor.getString(2));
-            LoginScreen.user.setPassword(cursor.getString(3));
-            LoginScreen.user.setImg(cursor.getString(4));
-            cursor.close();
-            flag = true;
-        } else {
-            LoginScreen.user = null; //otherwise we delete everything from user object
-        }
-        db.close();
-        return flag;
-    }
-
-
-    //delete user
-    public boolean deleteUser(String username) {
-        boolean result = false;
-        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
-                COLUMN_USERNAME + " = '" + username + "'";
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()) {
-            LoginScreen.user.setID(Integer.parseInt(cursor.getString(0)));
-            db.delete(TABLE_PRODUCTS, COLUMN_ID + " = ?",
-                    new String[] { String.valueOf(LoginScreen.user.getID()) });
-            cursor.close();
-            result = true;
-        }
-        db.close();
-        return result;
-    }
-
-    //update user
-    public void updateUser (){
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
-        values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
-        values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        //original
-        db.update(TABLE_USERS, values ,COLUMN_ID + " = ?", new String[] { String.valueOf(LoginScreen.user.getID()) });
-        db.close();
-
-    }
-
-    //checks if the text entered is email format
-    boolean isEmail(EditText text) {
-        CharSequence email = text.getText().toString();
-        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
-    }
 
     // we have created a new method that returns all the products in the fridge.
     public ArrayList<Product> showallProducts() {
@@ -418,6 +338,96 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //USER METHODS
+
+
+    //adding user to data base
+    public void addUser(){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
+        values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
+        values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        //original
+        db.insert(TABLE_USERS, null, values);
+        db.close();
+
+    }
+    //finding user from database
+    public boolean findUser(EditText name) {
+        String username = name.getText().toString();
+        String query;
+        //if the text field had an email address the is searching by email, otherwise is searching by username
+        if(isEmail(name)){
+             query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                    COLUMN_EMAIL + " = '" + username + "'";
+        }
+        else{
+             query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                    COLUMN_USERNAME + " = '" + username + "'";
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        boolean flag=false;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) { //if we found a matching to the text field user then we create the user in the programm
+            cursor.moveToFirst();   //so we can use later on for checks
+            LoginScreen.user.setID(Integer.parseInt(cursor.getString(0)));
+            LoginScreen.user.setUsername(cursor.getString(1));
+            LoginScreen.user.setEmail(cursor.getString(2));
+            LoginScreen.user.setPassword(cursor.getString(3));
+            LoginScreen.user.setImg(cursor.getString(4));
+            cursor.close();
+            flag = true;
+        } else {
+            LoginScreen.user = null; //otherwise we delete everything from user object
+        }
+        db.close();
+        return flag;
+    }
+
+
+    //delete user
+    public boolean deleteUser(String username) {
+        boolean result = false;
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = '" + username + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            LoginScreen.user.setID(Integer.parseInt(cursor.getString(0)));
+            db.delete(TABLE_PRODUCTS, COLUMN_ID + " = ?",
+                    new String[] { String.valueOf(LoginScreen.user.getID()) });
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+    }
+
+    //update user
+    public void updateUser (){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
+        values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
+        values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        //original
+        db.update(TABLE_USERS, values ,COLUMN_ID + " = ?", new String[] { String.valueOf(LoginScreen.user.getID()) });
+        db.close();
+
+    }
+
+    //checks if the text entered is email format
+    boolean isEmail(EditText text) {
+        CharSequence email = text.getText().toString();
+        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+    }
+
+
+
 
     //INGREDIENT METHODS
 
@@ -455,5 +465,117 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
 
+
+    // we have created a new method that returns all the ingredients of a recipe.
+    public ArrayList<Ingredient> getallIngredientsofRecipe(int idofrecipe) {
+        // on below line we are creating a
+        // database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // on below line we are creating a cursor with query to read data from database.
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_INGREDIENTS + " WHERE " +
+                COLUMN_ID_OF_RECIPE + " = '" + idofrecipe + "'", null);
+
+        // on below line we are creating a new array list.
+        ArrayList<Ingredient> listofIngredients = new ArrayList<>();
+
+        // moving our cursor to first position.
+        if (cursor.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                listofIngredients.add(new Ingredient(cursor.getInt(0), //id
+                        cursor.getInt(1), //idofRECIPE
+                        cursor.getString(2), //ingredientname
+                        cursor.getString(3), //quantity
+                        cursor.getString(4) //unit
+
+                ));
+            } while (cursor.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor and db
+        // and returning our array list.
+        cursor.close();
+        db.close();
+        return listofIngredients;
+    }
+
+    //RECIPE METHODS
+
+    // we have created a new method that returns all the recipes.
+    public ArrayList<Recipe> getallRecipes() {
+        // on below line we are creating a
+        // database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // on below line we are creating a cursor with query to read data from database.
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_RECIPES, null);
+
+        // on below line we are creating two new array lists, for recipes and ingredients.
+        ArrayList<Recipe> listofRecipes = new ArrayList<>();
+        ArrayList<Ingredient> listofIng = new ArrayList<>();
+
+
+        // moving our cursor to first position.
+        if (cursor.moveToFirst()) {
+            do {
+                Recipe recipe = new Recipe(cursor.getInt(0), //id
+                        cursor.getString(1), //recipename
+                        cursor.getString(2), //recipetype
+                        cursor.getString(3), //instructions
+                        cursor.getString(4)); //source
+
+                //fill the recipe's list of ingredients by calling getallIngredientsofRecipe method
+                listofIng = getallIngredientsofRecipe(recipe.get_id());
+
+                recipe.setListofIngr(listofIng);
+                // on below line we are adding the data from cursor to our recipe array list.
+                listofRecipes.add(recipe);
+
+            } while (cursor.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor and db
+        // and returning our array list.
+        cursor.close();
+        db.close();
+        return listofRecipes;
+    }
+
+    //TIP METHODS
+
+    // we have created a new method that returns all tips.
+    public ArrayList<Tip> getallTips() {
+        // on below line we are creating a
+        // database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // on below line we are creating a cursor with query to read data from database.
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TIPS, null);
+
+        // on below line we are creating a new array list.
+        ArrayList<Tip> listofTips = new ArrayList<>();
+
+        // moving our cursor to first position.
+        if (cursor.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                listofTips.add(new Tip(cursor.getInt(0), //id
+
+                        cursor.getString(1), //tipname
+                        cursor.getString(2), //description
+                        cursor.getString(3), //related product
+                        cursor.getString(4) //source
+
+                ));
+            } while (cursor.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor and db
+        // and returning our array list.
+        cursor.close();
+        db.close();
+        return listofTips;
+    }
 
 }
