@@ -1,5 +1,6 @@
 package com.example.managemyfridge;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -45,7 +46,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,8 +60,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         if (getArguments() != null) {
           //  mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-
+            //mParam2 = getArguments().getString(ARG_PARAM2);
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Settings");
         }
     }
@@ -68,6 +68,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.app_settings, rootKey);
+
+
+
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        boolean dark = sharedPreferences.getBoolean("dark_mode", false);
+
 
         feedback = (Preference) findPreference("send_feedback");
         feedback.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -99,6 +107,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 darkModeEnabled = false;
                 break;
         }
+
         darkMode.setDefaultValue(darkModeEnabled); //The default value is the theme that the system is currently using
 
         darkMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -121,7 +130,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 //TODO: The user's choice is saved in the SharedPreferences and will be retrieved upon starting the application
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("com.example.darkModeEnabled", darkModeEnabled);
+                editor.putBoolean("dark_mode", darkModeEnabled);
                 editor.apply();
 
                 return true;

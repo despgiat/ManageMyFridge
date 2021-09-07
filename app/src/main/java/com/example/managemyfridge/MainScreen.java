@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -94,6 +95,22 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         String headerUsername = sharedPreferences.getString("username", "Username");
         TextView header = inflatedView.findViewById(R.id.headerUsername);
         header.setText(headerUsername);
+
+        boolean darkMode = sharedPreferences.getBoolean("dark_mode", false);
+       /* if (darkMode) //if it is checked
+        {
+            //Switch to Dark Mode
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+           // darkModeEnabled = true;
+        }
+        else //if not
+        {
+            //Switch to Light Mode
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            //darkModeEnabled = false;
+        }
+
+        */
 
 
         //Desired date formatter
@@ -345,11 +362,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
 
             case R.id.recipesItem:
-                RecipesOverviewFragment recipesOverviewFragment = new RecipesOverviewFragment();
+                RecipeSearchFragment recipeSearchFragment = new RecipeSearchFragment();
                 //bundle.putSerializable("recipes" );
-                recipesOverviewFragment.setArguments(bundle);
-                currentFragment = recipesOverviewFragment;
-                getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipesOverviewFragment).commit();
+                recipeSearchFragment.setArguments(bundle);
+                currentFragment = recipeSearchFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipeSearchFragment).commit();
                 //getSupportActionBar().setTitle("Recipes");
                 break;
 
@@ -471,6 +488,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         TextView header = inflatedView.findViewById(R.id.headerUsername);
         header.setText(headerUsername);
     }
+
+    public void getMealType()
+    {
+
+    }
+
+    //public
 
 
 }

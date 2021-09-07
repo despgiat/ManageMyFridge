@@ -10,10 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import static android.widget.AbsListView.CHOICE_MODE_MULTIPLE;
 
@@ -24,7 +28,12 @@ import static android.widget.AbsListView.CHOICE_MODE_MULTIPLE;
  */
 public class RecipeSearchFragment extends Fragment {
 
-    String[] ingredients;
+    String[] diet_prefs;
+    String[] meal_type;
+    //String[] ingredients;
+    List<String> ingredientGroups;
+    HashMap<String, List<String>> ingredients;
+
     //ArrayList<String> fridge;
     //String[] ingredients = new String[]{"Eggs", "Bacon", "Chicken", "Milk", "Yogurt", "Apples", "Feta cheese", "Chocolate Milk", "Juice", "Bell Peppers"};
     //String[] fridge = new String[]{"Mayonaise", "Mustard", "Chicken", "Yogurt", "Juice"};
@@ -38,7 +47,10 @@ public class RecipeSearchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private Fridge fridge;
 
-    ListView listView;
+    ListView diet_prefs_listView;
+    ListView meal_type_listView;
+    ExpandableListView ingredients_list;
+
     Button clearButton;
     Button importfromfridge;
 
@@ -69,9 +81,26 @@ public class RecipeSearchFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             fridge = (Fridge) getArguments().getSerializable(ARG_PARAM1);
-            ingredients = getResources().getStringArray(R.array.types);
+            diet_prefs = getResources().getStringArray(R.array.diet_preference);
+            meal_type = getResources().getStringArray(R.array.meal_type);
+
+            ingredientGroups = Arrays.asList(getResources().getStringArray(R.array.ingredient_groups));
+            ingredients = new HashMap<>();
+
+            ingredients.put(ingredientGroups.get(0), Arrays.asList(getResources().getStringArray(R.array.dairy_group)));
+            ingredients.put(ingredientGroups.get(1), Arrays.asList(getResources().getStringArray(R.array.meats_group)));
+            ingredients.put(ingredientGroups.get(2), Arrays.asList(getResources().getStringArray(R.array.vegetables_group)));
+            ingredients.put(ingredientGroups.get(3), Arrays.asList(getResources().getStringArray(R.array.fruits_group)));
+            ingredients.put(ingredientGroups.get(4), Arrays.asList(getResources().getStringArray(R.array.grains_group)));
+            ingredients.put(ingredientGroups.get(5), Arrays.asList(getResources().getStringArray(R.array.fish_group)));
+            ingredients.put(ingredientGroups.get(6), Arrays.asList(getResources().getStringArray(R.array.legumes_group)));
+            ingredients.put(ingredientGroups.get(7), Arrays.asList(getResources().getStringArray(R.array.condiments_group)));
+            ingredients.put(ingredientGroups.get(8), Arrays.asList(getResources().getStringArray(R.array.dairy_alts_group)));
+            ingredients.put(ingredientGroups.get(9), Arrays.asList(getResources().getStringArray(R.array.nuts_group)));
 
 
+
+            //ingredients = getResources().getStringArray(R.array.types);
         }
     }
 
@@ -84,21 +113,28 @@ public class RecipeSearchFragment extends Fragment {
         clearButton = (Button) view.findViewById(R.id.clearButton);
         importfromfridge = view.findViewById(R.id.fromFridgeButton);
 
-        listView = view.findViewById(R.id.ingredient_list);
+        diet_prefs_listView = view.findViewById(R.id.diet_prefs_list);
 //        listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
-        listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, ingredients));
+        diet_prefs_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, diet_prefs));
+
+        diet_prefs_listView = view.findViewById(R.id.meal_type_list);
+//        listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
+        diet_prefs_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, meal_type));
+
+        ingredients_list = view.findViewById(R.id.ingredient_expandablelist);
+        ingredients_list.setAdapter(new IngredientExpListAdapter(this.getContext(), ingredientGroups, ingredients));
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClearSelection();
+                //ClearSelection();
             }
         });
 
         importfromfridge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImportFromFridge();
+                //ImportFromFridge();
             }
         });
 
@@ -107,7 +143,7 @@ public class RecipeSearchFragment extends Fragment {
         return view;
     }
 
-    public void ClearSelection() {
+   /* public void ClearSelection() {
         listView.clearChoices();
         listView.requestLayout();
     }
@@ -131,4 +167,6 @@ public class RecipeSearchFragment extends Fragment {
         listView.requestLayout();
 
     }
+
+    */
 }

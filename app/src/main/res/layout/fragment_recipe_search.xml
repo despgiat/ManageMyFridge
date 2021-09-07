@@ -7,36 +7,66 @@
     tools:context=".RecipeSearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/motivational_text_in_recipes"
-            app:layout_constraintBottom_toTopOf="@+id/clearButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipes_title" />
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/recipes_title"
+            android:id="@+id/diet_preferences_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/recipes"
-            android:textAllCaps="true"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_marginTop="42dp"
+            android:text="Diet Preferences"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/diet_prefs_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:choiceMode="multipleChoice"
+            android:visibility="gone">
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/meal_type_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="180dp"
+            android:text="Meal Type"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/meal_type_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:choiceMode="multipleChoice"
+            android:visibility="gone">
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/ingredients_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:text="Ingredients" />
+
+        <ExpandableListView
+            android:id="@+id/ingredient_expandablelist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:choiceMode="multipleChoice"
+            android:visibility="visible"></ExpandableListView>
 
         <Button
             android:id="@+id/findRecipesButton"
@@ -45,47 +75,43 @@
             android:backgroundTint="?attr/colorPrimary"
             android:text="@string/find_recipes"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.96"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <ListView
             android:id="@+id/ingredient_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:choiceMode="multipleChoice"
-            app:layout_constraintBottom_toTopOf="@id/findRecipesButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/clearButton" />
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="674dp" />
 
         <Button
             android:id="@+id/clearButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:backgroundTint="?attr/colorPrimary"
             android:text="@string/clear_selection"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/fromFridgeButton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            android:visibility="gone"
+            tools:layout_editor_absoluteY="674dp" />
 
         <Button
             android:id="@+id/fromFridgeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:backgroundTint="?attr/colorPrimary"
             android:text="@string/check_from_fridge"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/clearButton"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            android:visibility="gone"
+            tools:layout_editor_absoluteY="674dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

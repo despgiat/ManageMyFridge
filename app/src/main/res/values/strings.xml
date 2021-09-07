@@ -122,5 +122,169 @@
         <item>packet</item>
     </string-array>
 
+    <string-array name="meal_type">
+        <item>Breakfast</item>
+        <item>Brunch</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+        <item>Dessert</item>
+    </string-array>
+
+    <string-array name="diet_preference">
+        <item>None</item>
+        <item>Low Carb</item>
+        <item>Low Fat</item>
+        <item>Keto</item>
+        <item>Vegetarian</item>
+        <item>Vegan</item>
+        <item>Pescatarian</item>
+        <item>Dairy Free</item>
+        <item>Gluten Free</item>
+        <item>Nut Free</item>
+        <item>Paleo</item>
+    </string-array>
+
+    <string-array name="ingredient_groups">
+        <item>Dairy</item>
+        <item>Meats</item>
+        <item>Vegetables</item>
+        <item>Fruit</item>
+        <item>Grains</item>
+        <item>Fish</item>
+        <item>Legumes</item>
+        <item>Condiments</item>
+        <item>Dairy Alternatives</item>
+        <item>Nuts</item>
+    </string-array>
+
+    <string-array name="dairy_group">
+        <item>Eggs</item>
+        <item>Milk</item>
+        <item>Butter</item>
+        <item>Cheese</item>
+        <item>Butter</item>
+        <item>Yogurt</item>
+        <item>Heavy Cream</item>
+        <item>Sour Cream</item>
+        <item>Ice Cream</item>
+    </string-array>
+
+    <string-array name="meats_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
+
+    <string-array name="vegetables_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
+
+    <string-array name="fruits_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
+
+    <string-array name="grains_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
+
+    <string-array name="fish_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
+
+    <string-array name="legumes_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
+
+    <string-array name="condiments_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
+
+    <string-array name="dairy_alts_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
+
+    <string-array name="nuts_group">
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Bacon</item>
+        <item>Chicken Thighs</item>
+        <item>Chicken Breast</item>
+        <item>Chicken Wings</item>
+        <item>Turkey</item>
+        <item>Duck</item>
+        <item>Lamb</item>
+        <item>Liver</item>
+    </string-array>
 
 </resources>
