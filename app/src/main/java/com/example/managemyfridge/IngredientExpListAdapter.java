@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.ExpandableListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class IngredientExpListAdapter extends BaseExpandableListAdapter {
@@ -18,12 +21,29 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
     Context context;
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetails;
+    HashMap<Integer, Integer> checkedStates; //Integer is the child's id, Boolean is whether it is checked or not
+    HashMap<Integer, HashMap<Integer, Integer>> group_checkedStates; //Integer is the group position, the Hashmap is the child's hashmap
+    ArrayList<String> allChecked;
 
     public IngredientExpListAdapter(Context context, List<String> expandableListTitle, HashMap<String, List<String>> expandableListDetails)
     {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetails = expandableListDetails;
+        checkedStates = new HashMap<>();
+       /* for(int i = 0; i < expandableListTitle.size(); i++)
+        {
+            for(int j = 0; j < expandableListDetails.get(i).size(); j++)
+            {
+                checkedStates.put(j, 0);
+            }
+            group_checkedStates.put(i, checkedStates);
+        }
+
+        */
+
+        group_checkedStates = new HashMap<>();
+        allChecked = new ArrayList<>();
     }
 
 
@@ -78,13 +98,45 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup viewGroup) {
 
-        view = LayoutInflater.from(viewGroup.getContext()).inflate(android.R.layout.simple_list_item_multiple_choice, viewGroup, false);
-
+        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ingredient_list_item, viewGroup, false);
 
         String listChildTitle = (String) getChild(groupPosition, childPosition);
-        TextView listTitleTextView = (TextView) view.findViewById(android.R.id.text1);
-        //listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listChildTitle);
+        CheckBox listCheckbox = (CheckBox) view.findViewById(R.id.ingredient_checkbox);
+        listCheckbox.setText(listChildTitle);
+
+        try
+        {
+            if (group_checkedStates != null)
+                if (checkedStates.size() > 0)
+                    if((group_checkedStates.get(groupPosition)).get(childPosition) == 1)
+                    {
+                        listCheckbox.setChecked(true);
+                    }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        listCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listCheckbox.isChecked())
+                {
+                    checkedStates.put(childPosition, 1);
+                    allChecked.add(listChildTitle);
+                    System.out.println("HERRO HERRO");
+                }
+                else
+                {
+                    checkedStates.put(childPosition, 0);
+                    allChecked.remove(listChildTitle);
+                    System.out.println("BAH BUY");
+                }
+                group_checkedStates.put(groupPosition, checkedStates);
+                //notifyDataSetChanged();
+            }
+        });
 
         return view;
     }
@@ -94,4 +146,8 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    public ArrayList<String> getAllChecked()
+    {
+        return allChecked;
+    }
 }

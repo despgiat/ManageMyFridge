@@ -53,6 +53,7 @@ public class RecipeSearchFragment extends Fragment {
 
     Button clearButton;
     Button importfromfridge;
+    Button findRecipes;
 
     public RecipeSearchFragment() {
         // Required empty public constructor
@@ -112,6 +113,7 @@ public class RecipeSearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_search, container, false);
         clearButton = (Button) view.findViewById(R.id.clearButton);
         importfromfridge = view.findViewById(R.id.fromFridgeButton);
+        findRecipes = view.findViewById(R.id.findRecipesButton);
 
         diet_prefs_listView = view.findViewById(R.id.diet_prefs_list);
 //        listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
@@ -122,7 +124,10 @@ public class RecipeSearchFragment extends Fragment {
         diet_prefs_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, meal_type));
 
         ingredients_list = view.findViewById(R.id.ingredient_expandablelist);
-        ingredients_list.setAdapter(new IngredientExpListAdapter(this.getContext(), ingredientGroups, ingredients));
+
+        IngredientExpListAdapter adapter = new IngredientExpListAdapter(this.getContext(), ingredientGroups, ingredients);
+
+        ingredients_list.setAdapter(adapter);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +140,18 @@ public class RecipeSearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //ImportFromFridge();
+            }
+        });
+
+        findRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> ingList = adapter.getAllChecked();
+
+                for(int i = 0; i < ingList.size(); i++)
+                {
+                    System.out.println(ingList.get(i));
+                }
             }
         });
 
