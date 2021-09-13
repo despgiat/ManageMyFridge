@@ -2,6 +2,7 @@ package com.example.managemyfridge;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -33,6 +34,10 @@ public class RecipeSearchFragment extends Fragment {
     //String[] ingredients;
     List<String> ingredientGroups;
     HashMap<String, List<String>> ingredients;
+
+    HashMap<Integer, HashMap<Integer, Integer>> checkedStates;
+
+    IngredientExpListAdapter adapter;
 
     //ArrayList<String> fridge;
     //String[] ingredients = new String[]{"Eggs", "Bacon", "Chicken", "Milk", "Yogurt", "Apples", "Feta cheese", "Chocolate Milk", "Juice", "Bell Peppers"};
@@ -74,12 +79,14 @@ public class RecipeSearchFragment extends Fragment {
         args.putSerializable(ARG_PARAM1, fridge);
         //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             fridge = (Fridge) getArguments().getSerializable(ARG_PARAM1);
             diet_prefs = getResources().getStringArray(R.array.diet_preference);
@@ -100,10 +107,20 @@ public class RecipeSearchFragment extends Fragment {
             ingredients.put(ingredientGroups.get(9), Arrays.asList(getResources().getStringArray(R.array.nuts_group)));
 
 
-
             //ingredients = getResources().getStringArray(R.array.types);
         }
     }
+
+   /* @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        checkedStates = adapter.getGroup_checkedStates();
+        outState.putSerializable("ingredient_checked_states", checkedStates);
+    }
+
+    */
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,7 +142,7 @@ public class RecipeSearchFragment extends Fragment {
 
         ingredients_list = view.findViewById(R.id.ingredient_expandablelist);
 
-        IngredientExpListAdapter adapter = new IngredientExpListAdapter(this.getContext(), ingredientGroups, ingredients);
+        adapter = new IngredientExpListAdapter(this.getContext(), ingredientGroups, ingredients);
 
         ingredients_list.setAdapter(adapter);
 

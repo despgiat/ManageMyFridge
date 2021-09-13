@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.w3c.dom.ls.LSOutput;
+
 /**
  * In the TipsOverviewFragment the user is able to see the array of tips saved in the database in the form of clickable cards.
  */
@@ -60,12 +62,15 @@ public class TipsOverviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tips_overview, container, false);
 
         //Recycler view for the display of tips
-        RecyclerView recipesRecyclerView = view.findViewById(R.id.tipsCardView);
+        RecyclerView tipsRecyclerView = view.findViewById(R.id.tipsCardView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
-        recipesRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        tipsAdapter = new ContentRecyclerAdapter(getContext(), this);
-        recipesRecyclerView.setAdapter(tipsAdapter);
+        tipsRecyclerView.setLayoutManager(linearLayoutManagerToday);
+        tipsAdapter = new TipRecyclerAdapter(getContext(), this);
+        tipsRecyclerView.setAdapter(tipsAdapter);
+
+        System.out.println(tipsAdapter.getItemCount());
+
         // Inflate the layout for this fragment
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Zero Waste Tips");

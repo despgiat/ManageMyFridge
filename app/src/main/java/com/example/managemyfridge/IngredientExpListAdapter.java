@@ -21,8 +21,9 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
     Context context;
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetails;
-    HashMap<Integer, Integer> checkedStates; //Integer is the child's id, Boolean is whether it is checked or not
     HashMap<Integer, HashMap<Integer, Integer>> group_checkedStates; //Integer is the group position, the Hashmap is the child's hashmap
+    //Each group has its own hashmap of childs' id and checked state
+
     ArrayList<String> allChecked;
 
     public IngredientExpListAdapter(Context context, List<String> expandableListTitle, HashMap<String, List<String>> expandableListDetails)
@@ -30,17 +31,6 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetails = expandableListDetails;
-        checkedStates = new HashMap<>();
-       /* for(int i = 0; i < expandableListTitle.size(); i++)
-        {
-            for(int j = 0; j < expandableListDetails.get(i).size(); j++)
-            {
-                checkedStates.put(j, 0);
-            }
-            group_checkedStates.put(i, checkedStates);
-        }
-
-        */
 
         group_checkedStates = new HashMap<>();
         allChecked = new ArrayList<>();
@@ -107,7 +97,7 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
         try
         {
             if (group_checkedStates != null)
-                if (checkedStates.size() > 0)
+                //if (checkedStates.size() > 0)
                     if((group_checkedStates.get(groupPosition)).get(childPosition) == 1)
                     {
                         listCheckbox.setChecked(true);
@@ -118,22 +108,34 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
             e.printStackTrace();
         }
 
+
         listCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                HashMap<Integer, Integer> childMap = group_checkedStates.get(groupPosition);
+                if(childMap == null)
+                {
+                    childMap = new HashMap<>();
+                }
+
                 if (listCheckbox.isChecked())
                 {
-                    checkedStates.put(childPosition, 1);
+                    childMap.put(childPosition, 1);
+                    //group_checkedStates.put(groupPosition, childMap) ;//.get(groupPosition).get()checkedStates.put(childPosition, 1);
+
                     allChecked.add(listChildTitle);
-                    System.out.println("HERRO HERRO");
                 }
                 else
                 {
-                    checkedStates.put(childPosition, 0);
+                    childMap.put(childPosition, 0);
                     allChecked.remove(listChildTitle);
-                    System.out.println("BAH BUY");
                 }
-                group_checkedStates.put(groupPosition, checkedStates);
+
+                group_checkedStates.put(groupPosition, childMap) ;//.get(groupPosition).get()checkedStates.put(childPosition, 1);
+
+
+                //group_checkedStates.put(groupPosition, checkedStates);
                 //notifyDataSetChanged();
             }
         });
@@ -150,4 +152,9 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
     {
         return allChecked;
     }
+
+    public HashMap<Integer, HashMap<Integer, Integer>> getGroup_checkedStates() {
+        return group_checkedStates;
+    }
+
 }

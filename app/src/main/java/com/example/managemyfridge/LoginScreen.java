@@ -75,6 +75,10 @@ public class LoginScreen extends AppCompatActivity {
             boolean f = dbHandlerlog.findUser(username);
             if(f) //checks if the username exists
                 if(password.getText().toString().equals(user.getPassword())) { //checks if the password is correct
+
+                    user.setUsername(username.getText().toString());
+                    user.setPassword(password.getText().toString());
+
                     Intent i = new Intent(getApplicationContext(), MainScreen.class); //moves to mainscreen
                     startActivity(i);
                     finish(); //So that we don't go back to the login activity on back pressed

@@ -70,11 +70,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             setPreferencesFromResource(R.xml.app_settings, rootKey);
 
 
-
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        boolean dark = sharedPreferences.getBoolean("dark_mode", false);
+        darkModeEnabled = sharedPreferences.getBoolean("dark_mode", false);
+       // System.out.println(darkModeEnabled);
 
 
         feedback = (Preference) findPreference("send_feedback");
@@ -96,8 +96,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
 
         darkMode = (SwitchPreference) findPreference("darkMode");
+       // if(darkMode.)
 
-        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
+        /*switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
             case Configuration.UI_MODE_NIGHT_YES:
                 System.out.println("DARK MODE");
                 darkModeEnabled = true;
@@ -107,6 +108,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 darkModeEnabled = false;
                 break;
         }
+
+         */
 
         darkMode.setDefaultValue(darkModeEnabled); //The default value is the theme that the system is currently using
 
@@ -118,18 +121,21 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 {
                     //Switch to Dark Mode
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    darkModeEnabled = true;
                 }
                 else //if not
                 {
                     //Switch to Light Mode
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    darkModeEnabled = false;
                 }
 
+                darkModeEnabled = (boolean) newValue;
+                //darkMode.setDefaultValue(darkModeEnabled);
+
+                System.out.println(darkModeEnabled);
+
                 //TODO: The user's choice is saved in the SharedPreferences and will be retrieved upon starting the application
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                SharedPreferences.Editor editor = preferences.edit();
+                //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                //SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("dark_mode", darkModeEnabled);
                 editor.apply();
 

@@ -74,8 +74,6 @@ public class RecipesOverviewFragment extends Fragment {
         recipesAdapter = new ContentRecyclerAdapter(getContext(), this);
         recipesRecyclerView.setAdapter(recipesAdapter);
 
-
-
         // Inflate the layout for this fragment
         return view;
     }

@@ -1,9 +1,9 @@
 package com.example.managemyfridge;
 
 
+import java.util.HashMap;
+
 public class Users {
-
-
 
     private int _id;
     private String username;
@@ -13,6 +13,7 @@ public class Users {
     private Product[] fridgeItems;
 
     public Users(){
+
 
     }
 
@@ -56,4 +57,5 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

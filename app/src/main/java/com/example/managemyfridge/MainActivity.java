@@ -95,11 +95,11 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             //Retrieve data from the Bundle (other methods include getInt(), getBoolean() etc)
            // Product product = (Product) savedInstanceState.getSerializable("Product");
-            CharSequence displayText = savedInstanceState.getCharSequence("savedDisplayText");
+            CharSequence item_name = savedInstanceState.getCharSequence("item_name");
            // int userChoice = savedInstanceState.getInt("savedUserChoice");
 
             //Restore the dynamic state of the UI
-            //itemName.setText(product.getProductName());
+            itemName.setText(item_name);
 
         } else {
             //Initialize the UI
@@ -147,8 +147,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save data to the Bundle (other methods include putInt(), putBoolean() etc)
-        CharSequence userText = itemName.getText();
-        outState.putCharSequence("savedUserText", userText);
+        CharSequence item_name = itemName.getText();
+        outState.putCharSequence("item_name", item_name);
 
         //outState.putCharSequence("savedDisplayText", displayText);
         //outState.putInt("savedUserChoice", radioGroupOpened.getCheckedRadioButtonId());

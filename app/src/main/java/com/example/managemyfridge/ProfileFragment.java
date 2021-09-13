@@ -35,6 +35,7 @@ public class ProfileFragment extends Fragment {
     TextView username;
     TextView email;
     ImageButton changeUsername;
+    Button changePassword;
     EditText editTextUsername;
     boolean editMode = false;
 

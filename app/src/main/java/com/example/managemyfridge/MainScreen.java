@@ -97,20 +97,17 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         header.setText(headerUsername);
 
         boolean darkMode = sharedPreferences.getBoolean("dark_mode", false);
-       /* if (darkMode) //if it is checked
+        System.out.println("Dark Mode is " + darkMode);
+        if (darkMode)
         {
             //Switch to Dark Mode
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-           // darkModeEnabled = true;
         }
-        else //if not
+        else
         {
             //Switch to Light Mode
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            //darkModeEnabled = false;
         }
-
-        */
 
 
         //Desired date formatter
@@ -163,7 +160,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public void onResume() {
 
         super.onResume();
-
+/*
         //read preferences
         SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
         //SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -179,6 +176,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         //name.setText(s1);
         //age.setText(String.valueOf(a));
+
+ */
+        TextView header = inflatedView.findViewById(R.id.headerUsername);
+        header.setText(LoginScreen.user.getUsername());
+
     }
 
 
