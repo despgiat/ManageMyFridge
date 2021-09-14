@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -84,11 +85,14 @@ public class ProfileFragment extends Fragment {
         //profilePicture = view.findViewById(R.id.profilePic);
 
         username = view.findViewById(R.id.usernameTextView);
+        email = view.findViewById(R.id.emailTextView);
+
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         String name = sharedPreferences.getString("username", "Username");
-        username.setText(name);
+        username.setText(LoginScreen.user.getUsername());
+        email.setText(LoginScreen.user.getEmail());
 
         changeUsername = view.findViewById(R.id.editUsernameButton);
         changeUsername.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +100,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 //String usernameText = (String) username.getText();
+
 
                 editMode = !editMode;
                 if(editMode)
@@ -118,10 +123,16 @@ public class ProfileFragment extends Fragment {
                         editor.putString("username", String.valueOf(editTextUsername.getText()));
                         editor.apply();
 
+
+
                         //change the Username everywhere
 
                         ((MainScreen)getActivity()).usernameChange();
 
+                        LoginScreen.user.setUsername(username.getText().toString());
+
+                        //update DB
+                        LoginScreen.dbHandlerlog.updateUser();
                     }
 
                 }
