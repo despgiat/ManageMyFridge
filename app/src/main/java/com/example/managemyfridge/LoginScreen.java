@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class LoginScreen extends AppCompatActivity {
     static Users user;
-    EditText username;
+    EditText email;
     EditText password;
     Button register;
     Button login;
@@ -59,8 +59,8 @@ public class LoginScreen extends AppCompatActivity {
         boolean isemail = false;
 
         //checking if text views are filled
-        if (isEmpty(username)) {
-            username.setError("Please enter an username or email address to login");
+        if (isEmpty(email)) {
+            email.setError("Please enter email address to login");
             isValid = false;
         }
         if (isEmpty(password)) {
@@ -69,17 +69,15 @@ public class LoginScreen extends AppCompatActivity {
         }
 
         if (isValid) {
-            String usernameValue = username.getText().toString(); //gets the text that user added in the username container
+            String usernameValue = email.getText().toString(); //gets the text that user added in the username container
             String passwordValue = password.getText().toString(); //same for password
             /**TODO: Check if the username/email exists in our data base, if it does, check if the password is matching and create the user!
              *
              */
-            boolean f = dbHandlerlog.findUser(username);
+            boolean f = dbHandlerlog.findUser(email);
             if(f) //checks if the username exists
                 if(password.getText().toString().equals(user.getPassword())) { //checks if the password is correct
 
-                    user.setUsername(username.getText().toString());
-                    user.setPassword(password.getText().toString());
 
                     Intent i = new Intent(getApplicationContext(), MainScreen.class); //moves to mainscreen
                     startActivity(i);
@@ -93,7 +91,7 @@ public class LoginScreen extends AppCompatActivity {
             else
             {
                 //error message in case of wrong username
-                username.setError("The username you have entered is not correct, please try again or register if you dont have an account");
+                email.setError("The username you have entered is not correct, please try again or register if you dont have an account");
             }
             /*if (usernameValue.equals("dev") && passwordValue.equals("1234")) {//we need to check from db
                 if(isEmail(username))
@@ -121,7 +119,7 @@ public class LoginScreen extends AppCompatActivity {
     }
     //UI set up
     private void setupUI() {
-        username = findViewById(R.id.editTextTextEmailAddress);
+        email = findViewById(R.id.editTextTextEmailAddress);
         password = findViewById(R.id.editTextTextPassword);
         register = findViewById(R.id.button3);
         login = findViewById(R.id.button2);

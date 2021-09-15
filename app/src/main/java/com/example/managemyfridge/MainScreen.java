@@ -181,6 +181,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         TextView header = inflatedView.findViewById(R.id.headerUsername);
         header.setText(LoginScreen.user.getUsername());
 
+        TextView header1 = inflatedView.findViewById(R.id.headerEmail);
+        header1.setText(LoginScreen.user.getEmail());
+
     }
 
     //Starts the MainActivity, which adds new items to the product database
