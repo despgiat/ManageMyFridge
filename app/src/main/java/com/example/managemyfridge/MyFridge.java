@@ -57,7 +57,6 @@ public class MyFridge extends Fragment {
 
         if (getArguments() != null) {
             fridge = (Fridge) getArguments().getSerializable(FRIDGE);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My Fridge");
         }
     }
 
@@ -66,6 +65,7 @@ public class MyFridge extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.my_fridge_fragment, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My Fridge");
 
         addItemButton = view.findViewById(R.id.addItemButton);
         addItemButton.setOnClickListener(new View.OnClickListener() {

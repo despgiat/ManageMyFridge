@@ -34,7 +34,6 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
         this.fromFragment = fromFragment;
         dbHandler = new MyDBHandler(context, null, null, 1);
         tipsData = dbHandler.getallTips();
-
         for(int i = 0; i < tipsData.size(); i++)
         {
             System.out.println(tipsData.get(i).get_tipname());

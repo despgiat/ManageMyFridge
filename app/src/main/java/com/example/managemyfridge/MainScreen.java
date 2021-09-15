@@ -183,7 +183,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
-
     //Starts the MainActivity, which adds new items to the product database
     public void addNewItem()
     {
@@ -465,7 +464,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             Toast.makeText(this, "Something went wrong...", Toast.LENGTH_SHORT).show();
         }
-        //getSupportFragmentManager().beginTransaction().replace(R.id.screen, fromFragment).commit();
+        getSupportFragmentManager().beginTransaction().detach(fromFragment).attach(fromFragment).commit(); //To refresh the Fragment UI
     }
 
     //Deletes a product from the database

@@ -138,7 +138,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 //SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("dark_mode", darkModeEnabled);
                 editor.apply();
-
                 return true;
             }
         });

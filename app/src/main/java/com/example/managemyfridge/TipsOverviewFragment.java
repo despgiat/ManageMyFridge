@@ -19,7 +19,6 @@ import org.w3c.dom.ls.LSOutput;
 public class TipsOverviewFragment extends Fragment {
 
     //Load articles from database
-
     RecyclerView.Adapter tipsAdapter;
 
     // TODO: Rename parameter arguments, choose names that match

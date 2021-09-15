@@ -93,7 +93,7 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
             public void onClick(View v) {
                 System.out.println(productData.get(position).getID());
                 ((MainScreen) fromFragment.getActivity()).openProduct(productData.get(position).getID(), fromFragment);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
             }
         });
 
@@ -102,7 +102,7 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
             public void onClick(View v)
             {
                 ((MainScreen) fromFragment.getActivity()).editProduct(productData.get(position));
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
             }
         });
 

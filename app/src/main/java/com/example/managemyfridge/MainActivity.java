@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     //saves the current state
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -166,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         String unit = unitSpinner.getSelectedItem().toString();
         String productType = typeSpinner.getSelectedItem().toString();
 
+        //TODO Editing the custom opening date doesn't work, we should fix it.
 
         if(customOpenedDate) //If the user had chosen a custom opening date and not the "Today" option in the last radio group (upon checking that the product has been opened)
         {

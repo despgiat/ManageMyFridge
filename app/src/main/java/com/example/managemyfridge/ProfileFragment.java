@@ -140,7 +140,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
         email = view.findViewById(R.id.emailTextView);
 
         logoutButton = view.findViewById(R.id.logoutButton);

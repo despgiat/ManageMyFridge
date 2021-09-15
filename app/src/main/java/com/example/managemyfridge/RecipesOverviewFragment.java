@@ -39,7 +39,6 @@ public class RecipesOverviewFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     public static RecipesOverviewFragment newInstance(ArrayList<Recipe> recipes) {
         RecipesOverviewFragment fragment = new RecipesOverviewFragment();
         Bundle args = new Bundle();

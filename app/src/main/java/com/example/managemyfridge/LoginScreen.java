@@ -1,8 +1,10 @@
 package com.example.managemyfridge;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -76,6 +78,8 @@ public class LoginScreen extends AppCompatActivity {
             if(f) //checks if the username exists
                 if(password.getText().toString().equals(user.getPassword())) { //checks if the password is correct
 
+                    user.setUsername(username.getText().toString());
+                    user.setPassword(password.getText().toString());
 
                     Intent i = new Intent(getApplicationContext(), MainScreen.class); //moves to mainscreen
                     startActivity(i);
@@ -121,6 +125,21 @@ public class LoginScreen extends AppCompatActivity {
         password = findViewById(R.id.editTextTextPassword);
         register = findViewById(R.id.button3);
         login = findViewById(R.id.button2);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean darkMode = sharedPreferences.getBoolean("dark_mode", false);
+
+        if (darkMode)
+        {
+            //Switch to Dark Mode
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else
+        {
+            //Switch to Light Mode
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
     }
 
 }
