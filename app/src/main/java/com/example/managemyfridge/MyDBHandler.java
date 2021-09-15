@@ -1,5 +1,6 @@
 package com.example.managemyfridge;
 
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,14 +12,26 @@ import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
     //Σταθερές για τη ΒΔ (όνομα ΒΔ, έκδοση, πίνακες κλπ)
+
+    //New: Added PATH, mDataBase, mContext, mNeedUpdate and changed the name of the DB to MMFDB1
+    private static String DATABASE_PATH =  "";
+    private SQLiteDatabase mDataBase;
+    private final Context mContext;
+    private boolean mNeedUpdate = false;
+
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "MMFDB.db";
+    private static final String DATABASE_NAME = "MMFDB1.db";
     public static final String TABLE_PRODUCTS = "PRODUCT";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PRODUCTNAME = "Name";
@@ -55,6 +68,94 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
     //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+
+
+    //NEW: constructor and new methods for DB handling
+
+
+    public MyDBHandler(Context context, String name,
+                       SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+
+        if (android.os.Build.VERSION.SDK_INT >= 17)
+            DATABASE_PATH = context.getApplicationInfo().dataDir + "/databases/";
+        else
+            DATABASE_PATH = "/data/data/" + context.getPackageName() + "/databases/";
+        this.mContext = context;
+
+
+        copyDataBase();
+
+        this.getReadableDatabase();
+    }
+
+    public void updateDataBase() throws IOException {
+        if (mNeedUpdate) {
+            File dbFile = new File(DATABASE_PATH + DATABASE_NAME);
+            if (dbFile.exists())
+                dbFile.delete();
+
+            copyDataBase();
+
+            mNeedUpdate = false;
+        }
+    }
+
+    private boolean checkDataBase() {
+        File dbFile = new File(DATABASE_PATH + DATABASE_NAME);
+        return dbFile.exists();
+    }
+
+    private void copyDataBase() {
+        if (!checkDataBase()) {
+            this.getReadableDatabase();
+            this.close();
+            try {
+                copyDBFile();
+            } catch (IOException mIOException) {
+                throw new Error("ErrorCopyingDataBase");
+            }
+        }
+    }
+
+    private void copyDBFile() throws IOException {
+        InputStream mInput = mContext.getAssets().open(DATABASE_NAME);
+
+        OutputStream mOutput = new FileOutputStream(DATABASE_PATH + DATABASE_NAME);
+        byte[] mBuffer = new byte[1024];
+        int mLength;
+        while ((mLength = mInput.read(mBuffer)) > 0)
+            mOutput.write(mBuffer, 0, mLength);
+        mOutput.flush();
+        mOutput.close();
+        mInput.close();
+    }
+
+    public boolean openDataBase() throws SQLException {
+        mDataBase = SQLiteDatabase.openDatabase(DATABASE_PATH + DATABASE_NAME, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        return mDataBase != null;
+    }
+
+    @Override
+    public synchronized void close() {
+        if (mDataBase != null)
+            mDataBase.close();
+        super.close();
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion)
+            mNeedUpdate = true;
+    }
+
+    //ORIGINAL CODE
+    /*
 
     //Constructor
     public MyDBHandler(Context context, String name,
@@ -146,9 +247,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+     */
+
 
 
     //PRODUCT METHODS
+
+    //TODO: Change the product methods, new idofuser needed
 
     //Μέθοδος για προσθήκη ενός προϊόντος στη ΒΔ
     public void addProduct(Product product) {
@@ -340,6 +445,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //USER METHODS
 
+    //TODO: Add method to get fav_tips and fav_recipes, old methods may need changes
 
     //adding user to data base
     public void addUser(){
@@ -431,6 +537,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //INGREDIENT METHODS
 
+    //TODO: Might need to alter or delete all methods
+
     // we have created a new method that returns all the ingredients of a recipe.
     public ArrayList<Ingredient> getallIngredients() {
         // on below line we are creating a
@@ -501,6 +609,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     //RECIPE METHODS
+
+    //TODO: Changes may be needed, added ingredient in table RECIPE
 
     // we have created a new method that returns all the recipes.
     public ArrayList<Recipe> getallRecipes() {
