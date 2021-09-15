@@ -42,6 +42,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_QUANTITY = "Quantity";
     public static final String COLUMN_UNIT = "Unit";
 
+    //NEW: IDOFUSER = 0 for starters
+    private static String COLUMN_ID_OF_USER = "_idofUSER";
+
     public static final String TABLE_USERS = "USERS";
     public static final String COLUMN_USERNAME = "Username";
     public static final String COLUMN_EMAIL = "Email";
@@ -256,7 +259,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //TODO: Change the product methods, new idofuser needed
 
     //Μέθοδος για προσθήκη ενός προϊόντος στη ΒΔ
-    public void addProduct(Product product) {
+    public void addProduct(Product product, int idofuser) {
         //added: exdate, isopened, prodtype, dateofopening, img, unit
         ContentValues values = new ContentValues();
         values.put(COLUMN_PRODUCTNAME, product.getProductName());
@@ -268,6 +271,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_DATE_OF_OPENING, product.get_DateofOpening());
         values.put(COLUMN_IMAGE, product.get_img());
         values.put(COLUMN_UNIT, product.get_unit());
+        values.put(COLUMN_ID_OF_USER, idofuser); //NEW:added idofuser
         SQLiteDatabase db = this.getWritableDatabase();
         //original
         db.insert(TABLE_PRODUCTS, null, values);
@@ -376,7 +380,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                         cursor.getString(5), //type
                         cursor.getString(6), //date of opening
                         //image      cursor.getString(7),
-                        cursor.getString(8) //unit
+                        cursor.getString(8), //unit
+                        cursor.getInt(9)  //NEW:ADDED,  THIS CHECK IT OUT LATER
 
                 ));
             } while (cursor.moveToNext());

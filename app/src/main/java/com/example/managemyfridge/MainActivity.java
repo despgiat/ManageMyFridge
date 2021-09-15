@@ -231,7 +231,11 @@ public class MainActivity extends AppCompatActivity {
                 if (found == null){ //if it doesn't, the new product gets added
 
                     Product product = new Product(itemNameText, quantity, expiryText, isOpened, productType, openedDateText, unit);
-                    dbHandler.addProduct(product);
+
+                    //NEW: Find id of user and send it with new product to be created
+                    int idofuser = LoginScreen.user.getID();
+                    dbHandler.addProduct(product, idofuser);
+
 
                     //adding toast if product was added
                     Toast.makeText(MainActivity.this, "Product added", Toast.LENGTH_SHORT).show();

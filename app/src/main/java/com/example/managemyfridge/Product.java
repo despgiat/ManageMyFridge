@@ -18,11 +18,14 @@ public class Product implements Serializable {
     private String _img;
     private String _unit;
 
+    //NEW: Added idofuser
+    private int _idofUSER;
+
     public Product() {
     }
 
-    //Added to product: exDate, isitopen, type, dateofopening, unit
-    public Product(int id, String productname, String quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit) {
+    //Added to product: exDate, isitopen, type, dateofopening, unit. NEW : Added idofUSER
+    public Product(int id, String productname, String quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit, int idofuser) {
         this.setID(id);
         this._productname = productname;
         this._quantity = quantity;
@@ -31,6 +34,9 @@ public class Product implements Serializable {
         this._prodtype = productType;
         this._DateofOpening = dateofopening;
         this._unit = unit;
+
+        //NEW
+        this._idofUSER = idofuser;
     }
 
     public Product(String productname, String quantity, String expirationdate, String isitopen, String productType, String dateofopening, String unit) {
@@ -138,6 +144,16 @@ public class Product implements Serializable {
         this._unit = _unit;
     }
 
+    //NEW: getter and setter of idofUSER
+    public int get_idofUSER() {
+        return _idofUSER;
+    }
+
+    public void set_idofUSER(int _idofUSER) {
+        this._idofUSER = _idofUSER;
+    }
+
+
 
     //toString method
     @Override
@@ -151,7 +167,8 @@ public class Product implements Serializable {
                 ", type='" + _prodtype + '\'' +
                 ", date of opening='" + _DateofOpening + '\'' +
                 ", image='" + _img + '\'' +
-                ", unit='" + _unit +
+                ", unit='" + _unit + '\'' +
+                ", id of User='" + _idofUSER + //newly added
                 '}';
     }
 
