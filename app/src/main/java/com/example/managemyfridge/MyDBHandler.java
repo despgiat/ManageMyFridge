@@ -658,7 +658,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         // on below line we are creating a cursor with query to read data from database.
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_RECIPES, null);
 
-        // on below line we are creating two new array lists, for recipes and ingredients.
+        // on below line we are creating a new array list for recipes.
         ArrayList<Recipe> listofRecipes = new ArrayList<>();
        // ArrayList<Ingredient> listofIng = new ArrayList<>();
 
@@ -692,6 +692,62 @@ public class MyDBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return listofRecipes;
+    }
+
+    public ArrayList<Recipe> getallRecipesofCertainPref(ArrayList<String> listofpreferences){
+        int i = 0;
+        // on below line we are creating a new array list for chosen recipes.
+        ArrayList<Recipe> listofRecipes = new ArrayList<>();
+        while (i<listofpreferences.size()){
+
+            //meal type chosen, changes until all meal types chosen are selected and related recipes are searched for
+            String meal_type = listofpreferences.get(i);
+
+            // on below line we are creating a
+            // database for reading our database.
+            SQLiteDatabase db = this.getReadableDatabase();
+
+            // on below line we are creating a cursor with query to read data from database.
+
+            //searches for all recipes with certain meal type
+            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_RECIPES +  " WHERE " +
+                    COLUMN_RECIPE_TYPE + " = '" + meal_type + "'", null);
+
+
+
+
+
+            // moving our cursor to first position.
+            if (cursor.moveToFirst()) {
+                do {
+                    Recipe recipe = new Recipe(cursor.getInt(0), //id
+                            cursor.getString(1), //recipename
+                            cursor.getString(2), //recipetype
+                            cursor.getString(3), //instructions
+                            cursor.getString(4), //ingredients
+                            cursor.getString(5)); //source
+
+
+
+                    // on below line we are adding the data from cursor to our recipe array list.
+                    listofRecipes.add(recipe);
+
+                } while (cursor.moveToNext());
+                // moving our cursor to next.
+            }
+
+            //Incrementing i in order to move to next meal type if there is any.
+            i++;
+
+            // at last closing our cursor and db
+            // and returning our array list.
+            cursor.close();
+            db.close();
+
+
+        }
+        return listofRecipes;
+
     }
 
     //TIP METHODS
