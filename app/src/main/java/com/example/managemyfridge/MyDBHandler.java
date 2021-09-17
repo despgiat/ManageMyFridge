@@ -92,6 +92,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         this.getReadableDatabase();
     }
 
+    //Αναβάθμιση ΒΔ: Ελέγχει αν χρειάζεται αναβάθμιση (mNeedUpdate = true) και αν ναι,
+    // κάνει την αντίστοιχη διαγραφή και μετά επαναδημιουργία με την copyDataBase()/copyDBFile().
     public void updateDataBase() throws IOException {
         if (mNeedUpdate) {
             File dbFile = new File(DATABASE_PATH + DATABASE_NAME);
@@ -151,6 +153,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     }
 
+
+    //Αναβάθμιση ΒΔ: Λέω πως χρειάζεται αναβάθμιση αν η παλιά version είναι μικρότερη της νέας.
+    // Ελέγχεται και κάνει την αντίστοιχη διαγραφή και επαναδημιουργία στην updateDataBase().
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion)
@@ -256,7 +261,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //PRODUCT METHODS
 
-    //TODO: Change the product methods, new idofuser needed
+    //TODO: Change the product methods, new idofuser needed. DONE
 
     //Μέθοδος για προσθήκη ενός προϊόντος στη ΒΔ
     public void addProduct(Product product, int idofuser) {
@@ -328,6 +333,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             product.set_DateofOpening(cursor.getString(6));
             //product.set_img(cursor.getString(7)); //the img changes based on type, not user's choice.
             product.set_unit(cursor.getString(8));
+           //product.set_idofUSER(Integer.parseInt(cursor.getString(9))); //ID of user doesn't change
             cursor.close();
 
         } else {
@@ -356,14 +362,15 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    // we have created a new method that returns all the products in the fridge.
-    public ArrayList<Product> showallProducts() {
+    // we have created a new method that returns all the products in the fridge of the current user.
+    public ArrayList<Product> showallProducts(int idofuser) {
         // on below line we are creating a
         // database for reading our database.
         SQLiteDatabase db = this.getReadableDatabase();
 
         // on below line we are creating a cursor with query to read data from database.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PRODUCTS, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PRODUCTS +" WHERE " +
+                COLUMN_ID_OF_USER + " = '" + idofuser + "'", null);
 
         // on below line we are creating a new array list.
         ArrayList<Product> fridgeProducts = new ArrayList<>();
@@ -381,7 +388,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                         cursor.getString(6), //date of opening
                         //image      cursor.getString(7),
                         cursor.getString(8), //unit
-                        cursor.getInt(9)  //NEW:ADDED,  THIS CHECK IT OUT LATER
+                        cursor.getInt(9)  //NEW:ADDED idofuser, maybe not needed and perhaps we'll make a different constructor to leave this out
 
                 ));
             } while (cursor.moveToNext());
@@ -438,7 +445,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_IS_IT_OPEN, product.get_opened());
         values.put(COLUMN_TYPE, product.get_prodtype());
         values.put(COLUMN_DATE_OF_OPENING, product.get_DateofOpening());
-        values.put(COLUMN_IMAGE, product.get_img());
+        values.put(COLUMN_IMAGE, product.get_img()); //is this necessary?
         values.put(COLUMN_UNIT, product.get_unit());
         SQLiteDatabase db = this.getWritableDatabase();
         //original
@@ -544,6 +551,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //TODO: Might need to alter or delete all methods
 
+
     // we have created a new method that returns all the ingredients of a recipe.
     public ArrayList<Ingredient> getallIngredients() {
         // on below line we are creating a
@@ -575,6 +583,28 @@ public class MyDBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return listofIngredients;
+    }
+
+    //NEW: PROBABLY WE'LL STICK WITH THIS
+    // we have created a new method that returns all the ingredients of a recipe.
+    public String newgetallIngredientsofRecipe(int idofrecipe) {
+
+        // on below line we are creating a
+        // database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // on below line we are creating a cursor with query to read data from database.
+        Cursor cursor = db.rawQuery("SELECT Ingredients FROM " + TABLE_RECIPES + " WHERE " +
+                COLUMN_ID_OF_RECIPE + " = '" + idofrecipe + "'", null);
+
+        String Ingredients = cursor.getString(0);
+
+        // at last closing our cursor and db
+        // and returning our array list.
+        cursor.close();
+        db.close();
+        return Ingredients;
+
     }
 
 
@@ -613,6 +643,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return listofIngredients;
     }
 
+
+
     //RECIPE METHODS
 
     //TODO: Changes may be needed, added ingredient in table RECIPE
@@ -628,7 +660,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         // on below line we are creating two new array lists, for recipes and ingredients.
         ArrayList<Recipe> listofRecipes = new ArrayList<>();
-        ArrayList<Ingredient> listofIng = new ArrayList<>();
+       // ArrayList<Ingredient> listofIng = new ArrayList<>();
 
 
         // moving our cursor to first position.
@@ -638,12 +670,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
                         cursor.getString(1), //recipename
                         cursor.getString(2), //recipetype
                         cursor.getString(3), //instructions
-                        cursor.getString(4)); //source
+                        cursor.getString(4), //ingredients
+                        cursor.getString(5)); //source
 
+
+
+                /*
                 //fill the recipe's list of ingredients by calling getallIngredientsofRecipe method
                 listofIng = getallIngredientsofRecipe(recipe.get_id());
 
-                recipe.setListofIngr(listofIng);
+                recipe.setListofIngr(listofIng);*/
+
                 // on below line we are adding the data from cursor to our recipe array list.
                 listofRecipes.add(recipe);
 

@@ -12,8 +12,11 @@ public class Recipe {
     private String _img;
     private String _source;
 
+    //NEW: ADDED INGREDIENTS
+    private String _ingredients;
 
-    private ArrayList<Ingredient> listofIngr;
+
+    //private ArrayList<Ingredient> listofIngr;
 
 
     public Recipe() {
@@ -28,6 +31,8 @@ public class Recipe {
         this.listofIngr = new ArrayList<>();
     }*/
 
+    /*
+    //old constructor without ingredients
     public Recipe(int id, String recipename, String recipeType, String instructions, String source) {
         this.set_id(id);
         this._recipename = recipename;
@@ -35,6 +40,17 @@ public class Recipe {
         this._instructions = instructions;
         this._source = source;
         this.listofIngr = new ArrayList<>();
+    }*/
+
+    //NEW: CONSTRUCTOR WITH INGREDIENTS
+    public Recipe(int id, String recipename, String recipeType, String instructions,String ingredients, String source) {
+        this.set_id(id);
+        this._recipename = recipename;
+        this._recipetype = recipeType;
+        this._instructions = instructions;
+        this._ingredients = ingredients;
+        this._source = source;
+
     }
 
     public int get_id() {
@@ -86,13 +102,13 @@ public class Recipe {
     }
 
 
-    public ArrayList<Ingredient> getListofIngr() {
+   /* public ArrayList<Ingredient> getListofIngr() {
         return listofIngr;
     }
 
     public void setListofIngr(ArrayList<Ingredient> listofIngr) {
         this.listofIngr = listofIngr;
-    }
+    }*/
 
 
      public String get_source() {
@@ -101,6 +117,15 @@ public class Recipe {
 
     public void set_source(String _source) {
         this._source = _source;
+    }
+
+    //NEW: ADDED GETTER AND SETTER FOR INGREDIENTS
+    public String get_ingredients() {
+        return _ingredients;
+    }
+
+    public void set_ingredients(String _ingredients) {
+        this._ingredients = _ingredients;
     }
 
 
