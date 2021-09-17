@@ -63,7 +63,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -72,15 +72,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_weight="1"
             android:text="Username: "
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/usernameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="94dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Username"
@@ -96,16 +95,13 @@
             android:text="Name"
             android:visibility="gone" />
 
-        <ImageButton
+        <Button
             android:id="@+id/editUsernameButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="0dp"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
-            android:src="@drawable/ic_edit_yellow" />
+            android:layout_height="40dp"
+            android:text="Change Username"
+            android:textSize="8sp" />
+
 
     </LinearLayout>
 

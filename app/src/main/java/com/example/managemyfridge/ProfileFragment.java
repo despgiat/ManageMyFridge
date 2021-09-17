@@ -37,7 +37,7 @@ public class ProfileFragment extends Fragment {
     ImageView profilePicture;
     TextView username;
     TextView email;
-    ImageButton changeUsername;
+    Button changeUsername;
     EditText editTextUsername;
     TextView passwordTextView;
     Button changePassword;
@@ -168,7 +168,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
+        /*TODO: Change button to Save, after click*/
         changeUsername = view.findViewById(R.id.editUsernameButton);
         changeUsername.setOnClickListener(new View.OnClickListener() {
             @Override
