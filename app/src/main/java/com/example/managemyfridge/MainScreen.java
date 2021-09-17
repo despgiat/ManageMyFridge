@@ -115,7 +115,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         //Loads the databases:
         dbHandler = new MyDBHandler(this, null, null, 1);
-        ArrayList<Product> products = dbHandler.showallProducts();
+        ArrayList<Product> products = dbHandler.showallProducts(LoginScreen.user.getID());
         fridge = new Fridge(products);
 
         //Some fragments in the app get added to the backstack, and we want the "burger" button in the navigation drawer to become the arrow, and to allow the navigation only backward
@@ -216,7 +216,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 case 2: //case 2 and case 3 merged
                 case 3:
                     //Update the fridge from the database:
-                    fridge.setFridgeItems(dbHandler.showallProducts());
+                    fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                     //Updates the Home Fragment with the new fridge and displays it
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("fridge", fridge);
@@ -461,7 +461,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         if(opened)
         {
             Toast.makeText(this, "You opened this product!", Toast.LENGTH_SHORT).show();
-            fridge.setFridgeItems(dbHandler.showallProducts()); //Updates the fridge from the database
+            fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID())); //Updates the fridge from the database
         }
         else
         {
@@ -477,7 +477,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         if (deleted)
         {
             Toast.makeText(this, productName + " was successfully deleted", Toast.LENGTH_SHORT).show();
-            fridge.setFridgeItems(dbHandler.showallProducts());
+            fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
         }
         else
         {
