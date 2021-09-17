@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * In the Profile Fragment the user is able to see the information regarding them, such as their username, e-mail, password and profile picture.
  */
@@ -36,8 +38,15 @@ public class ProfileFragment extends Fragment {
     TextView username;
     TextView email;
     ImageButton changeUsername;
-    Button changePassword;
     EditText editTextUsername;
+    TextView passwordTextView;
+    Button changePassword;
+    EditText new_passowrd;
+    EditText confirm_passowrd;
+    TextView password_match;
+    Button save;
+    Button cancel;
+
     boolean editMode = false;
 
 
@@ -91,6 +100,74 @@ public class ProfileFragment extends Fragment {
         String name = sharedPreferences.getString("username", "Username");
         username.setText(LoginScreen.user.getUsername());
         email.setText(LoginScreen.user.getEmail());
+
+        changePassword = view.findViewById(R.id.change_password);
+        confirm_passowrd = view.findViewById(R.id.passwordConfirm);
+        passwordTextView = view.findViewById(R.id.passwordTextView);
+
+
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePassword.setVisibility(View.GONE);
+                passwordTextView.setVisibility(View.GONE);
+                new_passowrd = view.findViewById(R.id.newPassword);
+                new_passowrd.setVisibility(View.VISIBLE);
+
+                confirm_passowrd = view.findViewById(R.id.passwordConfirm);
+                confirm_passowrd.setVisibility(View.VISIBLE);
+
+
+
+
+                save = view.findViewById(R.id.save_new_password);
+                save.setVisibility(View.VISIBLE);
+                cancel = view.findViewById(R.id.discard);
+                cancel.setVisibility(View.VISIBLE);
+
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String newpass, confpass;
+                        newpass= new_passowrd.getText().toString();
+                        confpass = confirm_passowrd.getText().toString();
+
+                        if (!(newpass.equals(confpass))) {
+                            confirm_passowrd.setError("The passwords you have entered are not matching, please re-enter them to register!");
+                        }
+                        else{
+                            LoginScreen.user.setPassword(newpass);
+                            LoginScreen.dbHandlerlog.updateUser();
+
+                            save.setVisibility(View.GONE);
+                            cancel.setVisibility(View.GONE);
+                            new_passowrd.setVisibility(View.GONE);
+                            confirm_passowrd.setVisibility(View.GONE);
+                            changePassword.setVisibility(View.VISIBLE);
+                            passwordTextView.setVisibility(View.VISIBLE);
+                            confirm_passowrd.getText().clear();
+                            new_passowrd.getText().clear();
+                        }
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        confirm_passowrd.getText().clear();
+                        new_passowrd.getText().clear();
+                        save.setVisibility(View.GONE);
+                        cancel.setVisibility(View.GONE);
+                        new_passowrd.setVisibility(View.GONE);
+                        confirm_passowrd.setVisibility(View.GONE);
+                        changePassword.setVisibility(View.VISIBLE);
+                        passwordTextView.setVisibility(View.VISIBLE);
+                    }
+                });
+
+            }
+        });
 
         changeUsername = view.findViewById(R.id.editUsernameButton);
         changeUsername.setOnClickListener(new View.OnClickListener() {

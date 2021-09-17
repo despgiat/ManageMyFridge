@@ -91,7 +91,7 @@ public class LoginScreen extends AppCompatActivity {
             else
             {
                 //error message in case of wrong username
-                email.setError("The username you have entered is not correct, please try again or register if you dont have an account");
+                email.setError("The email you have entered is not correct, please try again or register if you dont have an account");
             }
             /*if (usernameValue.equals("dev") && passwordValue.equals("1234")) {//we need to check from db
                 if(isEmail(username))
