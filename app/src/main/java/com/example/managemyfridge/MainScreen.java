@@ -199,7 +199,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("Fridge", fridge);
         i.putExtra("Product", product);
-        //i.putExtra("Edit", true);
+
         startActivityForResult(i, 3);
     }
 
@@ -218,12 +218,16 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     //Update the fridge from the database:
                     fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                     //Updates the Home Fragment with the new fridge and displays it
-                    Bundle bundle = new Bundle();
+                   /* Bundle bundle = new Bundle();
                     bundle.putSerializable("fridge", fridge);
                     MyFridge myFridge = new MyFridge();
                     myFridge.setArguments(bundle);
                     currentFragment = myFridge;
                     getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
+
+                    */
+                    getSupportFragmentManager().beginTransaction().detach(currentFragment).attach(currentFragment).commit(); //To refresh the Fragment UI
+
                     break;
                 //Updates the Home Fragment with the new fridge and displays it
 
@@ -237,22 +241,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     break;
             }
         }
-
-
-        /*if ((requestCode == 2) && resultCode == RESULT_OK)
-        {
-
-
-
-        }
-
-        if (resultCode == RESULT_OK) { //https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
-
-            if (requestCode == 22) {
-
-            }
-        }
-         */
     }
 
     @Override
@@ -273,6 +261,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         else if(getSupportFragmentManager().getBackStackEntryCount() == 0 && !(currentFragment instanceof HomeFragment))
         {
             Bundle bundle = new Bundle();
+            fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
             bundle.putSerializable("fridge", fridge);
             HomeFragment homeFragment = new HomeFragment();
             homeFragment.setArguments(bundle);
@@ -337,6 +326,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         switch (item.getItemId())
         {
             case R.id.myFridgeItem:
+                fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                 bundle.putSerializable("fridge", fridge);
                 MyFridge myFridge = new MyFridge();
                 myFridge.setArguments(bundle);
@@ -346,6 +336,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
 
             case R.id.homeItem:
+                fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                 bundle.putSerializable("fridge", fridge);
                 //bundle.putString("date", currentDate.format(formatter));
 
@@ -357,6 +348,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
 
             case R.id.expiredItem:
+                fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                 bundle.putSerializable("fridge", fridge);
                 ExpiredFragment expiredFragment = new ExpiredFragment();
                 expiredFragment.setArguments(bundle);
@@ -385,7 +377,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 SettingsFragment settingsFragment = new SettingsFragment();
                 currentFragment = settingsFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, settingsFragment).commit();
-                //getSupportActionBar().setTitle("Settings");
+               // getSupportActionBar().setTitle("Settings");
                 break;
 
             case R.id.favouritesItem:
@@ -445,6 +437,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     {
         navigationView.getMenu().findItem(R.id.expiredItem).setChecked(true);
 
+        fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
         Bundle bundle = new Bundle();
         bundle.putSerializable("fridge", fridge);
         ExpiredFragment expiredFragment = new ExpiredFragment();
@@ -492,13 +485,5 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         TextView header = inflatedView.findViewById(R.id.headerUsername);
         header.setText(headerUsername);
     }
-
-    public void getMealType()
-    {
-
-    }
-
-    //public
-
 
 }

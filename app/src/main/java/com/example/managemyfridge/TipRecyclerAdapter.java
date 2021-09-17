@@ -80,7 +80,7 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
 
                     Bundle bundle = new Bundle();
                     bundle.putString("title", tipsData.get(position).get_tipname());
-                    bundle.putString("instructions", tipsData.get(position).get_description());
+                    bundle.putString("description", tipsData.get(position).get_description());
                     //bundle.putSerializable("ingredients", ingredients);
 
                     //Add the image and the ingredients list and we're set

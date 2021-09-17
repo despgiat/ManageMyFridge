@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import java.time.LocalDate;
 
+//TODO Update Expired Items for each user distinctively (DONE)
+
 public class ExpiredFragment extends Fragment {
 
     private Fridge fridge; //We need to access the fridge products

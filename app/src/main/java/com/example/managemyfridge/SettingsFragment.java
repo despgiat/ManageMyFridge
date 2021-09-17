@@ -25,7 +25,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private static final String DARK_MODE_SWITCH = "darkMode";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -40,7 +39,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
 
-    // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(String param1, String param2) {
 
         SettingsFragment fragment = new SettingsFragment();
@@ -61,14 +59,20 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         if (getArguments() != null) {
           //  mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Settings");
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = super.onCreateView(inflater, container, savedInstanceState); //because we don't want to inflate a new XML layout
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Settings");
+        return view;
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.app_settings, rootKey);
-
 
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -133,7 +137,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
                 System.out.println(darkModeEnabled);
 
-                //TODO: The user's choice is saved in the SharedPreferences and will be retrieved upon starting the application
+                //TODO: The user's choice is saved in the SharedPreferences and will be retrieved upon starting the application (DONE)
                 //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 //SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("dark_mode", darkModeEnabled);

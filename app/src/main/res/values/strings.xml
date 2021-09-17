@@ -143,6 +143,7 @@
         <item>Gluten Free</item>
         <item>Nut Free</item>
         <item>Paleo</item>
+        <item>Mediterranean</item>
     </string-array>
 
     <string-array name="ingredient_groups">

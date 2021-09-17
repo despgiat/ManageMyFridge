@@ -39,17 +39,26 @@ public class RecipeSearchFragment extends Fragment {
 
     IngredientExpListAdapter adapter;
 
+    MyDBHandler dbHandler;
+
+    //Things I need to implement the find Recipes functionality
+    //Get the diet prefs
+    //Get the desired meal type
+    //Get all the desired checked ingredients
+
+    ArrayList<String> checkedDietPrefs;
+    ArrayList<String> checkedMealTypes;
+    ArrayList<String> checkedIngredients;
+
     //ArrayList<String> fridge;
     //String[] ingredients = new String[]{"Eggs", "Bacon", "Chicken", "Milk", "Yogurt", "Apples", "Feta cheese", "Chocolate Milk", "Juice", "Bell Peppers"};
     //String[] fridge = new String[]{"Mayonaise", "Mustard", "Chicken", "Yogurt", "Juice"};
 
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "fridge";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private Fridge fridge;
 
     ListView diet_prefs_listView;
@@ -72,14 +81,13 @@ public class RecipeSearchFragment extends Fragment {
 
      * @return A new instance of fragment Recipes.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static RecipeSearchFragment newInstance(Fridge fridge) {
         RecipeSearchFragment fragment = new RecipeSearchFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, fridge);
         //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -91,10 +99,9 @@ public class RecipeSearchFragment extends Fragment {
             fridge = (Fridge) getArguments().getSerializable(ARG_PARAM1);
             diet_prefs = getResources().getStringArray(R.array.diet_preference);
             meal_type = getResources().getStringArray(R.array.meal_type);
-
             ingredientGroups = Arrays.asList(getResources().getStringArray(R.array.ingredient_groups));
-            ingredients = new HashMap<>();
 
+            ingredients = new HashMap<>();
             ingredients.put(ingredientGroups.get(0), Arrays.asList(getResources().getStringArray(R.array.dairy_group)));
             ingredients.put(ingredientGroups.get(1), Arrays.asList(getResources().getStringArray(R.array.meats_group)));
             ingredients.put(ingredientGroups.get(2), Arrays.asList(getResources().getStringArray(R.array.vegetables_group)));
@@ -106,6 +113,7 @@ public class RecipeSearchFragment extends Fragment {
             ingredients.put(ingredientGroups.get(8), Arrays.asList(getResources().getStringArray(R.array.dairy_alts_group)));
             ingredients.put(ingredientGroups.get(9), Arrays.asList(getResources().getStringArray(R.array.nuts_group)));
 
+            dbHandler = new MyDBHandler(getActivity(), null, null, 1);
 
             //ingredients = getResources().getStringArray(R.array.types);
         }
@@ -162,12 +170,19 @@ public class RecipeSearchFragment extends Fragment {
         findRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> ingList = adapter.getAllChecked();
 
-                for(int i = 0; i < ingList.size(); i++)
+                findRecipes();
+
+                //findRecipes();
+
+               // ArrayList<String> ingList = adapter.getAllChecked();
+
+               /* for(int i = 0; i < ingList.size(); i++)
                 {
                     System.out.println(ingList.get(i));
                 }
+
+                */
             }
         });
 
@@ -202,4 +217,35 @@ public class RecipeSearchFragment extends Fragment {
     }
 
     */
+
+    //TODO The actual findRecipes function. This is a placeholder
+
+   public ArrayList<Recipe> findRecipes()
+    {
+        ArrayList<Recipe> foundRecipes; //= new ArrayList<>();
+        //ArrayList<Recipe> allRecipes = dbHandler.getallRecipes();
+
+        ArrayList<String> prefs = new ArrayList<>();
+        prefs.add("Lunch");
+        prefs.add("Snack");
+
+        foundRecipes = dbHandler.getallRecipesofCertainPref(prefs);
+        //System.out.println(foundRecipes.size());
+
+        if(foundRecipes.size() > 0)
+        {
+            for(int i = 0; i < foundRecipes.size(); i++)
+            {
+                System.out.println(foundRecipes.get(i).get_recipename());
+            }
+        }
+        else
+        {
+            System.out.println("No recipes found!");
+        }
+
+
+        return foundRecipes;
+    }
+
 }

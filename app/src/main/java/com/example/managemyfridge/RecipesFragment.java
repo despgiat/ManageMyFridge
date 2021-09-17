@@ -32,7 +32,6 @@ public class RecipesFragment extends Fragment {
     private static final String INGREDIENTS = "ingredients";
 
 
-    // TODO: Rename and change types of parameters
     private String recipeTitle;
     private String recipeInstructions;
     private Ingredient[] ingredients;
@@ -100,6 +99,8 @@ public class RecipesFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu items for use in the action bar
         inflater.inflate(R.menu.recipes_toobar_menu, menu);
+
+        //TODO Check from the database if this recipe belongs to the user's favorites and display it accordingly (the heart icon should be filled )
 
         fave = menu.findItem(R.id.fave);
         fave.setIcon(R.drawable.ic_fave_empty);
