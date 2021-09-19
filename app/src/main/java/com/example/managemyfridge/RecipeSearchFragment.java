@@ -226,10 +226,11 @@ public class RecipeSearchFragment extends Fragment {
         //ArrayList<Recipe> allRecipes = dbHandler.getallRecipes();
 
         ArrayList<String> prefs = new ArrayList<>();
-        prefs.add("Lunch");
-        prefs.add("Snack");
+        ArrayList<String> types = new ArrayList<>();
+        types.add("Lunch");
+        types.add("Snack");
 
-        foundRecipes = dbHandler.getallRecipesofCertainPref(prefs);
+        foundRecipes = dbHandler.getallRecipesofCertainPref(prefs,types);
         //System.out.println(foundRecipes.size());
 
         if(foundRecipes.size() > 0)

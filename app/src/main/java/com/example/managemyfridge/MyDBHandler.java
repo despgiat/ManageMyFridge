@@ -69,6 +69,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_INGREDIENTNAME = "Ingredient_Name";
     public static final String COLUMN_ID_OF_RECIPE = "_idofRECIPE";
 
+    //NEW: COLUMN FOR DIET PREFERENCE
+    public static final String COLUMN_DIET_PREF = "Diet_Preference";
+
 
     //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
 
@@ -544,6 +547,15 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
+    //TODO: Make the fav_recipes and fav_tips methods
+    //NEW: Methods to get favorite recipes and tips.
+    public void fav_recipes(){}
+
+    public void fav_tips(){}
+
+
+
+
 
 
 
@@ -668,10 +680,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
             do {
                 Recipe recipe = new Recipe(cursor.getInt(0), //id
                         cursor.getString(1), //recipename
-                        cursor.getString(2), //recipetype
-                        cursor.getString(3), //instructions
-                        cursor.getString(4), //ingredients
-                        cursor.getString(5)); //source
+                        cursor.getString(2), //recipediet_pref //newly added
+                        cursor.getString(3), //recipetype
+                        cursor.getString(4), //instructions
+                        cursor.getString(5), //ingredients
+                        cursor.getString(6)); //source
 
 
 
@@ -694,14 +707,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return listofRecipes;
     }
 
-    public ArrayList<Recipe> getallRecipesofCertainPref(ArrayList<String> listofpreferences){
+    public ArrayList<Recipe> getallRecipesofCertainPref(ArrayList<String> listofpreferences, ArrayList<String> listofmealtype){
         int i = 0;
         // on below line we are creating a new array list for chosen recipes.
         ArrayList<Recipe> listofRecipes = new ArrayList<>();
+
         while (i<listofpreferences.size()){
 
+            //diet preference chosen, changes until all preferences chosen are selected and related recipes are searched for
+            String diet_pref = listofpreferences.get(i);
+
             //meal type chosen, changes until all meal types chosen are selected and related recipes are searched for
-            String meal_type = listofpreferences.get(i);
+            String meal_type = listofmealtype.get(i);
 
             // on below line we are creating a
             // database for reading our database.
@@ -722,10 +739,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 do {
                     Recipe recipe = new Recipe(cursor.getInt(0), //id
                             cursor.getString(1), //recipename
-                            cursor.getString(2), //recipetype
-                            cursor.getString(3), //instructions
-                            cursor.getString(4), //ingredients
-                            cursor.getString(5)); //source
+                            cursor.getString(2), //recipediet_pref //newly added
+                            cursor.getString(3), //recipetype
+                            cursor.getString(4), //instructions
+                            cursor.getString(5), //ingredients
+                            cursor.getString(6)); //source
+
 
 
 
