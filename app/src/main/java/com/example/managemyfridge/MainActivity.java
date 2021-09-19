@@ -132,6 +132,11 @@ public class MainActivity extends AppCompatActivity {
                 itemName.setClickable(false);
 
                 expiry.setText(product.get_exdate());
+
+                //TODO When the product was found in the database, store its values into the "temp" variables we use to update the product's fields
+                isOpened = product.get_opened();
+                openedDateText = product.get_DateofOpening();
+
                 if(product.get_opened().equals("no"))
                 {
                     openedLayout.setVisibility(View.GONE);
@@ -274,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
     {
         RadioGroup openedRadioGroup = findViewById(R.id.radioGroup);
         int checked = openedRadioGroup.getCheckedRadioButtonId();
+        openedDateText = ""; //We initialize the field and we let the user change the date in the next radio group
 
         switch (checked)
         {
