@@ -49,6 +49,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_USERNAME = "Username";
     public static final String COLUMN_EMAIL = "Email";
     public static final String COLUMN_PASSWORD = "User_Password";
+    public static final String COLUMN_FAVORITES = "Fav_Recipes";
 
     public static final String TABLE_RECIPES = "RECIPE";
     public static final String COLUMN_RECIPENAME = "Name";
@@ -465,6 +466,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
         values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
         values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
+        values.put(COLUMN_FAVORITES, LoginScreen.user.getFavs());
 
         SQLiteDatabase db = this.getWritableDatabase();
         //original
@@ -494,6 +496,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             LoginScreen.user.setUsername(cursor.getString(1));
             LoginScreen.user.setEmail(cursor.getString(2));
             LoginScreen.user.setPassword(cursor.getString(3));
+            LoginScreen.user.setFavs(cursor.getString(3));
             LoginScreen.user.setImg(cursor.getString(4));
             cursor.close();
             flag = true;
@@ -530,6 +533,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
         values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
         values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
+        values.put(COLUMN_FAVORITES, LoginScreen.user.getFavs());
 
         SQLiteDatabase db = this.getWritableDatabase();
         //original
