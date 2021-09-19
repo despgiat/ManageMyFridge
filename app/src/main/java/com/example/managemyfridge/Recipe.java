@@ -12,8 +12,9 @@ public class Recipe {
     private String _img;
     private String _source;
 
-    //NEW: ADDED INGREDIENTS
+    //NEW: ADDED INGREDIENTS, diet preference
     private String _ingredients;
+    private String _diet_pref;
 
 
     //private ArrayList<Ingredient> listofIngr;
@@ -42,10 +43,11 @@ public class Recipe {
         this.listofIngr = new ArrayList<>();
     }*/
 
-    //NEW: CONSTRUCTOR WITH INGREDIENTS
-    public Recipe(int id, String recipename, String recipeType, String instructions,String ingredients, String source) {
+    //NEW: CONSTRUCTOR WITH INGREDIENTS, diet preference
+    public Recipe(int id, String recipename, String diet_pref, String recipeType, String instructions,String ingredients, String source) {
         this.set_id(id);
         this._recipename = recipename;
+        this._diet_pref = diet_pref;
         this._recipetype = recipeType;
         this._instructions = instructions;
         this._ingredients = ingredients;
@@ -127,6 +129,17 @@ public class Recipe {
     public void set_ingredients(String _ingredients) {
         this._ingredients = _ingredients;
     }
+
+
+    //NEW: ADDED GETTER AND SETTER FOR diet preference
+    public String get_diet_pref() {
+        return _diet_pref;
+    }
+
+    public void set_diet_pref(String _diet_pref) {
+        this._diet_pref = _diet_pref;
+    }
+
 
 
 }
