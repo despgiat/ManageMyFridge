@@ -49,7 +49,7 @@
     <string name="productName"></string>
     <string name="expired">Expired</string>
     <string name="no_expired_in_fridge_warning">There are currently no expired items in your fridge! Add more products or just wait a couple days!</string>
-    <string name="motivational_text_in_recipes">Millions of food gets wasted every year. You can contribute to the lessening of the food waste by making use of as many items in your kitchen as you can. Enter your list of ingredients and find recipes that you\'ll love, while contributing to the zero waste movement!</string>
+    <string name="motivational_text_in_recipes">Millions of food gets wasted every year. You can contribute to the lessening of the food waste by making use of as many items in your kitchen as you can. Enter your list of ingredients and find recipes that you\'ll love, while contributing to the zero waste movement! Input your diet preferences, the kind of meal you want to eat and the ingredients of your choice!</string>
     <string name="recipes">Recipes</string>
     <string name="find_recipes">Find Recipes!</string>
     <string name="clear_selection">Clear Selection</string>

@@ -218,15 +218,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     //Update the fridge from the database:
                     fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                     //Updates the Home Fragment with the new fridge and displays it
-                   /* Bundle bundle = new Bundle();
+
+                    Bundle bundle = new Bundle();
                     bundle.putSerializable("fridge", fridge);
                     MyFridge myFridge = new MyFridge();
                     myFridge.setArguments(bundle);
                     currentFragment = myFridge;
                     getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
 
-                    */
-                    getSupportFragmentManager().beginTransaction().detach(currentFragment).attach(currentFragment).commit(); //To refresh the Fragment UI
+                    //getSupportFragmentManager().beginTransaction().detach(currentFragment).attach(currentFragment).commit(); //To refresh the Fragment UI
 
                     break;
                 //Updates the Home Fragment with the new fridge and displays it

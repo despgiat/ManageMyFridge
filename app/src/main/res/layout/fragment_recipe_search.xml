@@ -8,77 +8,82 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/motivational_text_in_recipes"
-            android:visibility="gone" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/diet_preferences_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:text="Diet Preferences"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/motivational_text_in_recipes"
+                android:visibility="visible" />
 
-        <ListView
-            android:id="@+id/diet_prefs_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:choiceMode="multipleChoice"
-            android:visibility="gone">
+            <TextView
+                android:id="@+id/diet_preferences_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Diet Preferences"
+                android:visibility="visible" />
 
-        </ListView>
+            <ListView
+                android:id="@+id/diet_prefs_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:choiceMode="multipleChoice"
+                android:visibility="visible">
 
-        <TextView
-            android:id="@+id/meal_type_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="180dp"
-            android:text="Meal Type"
-            android:visibility="gone" />
+            </ListView>
 
-        <ListView
-            android:id="@+id/meal_type_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:choiceMode="multipleChoice"
-            android:visibility="gone">
+            <TextView
+                android:id="@+id/meal_type_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="180dp"
+                android:text="Meal Type"
+                android:visibility="visible" />
 
-        </ListView>
+            <ListView
+                android:id="@+id/meal_type_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:choiceMode="multipleChoice"
+                android:visibility="visible">
 
-        <TextView
-            android:id="@+id/ingredients_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="Ingredients"
-            android:visibility="gone" />
+            </ListView>
 
-        <ExpandableListView
-            android:id="@+id/ingredient_expandablelist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:choiceMode="multipleChoice"
-            android:visibility="visible"></ExpandableListView>
+            <TextView
+                android:id="@+id/ingredients_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:text="Ingredients"
+                android:visibility="visible" />
 
-        <Button
-            android:id="@+id/findRecipesButton"
-            android:layout_width="148dp"
-            android:layout_height="57dp"
-            android:backgroundTint="?attr/colorPrimary"
-            android:text="@string/find_recipes"
-            android:textStyle="bold"
-            android:visibility="visible" />
+            <ExpandableListView
+                android:id="@+id/ingredient_expandablelist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:choiceMode="multipleChoice"
+                android:visibility="visible" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/findRecipesButton"
+                android:layout_width="148dp"
+                android:layout_height="57dp"
+                android:backgroundTint="?attr/colorPrimary"
+                android:text="@string/find_recipes"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
