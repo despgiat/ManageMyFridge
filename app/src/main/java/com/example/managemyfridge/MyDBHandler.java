@@ -31,7 +31,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private boolean mNeedUpdate = false;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "MMFDB1.db";
+    private static final String DATABASE_NAME = "MMFDB2.db";
     public static final String TABLE_PRODUCTS = "PRODUCT";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PRODUCTNAME = "Name";
@@ -712,17 +712,89 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     public ArrayList<Recipe> getallRecipesofCertainPref(ArrayList<String> listofpreferences, ArrayList<String> listofmealtype){
+
         int i = 0;
+        int j = 0;
+
+        //boolean to see if recipe with certain id already exists
+        boolean exists;
+
+
         // on below line we are creating a new array list for chosen recipes.
         ArrayList<Recipe> listofRecipes = new ArrayList<>();
 
+
+        //adding the recipes based on diet preference
         while (i<listofpreferences.size()){
 
             //diet preference chosen, changes until all preferences chosen are selected and related recipes are searched for
             String diet_pref = listofpreferences.get(i);
 
+
+            // on below line we are creating a
+            // database for reading our database.
+            SQLiteDatabase db = this.getReadableDatabase();
+
+            // on below line we are creating a cursor with query to read data from database.
+
+            //searches for all recipes with certain diet preference
+            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_RECIPES +  " WHERE " +
+                    COLUMN_DIET_PREF + " = '" + diet_pref + "'", null);
+
+
+
+
+
+            // moving our cursor to first position.
+            if (cursor.moveToFirst()) {
+                do {
+                    Recipe recipe = new Recipe(cursor.getInt(0), //id
+                            cursor.getString(1), //recipename
+                            cursor.getString(2), //recipediet_pref //newly added
+                            cursor.getString(3), //recipetype
+                            cursor.getString(4), //instructions
+                            cursor.getString(5), //ingredients
+                            cursor.getString(6)); //source
+
+
+
+
+                    // on below line we are adding the data from cursor to our recipe array list.
+                    /*boolean exists = false;
+                    for (Customer customer : customers) {
+                        if (customer.getName().equals(name)) {
+                            return customer;
+                        }
+                    }
+                    if(!exists) {
+
+                    }*/
+                    listofRecipes.add(recipe);
+
+                } while (cursor.moveToNext());
+                // moving our cursor to next.
+            }
+
+            //Incrementing i in order to move to next meal type if there is any.
+            i++;
+
+            // at last closing our cursor and db
+            // and returning our array list.
+            cursor.close();
+            db.close();
+
+
+        }
+
+
+
+        //Adding the recipes based on meal type
+        while (j < listofmealtype.size()){
+
+            exists = false;
+
             //meal type chosen, changes until all meal types chosen are selected and related recipes are searched for
-            String meal_type = listofmealtype.get(i);
+            String meal_type = listofmealtype.get(j);
 
             // on below line we are creating a
             // database for reading our database.
@@ -753,14 +825,43 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
                     // on below line we are adding the data from cursor to our recipe array list.
-                    listofRecipes.add(recipe);
+                    /*boolean exists = false;
+                    for (Customer customer : customers) {
+                        if (customer.getName().equals(name)) {
+                            return customer;
+                        }
+                    }
+                    if(!exists) {
+
+                    }*/
+
+                    //checking if the recipe found is already on the list of recipes we're going to return.
+                    // If it is we make boolean exists true and don't add that recipe in the list
+
+                    //soon to be id of the recipe. We need it to check if the recipe is already in the list.
+                    int stbid = recipe.get_id();
+
+                    for (Recipe rec : listofRecipes){
+                        if (rec.get_id() == stbid){
+                            exists = true;
+                            break;
+                        }
+                        else {
+                            exists = false;
+                        }
+                    }
+
+                    if(!exists){
+                        listofRecipes.add(recipe);
+                    }
+
 
                 } while (cursor.moveToNext());
                 // moving our cursor to next.
             }
 
             //Incrementing i in order to move to next meal type if there is any.
-            i++;
+            j++;
 
             // at last closing our cursor and db
             // and returning our array list.

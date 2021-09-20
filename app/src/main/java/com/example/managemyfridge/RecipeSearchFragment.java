@@ -229,6 +229,8 @@ public class RecipeSearchFragment extends Fragment {
         ArrayList<String> types = new ArrayList<>();
         types.add("Lunch");
         types.add("Snack");
+        prefs.add("Vegan");
+        prefs.add("Vegetarian");
 
         foundRecipes = dbHandler.getallRecipesofCertainPref(prefs,types);
         //System.out.println(foundRecipes.size());
