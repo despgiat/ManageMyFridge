@@ -16,12 +16,17 @@ public class Users {
     private String password;
     private String img;
     private Product[] fridgeItems;
-    private ArrayList<Integer> favorites;
-    private String favs;
+    private ArrayList<Integer> favoriteRecipes;
+    private String favoriteRecipesString;
+    private ArrayList<Integer> favoriteTips;
+    private String favoriteTipsString;
 
     public Users(){
-        this.favorites = new ArrayList<>();
-        favs = null;
+        this.favoriteRecipes = new ArrayList<>();
+        favoriteRecipesString = null;
+        favoriteTipsString = null;
+        favoriteTips = null;
+        favoriteRecipes = null;
     }
 
 
@@ -65,41 +70,56 @@ public class Users {
         this.email = email;
     }
 
-    public String getFavs(){ arrayToString(); return favs; }
+    public String getFavoriteRecipesString(){ favoriteRecipesString = arrayToString(favoriteRecipes); return favoriteRecipesString; }
 
-    public void setFavs(String favs){ this.favs=favs; }
+    public void setFavRecipeString(String favs){ this.favoriteRecipesString=favs; }
 
-    public void setFavorites(ArrayList<Integer> favorites){this.favorites = favorites;}
+    public void setFavRecipeArray(ArrayList<Integer> favorites){this.favoriteRecipes = favorites;}
 
-    public ArrayList<Integer> getFavorites(){ return this.favorites;}
+    public ArrayList<Integer> getFavoriteRecipesArray(){ return this.favoriteRecipes;}
 
-    public void addFavorite(int a){this.favorites.add(a);}
+    public void addFavoriteRecipe(int a){this.favoriteTips.add(a);}
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void removeFavorite(int a){this.favorites.removeIf(s -> s.equals(a));}
+    public void removeFavoriteRecipe(int a){this.favoriteRecipes.removeIf(s -> s.equals(a));}
 
-    public void arrayToString()
+    public String arrayToString(ArrayList<Integer> favorites)
     {
         StringBuffer sb = new StringBuffer();
 
-        for (Integer s : this.favorites) {
+        for (Integer s : favorites) {
             sb.append(s);
             sb.append(",");
         }
-        this.favs= sb.toString();
+        return sb.toString();
     }
 
-    public void stringToArray()
+    public ArrayList<Integer> stringToArray(String favorites)
     {
-        String[] splitArray = this.favs.split(",");
-
+        String[] splitArray = favorites.split(",");
+        ArrayList<Integer> tempFavs = new ArrayList<>();
         //parsing the String argument as a signed decimal integer object and
         //storing that integer into the array
         for(int i=0;i<splitArray.length;i++)
         {
-            this.favorites.add(Integer.parseInt(splitArray[i]));
+            tempFavs.add(Integer.parseInt(splitArray[i]));
         }
-
+        return tempFavs;
     }
+
+    public String getFavoriteTipsString(){ favoriteTipsString = arrayToString(favoriteTips); return favoriteTipsString; }
+
+    public void setFavoriteTipsString(String favs){ this.favoriteTipsString=favs; }
+
+    public void setFavoriteTipsArray(ArrayList<Integer> favorites){this.favoriteTips = favorites;}
+
+    public ArrayList<Integer> getFavoriteTipsArray(){ return this.favoriteTips;}
+
+    public void addFavoriteTip(int a){this.favoriteTips.add(a);}
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void removeFavoriteTip(int a){this.favoriteTips.removeIf(s -> s.equals(a));}
+
+
 
 }
