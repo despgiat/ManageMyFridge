@@ -22,11 +22,18 @@ public class Users {
     private String favoriteTipsString;
 
     public Users(){
-        this.favoriteRecipes = new ArrayList<>();
+       /* this.favoriteRecipes = new ArrayList<>();
         favoriteRecipesString = null;
         favoriteTipsString = null;
         favoriteTips = null;
         favoriteRecipes = null;
+
+        */
+
+        favoriteRecipes = new ArrayList<>();
+        favoriteRecipesString = "";
+        favoriteTipsString = "";
+        favoriteTips = new ArrayList<>();
     }
 
 

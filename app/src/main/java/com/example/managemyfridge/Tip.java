@@ -1,8 +1,9 @@
 package com.example.managemyfridge;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Tip {
+public class Tip implements Serializable {
 
 
     private int _id;

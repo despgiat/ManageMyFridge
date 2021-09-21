@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.ViewHolder>{
@@ -61,12 +63,14 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView description;
+        ImageView fave_icon;
         //ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tip_title);
             description = itemView.findViewById(R.id.tip_subtitle);
+            fave_icon = itemView.findViewById(R.id.fave_icon_card);
 
             itemView.setOnClickListener(new View.OnClickListener() { //When a card is clicked, a new fragment is added to the stack
                 @Override
@@ -79,8 +83,12 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
                     //replace screen and get to the recipe fragment
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("title", tipsData.get(position).get_tipname());
-                    bundle.putString("description", tipsData.get(position).get_description());
+                    bundle.putSerializable("tip", (Serializable) tipsData.get(position));
+
+                    //bundle.putString("title", tipsData.get(position).get_tipname());
+                    //bundle.putString("description", tipsData.get(position).get_description());
+                    //bundle.putBoolean("fave", LoginScreen.user.getFavoriteTipsArray().contains(position)); //True if this particular tip's id is in the favourites list or not
+
                     //bundle.putSerializable("ingredients", ingredients);
 
                     //Add the image and the ingredients list and we're set

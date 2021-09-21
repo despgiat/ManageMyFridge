@@ -22,8 +22,12 @@ import android.widget.Toast;
 public class TipsFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String TITLE = "title";
-    private static final String DESCRIPTION = "description";
+    //private static final String TITLE = "title";
+    //private static final String DESCRIPTION = "description";
+    //public static final String FAVOURITE = "fave";
+
+    public static final String TIPINFO = "tip";
+    private Tip tip;
 
     private String tipTitle;
     private String tipDescription;
@@ -44,11 +48,13 @@ public class TipsFragment extends Fragment {
      * @return A new instance of fragment TipsFragment.
      */
 
-    public static TipsFragment newInstance(String param1, String param2) {
+    public static TipsFragment newInstance(String param1) {
         TipsFragment fragment = new TipsFragment();
         Bundle args = new Bundle();
-        args.putString(TITLE, param1);
-        args.putString(DESCRIPTION, param2);
+        //args.putString(TITLE, param1);
+        //args.putString(DESCRIPTION, param2);
+        //args.putBoolean(FAVOURITE, param3);
+        args.putSerializable(TIPINFO, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,8 +63,11 @@ public class TipsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tipTitle = getArguments().getString(TITLE);
-            tipDescription = getArguments().getString(DESCRIPTION);
+
+            tip = (Tip) getArguments().getSerializable(TIPINFO);
+            tipTitle = tip.get_tipname();
+            tipDescription = tip.get_description();
+            favourite = LoginScreen.user.getFavoriteTipsArray().contains(tip.get_id());
 
             setHasOptionsMenu(true);
 
