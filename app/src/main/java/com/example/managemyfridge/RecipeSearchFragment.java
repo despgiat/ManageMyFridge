@@ -31,6 +31,7 @@ public class RecipeSearchFragment extends Fragment {
 
     String[] diet_prefs;
     String[] meal_type;
+
     //String[] ingredients;
     List<String> ingredientGroups;
     HashMap<String, List<String>> ingredients;

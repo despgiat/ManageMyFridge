@@ -719,7 +719,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         //boolean to see if recipe with certain id already exists
         boolean exists;
 
-
         // on below line we are creating a new array list for chosen recipes.
         ArrayList<Recipe> listofRecipes = new ArrayList<>();
 
