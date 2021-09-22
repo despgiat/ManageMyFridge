@@ -29,16 +29,15 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
     //String[] recipeDescriptions = {"Delicious porkchops with honey and chili sauce", "Ceasar's Salad with chicken and lettuce", "Decadent chocolate Cake with vanilla buttercream"};
     //Ingredient[] ingredients = {new Ingredient(1,1,  "flour", "3 1/4", "cups"), new Ingredient(2,1,  "flour", "3 1/4", "cups"), new Ingredient(3,1,  "flour", "3 1/4", "cups")};
 
-    public TipRecyclerAdapter(Context context, Fragment fromFragment)
+    public TipRecyclerAdapter(Context context, Fragment fromFragment, ArrayList<Tip> tipsData)
     {
         this.context = context;
         this.fromFragment = fromFragment;
         dbHandler = new MyDBHandler(context, null, null, 1);
-        tipsData = dbHandler.getallTips();
-        for(int i = 0; i < tipsData.size(); i++)
-        {
-            System.out.println(tipsData.get(i).get_tipname());
-        }
+        //tipsData = dbHandler.getallTips();
+
+        this.tipsData = tipsData;
+
     }
 
     @NonNull

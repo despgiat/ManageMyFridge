@@ -13,12 +13,15 @@ import android.view.ViewGroup;
 
 import org.w3c.dom.ls.LSOutput;
 
+import java.util.ArrayList;
+
 /**
  * In the TipsOverviewFragment the user is able to see the array of tips saved in the database in the form of clickable cards.
  */
 public class TipsOverviewFragment extends Fragment {
 
     //Load articles from database
+    ArrayList<Tip> all_tips;
     RecyclerView.Adapter tipsAdapter;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,6 +42,7 @@ public class TipsOverviewFragment extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -48,6 +52,7 @@ public class TipsOverviewFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -57,12 +62,14 @@ public class TipsOverviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tips_overview, container, false);
 
+        all_tips = LoginScreen.dbHandlerlog.getallTips();
+
         //Recycler view for the display of tips
         RecyclerView tipsRecyclerView = view.findViewById(R.id.tipsCardView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
         tipsRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        tipsAdapter = new TipRecyclerAdapter(getContext(), this);
+        tipsAdapter = new TipRecyclerAdapter(getContext(), this, all_tips);
         tipsRecyclerView.setAdapter(tipsAdapter);
 
         System.out.println(tipsAdapter.getItemCount());

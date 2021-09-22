@@ -41,6 +41,7 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
         this.context = context;
         this.fromFragment = fromFragment;
         this.recipeData = recipeData;
+        System.out.println("WHOAH");
     }
 
     @NonNull
@@ -55,7 +56,7 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
         holder.title.setText(recipeData.get(position).get_recipename());
         holder.description.setText(recipeData.get(position).get_instructions());
 
-        boolean isFave = LoginScreen.user.getFavoriteTipsArray().contains(recipeData.get(position).get_id());
+        boolean isFave = LoginScreen.user.getFavoriteRecipesArray().contains(recipeData.get(position).get_id());
 
         if(isFave)
         {
@@ -98,7 +99,7 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("recipe", (Serializable) recipeData.get(position));
-                    //bundle.putString("instructions", recipeDescriptions[position]);
+                    bundle.putBoolean("favourite", LoginScreen.user.getFavoriteRecipesArray().contains(recipeData.get(position).get_id()));
                     //bundle.putSerializable("ingredients", ingredients);
 
                     //Add the image and the ingredients list and we're set

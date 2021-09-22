@@ -1,8 +1,9 @@
 package com.example.managemyfridge;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Recipe {
+public class Recipe implements Serializable {
 
     private int _id;
     private String _recipename;

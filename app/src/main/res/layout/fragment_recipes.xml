@@ -40,6 +40,12 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/ingredientsListTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientsRecyclerView"
             android:layout_width="match_parent"

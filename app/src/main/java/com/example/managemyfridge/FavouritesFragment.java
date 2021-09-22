@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,8 @@ public class FavouritesFragment extends Fragment {
     private static final String FAV_RECIPES = "fav_recipes";
     private static final String FAV_TIPS = "fav_tips";
 
-    ArrayList<Recipe> recipes;
-    ArrayList<Tip> tips;
+    ArrayList<Recipe> all_recipes;
+    ArrayList<Tip> all_tips;
 
     RecyclerView.Adapter fav_recipesAdapter;
     RecyclerView.Adapter fav_tipsAdapter;
@@ -62,18 +63,57 @@ public class FavouritesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
-        RecyclerView recipesRecyclerView = view.findViewById(R.id.recipesFoundRecyclerView);
-        LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
-
-        recipesRecyclerView.setLayoutManager(linearLayoutManagerToday);
-
         ArrayList<Integer> recipe_ids = LoginScreen.user.getFavoriteRecipesArray();
-        recipes = LoginScreen.dbHandlerlog.getallRecipes();
+        ArrayList<Integer> tips_ids = LoginScreen.user.getFavoriteTipsArray();
+
+        //The full catalog of recipes
+        //The other implementation can be that the adapters can have the data themselves and the input can be the ids of the recipes we want to show each time
+        all_recipes = LoginScreen.dbHandlerlog.getallRecipes();
+        all_tips = LoginScreen.dbHandlerlog.getallTips();
+
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        ArrayList<Tip> tips = new ArrayList<>();
+
+            for(int i = 0; i < recipe_ids.size(); i++)
+            {
+                for(int j = 0; j < all_recipes.size(); j++)
+                {
+                    if(recipe_ids.get(i) == all_recipes.get(j).get_id())
+                    {
+                        recipes.add(all_recipes.get(j));
+                    }
+                }
+            }
+
+
+            for(int i = 0; i < tips_ids.size(); i++)
+            {
+                for(int j = 0; j < all_tips.size(); j++)
+                {
+                    if(tips_ids.get(i) == all_tips.get(j).get_id())
+                    {
+                        tips.add(all_tips.get(j));
+                    }
+                }
+            }
+
 
         //TODO PLACEHOLDER, TO ADD THE USER'S FAVOURITE RECIPES
 
+
+        RecyclerView recipesRecyclerView = view.findViewById(R.id.faveRecipesRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        recipesRecyclerView.setLayoutManager(linearLayoutManager);
         fav_recipesAdapter = new ContentRecyclerAdapter(getContext(), this, recipes);
         recipesRecyclerView.setAdapter(fav_recipesAdapter);
+
+
+        RecyclerView tipsRecyclerView = view.findViewById(R.id.faveTipsRecyclerView);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this.getContext());
+        tipsRecyclerView.setLayoutManager(linearLayoutManager1);
+        fav_tipsAdapter = new TipRecyclerAdapter(getContext(), this, tips);
+        tipsRecyclerView.setAdapter(fav_tipsAdapter);
+
 
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favourites");

@@ -120,7 +120,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         //---------------TESTING-------------------//
         LoginScreen.user.addFavoriteTip(1);
-
+        LoginScreen.user.addFavoriteRecipe(2);
+        //LoginScreen.user.addFavoriteRecipe(3);
 
 
 

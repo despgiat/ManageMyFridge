@@ -85,7 +85,7 @@ public class Users {
 
     public ArrayList<Integer> getFavoriteRecipesArray(){ return this.favoriteRecipes;}
 
-    public void addFavoriteRecipe(int a){this.favoriteTips.add(a);}
+    public void addFavoriteRecipe(int a){this.favoriteRecipes.add(a);}
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void removeFavoriteRecipe(int a){this.favoriteRecipes.removeIf(s -> s.equals(a));}
