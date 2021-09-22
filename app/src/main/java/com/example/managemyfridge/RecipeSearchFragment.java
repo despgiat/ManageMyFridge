@@ -157,8 +157,16 @@ public class RecipeSearchFragment extends Fragment {
         diet_prefs_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                Toast.makeText(getActivity(), selectedItem, Toast.LENGTH_SHORT).show();
+
+                String item = (String) parent.getItemAtPosition(position);
+                if(!checkedDietPrefs.contains(item))
+                {
+                    checkedDietPrefs.add(item);
+                }
+                else
+                {
+                    checkedDietPrefs.remove(item);
+                }
             }
         });
 
@@ -175,19 +183,27 @@ public class RecipeSearchFragment extends Fragment {
             }
         });
 
-        diet_prefs_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-
 
 
         meal_type_listView = view.findViewById(R.id.meal_type_list);
 //        listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
         meal_type_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, meal_type));
+
+        meal_type_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String item = (String) parent.getItemAtPosition(position);
+                if(!checkedMealTypes.contains(item))
+                {
+                    checkedMealTypes.add(item);
+                }
+                else
+                {
+                    checkedMealTypes.remove(item);
+                }
+            }
+        });
 
         ingredients_list = view.findViewById(R.id.ingredient_expandablelist);
 
@@ -262,7 +278,33 @@ public class RecipeSearchFragment extends Fragment {
 
     //TODO The actual findRecipes function. This is a placeholder
 
-   public ArrayList<Recipe> findRecipes()
+    public ArrayList<Recipe> findRecipes()
+    {
+        ArrayList<Recipe> foundRecipes = new ArrayList<>();
+
+        checkedIngredients = adapter.getAllChecked();
+
+        for(int i = 0; i < checkedDietPrefs.size(); i++)
+        {
+            System.out.println(checkedDietPrefs.get(i));
+        }
+
+        for(int i = 0; i < checkedMealTypes.size(); i++)
+        {
+            System.out.println(checkedMealTypes.get(i));
+        }
+
+        for(int i = 0; i < checkedIngredients.size(); i++)
+        {
+            System.out.println(checkedIngredients.get(i));
+        }
+
+        return foundRecipes;
+
+
+    }
+
+   /*public ArrayList<Recipe> findRecipes()
     {
         ArrayList<Recipe> foundRecipes; //= new ArrayList<>();
         //ArrayList<Recipe> allRecipes = dbHandler.getallRecipes();
@@ -292,5 +334,7 @@ public class RecipeSearchFragment extends Fragment {
 
         return foundRecipes;
     }
+
+    */
 
 }

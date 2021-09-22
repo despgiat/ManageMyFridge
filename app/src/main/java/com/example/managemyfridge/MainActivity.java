@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
                 expiry.setText(product.get_exdate());
 
-                //TODO When the product was found in the database, store its values into the "temp" variables we use to update the product's fields
+                //TODO When the product was found in the database, store its values into the "temp" variables we use to update the product's fields (DONE)
                 isOpened = product.get_opened();
                 openedDateText = product.get_DateofOpening();
 
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         String unit = unitSpinner.getSelectedItem().toString();
         String productType = typeSpinner.getSelectedItem().toString();
 
-        //TODO Editing the custom opening date doesn't work, we should fix it.
+        //TODO Editing the custom opening date doesn't work, we should fix it. (FIXED)
 
         if(customOpenedDate) //If the user had chosen a custom opening date and not the "Today" option in the last radio group (upon checking that the product has been opened)
         {

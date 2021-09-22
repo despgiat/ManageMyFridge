@@ -230,11 +230,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             switch(requestCode)
             {
-                case 2: //case 2 and case 3 merged
-                case 3:
+                case 2: //case 2 and case 3 merged //2 is Add Product
+                case 3: //3 is Edit product
                     //Update the fridge from the database:
                     fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                     //Updates the Home Fragment with the new fridge and displays it
+
+                    //TODO Send the user back to the myFridge or the Expired fragment, depending on which fragment they called the "edit" function for a product
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("fridge", fridge);
@@ -349,19 +351,17 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 myFridge.setArguments(bundle);
                 currentFragment = myFridge;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
-                //getSupportActionBar().setTitle("My Fridge");
                 break;
 
             case R.id.homeItem:
                 fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                 bundle.putSerializable("fridge", fridge);
-                //bundle.putString("date", currentDate.format(formatter));
 
                 HomeFragment homeFragment = new HomeFragment();
                 homeFragment.setArguments(bundle);
                 currentFragment = homeFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, homeFragment).commit();
-                //getSupportActionBar().setTitle("Home");
+
                 break;
 
             case R.id.expiredItem:
@@ -371,44 +371,44 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 expiredFragment.setArguments(bundle);
                 currentFragment = expiredFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, expiredFragment).commit();
-                //getSupportActionBar().setTitle("Expired");
+
                 break;
 
             case R.id.recipesItem:
                 RecipeSearchFragment recipeSearchFragment = new RecipeSearchFragment();
-                //bundle.putSerializable("recipes" );
+
                 recipeSearchFragment.setArguments(bundle);
                 currentFragment = recipeSearchFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipeSearchFragment).commit();
-                //getSupportActionBar().setTitle("Recipes");
+
                 break;
 
             case R.id.zeroWasteItem:
                 TipsOverviewFragment tipsOverviewFragment = new TipsOverviewFragment();
                 currentFragment = tipsOverviewFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, tipsOverviewFragment).commit();
-                //getSupportActionBar().setTitle("Zero Waste Tips");
+
                 break;
 
             case R.id.settingsItem:
                 SettingsFragment settingsFragment = new SettingsFragment();
                 currentFragment = settingsFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, settingsFragment).commit();
-               // getSupportActionBar().setTitle("Settings");
+
                 break;
 
             case R.id.favouritesItem:
                 FavouritesFragment favouritesFragment = new FavouritesFragment();
                 currentFragment = favouritesFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, favouritesFragment).commit();
-               // getSupportActionBar().setTitle("Favourites");
+
                 break;
 
             case R.id.profileItem:
                 ProfileFragment profileFragment = new ProfileFragment();
                 currentFragment = profileFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, profileFragment).commit();
-                //getSupportActionBar().setTitle("Profile");
+
                 break;
         }
 
@@ -453,7 +453,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public void goToExpired(View view)
     {
         navigationView.getMenu().findItem(R.id.expiredItem).setChecked(true);
-
         fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
         Bundle bundle = new Bundle();
         bundle.putSerializable("fridge", fridge);

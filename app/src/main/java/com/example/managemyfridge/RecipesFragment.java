@@ -108,7 +108,7 @@ public class RecipesFragment extends Fragment {
         // Inflate the menu items for use in the action bar
         inflater.inflate(R.menu.recipes_toobar_menu, menu);
 
-        //TODO Check from the database if this recipe belongs to the user's favorites and display it accordingly (the heart icon should be filled )
+        //TODO Check from the database if this recipe belongs to the user's favorites and display it accordingly (the heart icon should be filled ) (DONE)
 
         fave = menu.findItem(R.id.fave);
 

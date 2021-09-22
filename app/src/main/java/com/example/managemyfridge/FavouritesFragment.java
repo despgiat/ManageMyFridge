@@ -30,6 +30,9 @@ public class FavouritesFragment extends Fragment {
     ArrayList<Recipe> all_recipes;
     ArrayList<Tip> all_tips;
 
+    ArrayList<Integer> recipe_ids;
+    ArrayList<Integer> tips_ids;
+
     RecyclerView.Adapter fav_recipesAdapter;
     RecyclerView.Adapter fav_tipsAdapter;
 
@@ -51,9 +54,12 @@ public class FavouritesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        recipe_ids = LoginScreen.user.getFavoriteRecipesArray();
+        tips_ids = LoginScreen.user.getFavoriteTipsArray();
+        all_recipes = LoginScreen.dbHandlerlog.getallRecipes();
+        all_tips = LoginScreen.dbHandlerlog.getallTips();
     }
 
     @Override
@@ -63,13 +69,8 @@ public class FavouritesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
-        ArrayList<Integer> recipe_ids = LoginScreen.user.getFavoriteRecipesArray();
-        ArrayList<Integer> tips_ids = LoginScreen.user.getFavoriteTipsArray();
-
         //The full catalog of recipes
         //The other implementation can be that the adapters can have the data themselves and the input can be the ids of the recipes we want to show each time
-        all_recipes = LoginScreen.dbHandlerlog.getallRecipes();
-        all_tips = LoginScreen.dbHandlerlog.getallTips();
 
         ArrayList<Recipe> recipes = new ArrayList<>();
         ArrayList<Tip> tips = new ArrayList<>();
@@ -98,7 +99,7 @@ public class FavouritesFragment extends Fragment {
             }
 
 
-        //TODO PLACEHOLDER, TO ADD THE USER'S FAVOURITE RECIPES
+        //TODO PLACEHOLDER, TO ADD THE USER'S FAVOURITE RECIPES (DONE)
 
 
         RecyclerView recipesRecyclerView = view.findViewById(R.id.faveRecipesRecyclerView);
@@ -113,7 +114,6 @@ public class FavouritesFragment extends Fragment {
         tipsRecyclerView.setLayoutManager(linearLayoutManager1);
         fav_tipsAdapter = new TipRecyclerAdapter(getContext(), this, tips);
         tipsRecyclerView.setAdapter(fav_tipsAdapter);
-
 
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favourites");
