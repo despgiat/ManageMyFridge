@@ -9,15 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 /**
  * The IngredientAdapter helps the ingredients be displayed at the corrent format in the RecipeFragment.
  */
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
-    Ingredient[] ingredients;
+    ArrayList<String> ingredients;
 
-    public IngredientAdapter(Ingredient[] ingredients)
+    public IngredientAdapter(ArrayList<String> ingredients)
     {
         this.ingredients = ingredients;
     }
@@ -32,26 +34,26 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.ViewHolder holder, int position) {
 
-        holder.name.setText(ingredients[position].get_ingredientname());
-        holder.amount.setText(ingredients[position].get_quantity());
-        holder.unit.setText(ingredients[position].get_unit());
+        holder.ingredient.setText(ingredients.get(position));
+        //holder.amount.setText(ingredients[position].get_quantity());
+        //holder.unit.setText(ingredients[position].get_unit());
     }
 
     @Override
     public int getItemCount() {
-        return ingredients.length;
+        return ingredients.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView amount;
-        TextView unit;
-        TextView name;
+        TextView ingredient;
+        //TextView unit;
+        //TextView name;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            amount = itemView.findViewById(R.id.amountTextView);
-            unit = itemView.findViewById(R.id.unitTextView);
-            name = itemView.findViewById(R.id.ingredientTextView);
+            ingredient = itemView.findViewById(R.id.ingredientTextView);
+            //unit = itemView.findViewById(R.id.unitTextView);
+            //name = itemView.findViewById(R.id.ingredientTextView);
 
         }
     }

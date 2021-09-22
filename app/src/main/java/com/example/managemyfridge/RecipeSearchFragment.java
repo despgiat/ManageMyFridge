@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -116,6 +119,10 @@ public class RecipeSearchFragment extends Fragment {
 
             dbHandler = new MyDBHandler(getActivity(), null, null, 1);
 
+            checkedDietPrefs = new ArrayList<>();
+            checkedMealTypes = new ArrayList<>();
+            checkedIngredients = new ArrayList<>();
+
             //ingredients = getResources().getStringArray(R.array.types);
         }
     }
@@ -136,6 +143,9 @@ public class RecipeSearchFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_recipe_search, container, false);
+
+        CheckBox none = view.findViewById(R.id.no_preference_checkbox);
+
         clearButton = (Button) view.findViewById(R.id.clearButton);
         importfromfridge = view.findViewById(R.id.fromFridgeButton);
         findRecipes = view.findViewById(R.id.findRecipesButton);
@@ -144,9 +154,40 @@ public class RecipeSearchFragment extends Fragment {
 //        listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
         diet_prefs_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, diet_prefs));
 
-        diet_prefs_listView = view.findViewById(R.id.meal_type_list);
+        diet_prefs_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                Toast.makeText(getActivity(), selectedItem, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        none.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(none.isChecked())
+                {
+                    diet_prefs_listView.clearChoices();
+                    adapter.notifyDataSetChanged();
+                    checkedDietPrefs.addAll(Arrays.asList(diet_prefs)); //If NONE diet preferences is checked, it means we want every type of recipe, there's no diet preference
+                }
+            }
+        });
+
+        diet_prefs_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+
+
+
+        meal_type_listView = view.findViewById(R.id.meal_type_list);
 //        listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
-        diet_prefs_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, meal_type));
+        meal_type_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, meal_type));
 
         ingredients_list = view.findViewById(R.id.ingredient_expandablelist);
 

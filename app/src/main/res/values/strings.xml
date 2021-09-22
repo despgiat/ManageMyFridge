@@ -132,7 +132,6 @@
     </string-array>
 
     <string-array name="diet_preference">
-        <item>None</item>
         <item>Low Carb</item>
         <item>Low Fat</item>
         <item>Keto</item>

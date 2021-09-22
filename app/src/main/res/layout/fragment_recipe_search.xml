@@ -8,7 +8,7 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,10 +32,16 @@
                 android:text="Diet Preferences"
                 android:visibility="visible" />
 
+            <CheckBox
+                android:id="@+id/no_preference_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="None" />
+
             <ListView
                 android:id="@+id/diet_prefs_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:choiceMode="multipleChoice"
                 android:visibility="visible">
 
@@ -47,14 +53,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
                 android:text="Meal Type"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ListView
                 android:id="@+id/meal_type_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:choiceMode="multipleChoice"
-                android:visibility="visible">
+                android:visibility="gone">
 
             </ListView>
 
@@ -64,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="34dp"
                 android:text="Ingredients"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ExpandableListView
                 android:id="@+id/ingredient_expandablelist"
@@ -83,7 +89,7 @@
                 android:visibility="visible" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

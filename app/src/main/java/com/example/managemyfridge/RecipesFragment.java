@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RecipesFragment#newInstance} factory method to
@@ -27,14 +29,16 @@ import android.widget.Toast;
  */
 public class RecipesFragment extends Fragment {
 
-    private static final String TITLE = "title";
-    private static final String INSTRUCTIONS = "instructions";
-    private static final String INGREDIENTS = "ingredients";
+    private static final String RECIPEINFO = "recipe";
+    //private static final String INSTRUCTIONS = "instructions";
+    //private static final String INGREDIENTS = "ingredients";
 
 
-    private String recipeTitle;
-    private String recipeInstructions;
-    private Ingredient[] ingredients;
+    private Recipe recipe;
+   // private String recipeTitle;
+    private String[] recipeInstructions;
+    //private Ingredient[] ingredients;
+
     RecyclerView.Adapter ingredientsAdapter;
 
     //Recipe recipe //The recipe in question, it will be retrieved from the database
@@ -48,12 +52,12 @@ public class RecipesFragment extends Fragment {
     }
 
 
-    public static RecipesFragment newInstance(String param1, String param2, Ingredient[] param3) {
+    public static RecipesFragment newInstance(String param1) {
         RecipesFragment fragment = new RecipesFragment();
         Bundle args = new Bundle();
-        args.putString(TITLE, param1);
-        args.putString(INSTRUCTIONS, param2);
-        args.putSerializable(INGREDIENTS, param3);
+        args.putSerializable(RECIPEINFO, param1);
+      //  args.putString(INSTRUCTIONS, param2);
+        //args.putSerializable(INGREDIENTS, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,9 +66,9 @@ public class RecipesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            recipeTitle = getArguments().getString(TITLE);
-            recipeInstructions = getArguments().getString(INSTRUCTIONS);
-            ingredients = (Ingredient[]) getArguments().getSerializable(INGREDIENTS);
+            recipe = (Recipe) getArguments().getSerializable(RECIPEINFO);
+            //recipeInstructions = getArguments().getString(INSTRUCTIONS);
+            //ingredients = (Ingredient[]) getArguments().getSerializable(INGREDIENTS);
 
             setHasOptionsMenu(true);
         }
@@ -77,19 +81,19 @@ public class RecipesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_recipes, container, false);
         TextView titleTextView = view.findViewById(R.id.recipeTitle);
-        titleTextView.setText(recipeTitle);
+        titleTextView.setText(recipe.get_recipename());
 
         TextView instructions = view.findViewById(R.id.instructionsTextView);
-        instructions.setText(recipeInstructions);
+        instructions.setText(recipe.get_instructions());
 
         RecyclerView ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerView);
         LinearLayoutManager linearLayoutManagerIngredients = new LinearLayoutManager(this.getContext());
 
-        ingredientsRecyclerView.setLayoutManager(linearLayoutManagerIngredients);
-        ingredientsAdapter = new IngredientAdapter(ingredients);
-        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+        //ingredientsRecyclerView.setLayoutManager(linearLayoutManagerIngredients);
+        //ingredientsAdapter = new IngredientAdapter(recipe.get_ingredients());
+        //ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(recipeTitle);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(recipe.get_recipename());
 
         return view;
     }
@@ -103,7 +107,15 @@ public class RecipesFragment extends Fragment {
         //TODO Check from the database if this recipe belongs to the user's favorites and display it accordingly (the heart icon should be filled )
 
         fave = menu.findItem(R.id.fave);
-        fave.setIcon(R.drawable.ic_fave_empty);
+
+        if(favourite)
+        {
+            fave.setIcon(R.drawable.ic_fave_filled);
+        }
+        else
+        {
+            fave.setIcon(R.drawable.ic_fave_empty);
+        }
 
         fave.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -134,7 +146,7 @@ public class RecipesFragment extends Fragment {
         //recipe will be marked as favourite (and it will be saved in the database
 
         Toast.makeText(getContext(), "This recipe has been added to your favorites!", Toast.LENGTH_SHORT).show();
-        favourite = true;
+        //favourite = true;
     }
 
     public void removeFromFavourites()
@@ -144,7 +156,7 @@ public class RecipesFragment extends Fragment {
         //Database stuff
 
         Toast.makeText(getContext(), "This recipe has been removed from your favorites!", Toast.LENGTH_SHORT).show();
-        favourite = false;
+        //favourite = false;
     }
 
 

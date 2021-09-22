@@ -68,7 +68,7 @@ public class RecipesOverviewFragment extends Fragment {
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
         recipesRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        recipesAdapter = new ContentRecyclerAdapter(getContext(), this);
+        recipesAdapter = new ContentRecyclerAdapter(getContext(), this, LoginScreen.dbHandlerlog.getallRecipes());
         recipesRecyclerView.setAdapter(recipesAdapter);
 
         // Inflate the layout for this fragment

@@ -25,7 +25,6 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
     MyDBHandler dbHandler;
     ArrayList<Tip> tipsData;
 
-
     //String[] recipeNames = {"Porkchops with honey", "Ceasar's Salad", "Chocolate Cake"};
     //String[] recipeDescriptions = {"Delicious porkchops with honey and chili sauce", "Ceasar's Salad with chicken and lettuce", "Decadent chocolate Cake with vanilla buttercream"};
     //Ingredient[] ingredients = {new Ingredient(1,1,  "flour", "3 1/4", "cups"), new Ingredient(2,1,  "flour", "3 1/4", "cups"), new Ingredient(3,1,  "flour", "3 1/4", "cups")};
@@ -53,6 +52,18 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
     public void onBindViewHolder(@NonNull TipRecyclerAdapter.ViewHolder holder, int position) {
         holder.title.setText(tipsData.get(position).get_tipname());
         holder.description.setText(tipsData.get(position).get_description());
+
+        boolean isFave = LoginScreen.user.getFavoriteTipsArray().contains(tipsData.get(position).get_id());
+
+        if(isFave)
+        {
+            holder.fave_icon.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.fave_icon.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -84,6 +95,7 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("tip", (Serializable) tipsData.get(position));
+                    bundle.putBoolean("favourite", LoginScreen.user.getFavoriteTipsArray().contains(tipsData.get(position).get_id()));
 
                     //bundle.putString("title", tipsData.get(position).get_tipname());
                     //bundle.putString("description", tipsData.get(position).get_description());

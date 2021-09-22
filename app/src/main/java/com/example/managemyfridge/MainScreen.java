@@ -118,6 +118,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         ArrayList<Product> products = dbHandler.showallProducts(LoginScreen.user.getID());
         fridge = new Fridge(products);
 
+        //---------------TESTING-------------------//
+        LoginScreen.user.addFavoriteTip(1);
+
+
+
+
         //Some fragments in the app get added to the backstack, and we want the "burger" button in the navigation drawer to become the arrow, and to allow the navigation only backward
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -183,6 +189,16 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         TextView header1 = inflatedView.findViewById(R.id.headerEmail);
         header1.setText(LoginScreen.user.getEmail());
+
+    }
+
+    //TODO Save the user's favourites and other data in the database
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        //Save arraylists in the databases
 
     }
 

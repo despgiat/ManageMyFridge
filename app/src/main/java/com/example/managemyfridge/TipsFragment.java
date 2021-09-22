@@ -1,18 +1,22 @@
 package com.example.managemyfridge;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +28,7 @@ public class TipsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     //private static final String TITLE = "title";
     //private static final String DESCRIPTION = "description";
-    //public static final String FAVOURITE = "fave";
+    public static final String FAVOURITE = "favourite";
 
     public static final String TIPINFO = "tip";
     private Tip tip;
@@ -48,13 +52,14 @@ public class TipsFragment extends Fragment {
      * @return A new instance of fragment TipsFragment.
      */
 
-    public static TipsFragment newInstance(String param1) {
+    public static TipsFragment newInstance(String param1, Boolean param2) {
         TipsFragment fragment = new TipsFragment();
         Bundle args = new Bundle();
         //args.putString(TITLE, param1);
         //args.putString(DESCRIPTION, param2);
         //args.putBoolean(FAVOURITE, param3);
         args.putSerializable(TIPINFO, param1);
+        args.putBoolean(FAVOURITE, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +72,7 @@ public class TipsFragment extends Fragment {
             tip = (Tip) getArguments().getSerializable(TIPINFO);
             tipTitle = tip.get_tipname();
             tipDescription = tip.get_description();
-            favourite = LoginScreen.user.getFavoriteTipsArray().contains(tip.get_id());
+            favourite = getArguments().getBoolean(FAVOURITE);
 
             setHasOptionsMenu(true);
 
@@ -86,6 +91,8 @@ public class TipsFragment extends Fragment {
         TextView description = view.findViewById(R.id.tip_instructionsTextView);
         description.setText(tipDescription);
 
+
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(tipTitle);
 
         return view;
@@ -99,9 +106,18 @@ public class TipsFragment extends Fragment {
         //TODO Check from the database if this tip belongs to the user's favorites and display it accordingly
 
         fave = menu.findItem(R.id.fave);
-        fave.setIcon(R.drawable.ic_fave_empty);
+
+        if(favourite)
+        {
+            fave.setIcon(R.drawable.ic_fave_filled);
+        }
+        else
+        {
+            fave.setIcon(R.drawable.ic_fave_empty);
+        }
 
         fave.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
@@ -125,22 +141,25 @@ public class TipsFragment extends Fragment {
     public void setAsFavourite()
     {
         fave.setIcon(R.drawable.ic_fave_filled);
+        LoginScreen.user.addFavoriteTip(tip.get_id());
 
         //Database stuff
         //recipe will be marked as favourite (and it will be saved in the database
 
         Toast.makeText(getContext(), "This recipe has been added to your favorites!", Toast.LENGTH_SHORT).show();
-        favourite = true;
+        //favourite = true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void removeFromFavourites()
     {
         fave.setIcon(R.drawable.ic_fave_empty);
+        LoginScreen.user.removeFavoriteTip(tip.get_id());
 
         //Database stuff
 
         Toast.makeText(getContext(), "This recipe has been removed from your favorites!", Toast.LENGTH_SHORT).show();
-        favourite = false;
+        //favourite = false;
     }
 
 
