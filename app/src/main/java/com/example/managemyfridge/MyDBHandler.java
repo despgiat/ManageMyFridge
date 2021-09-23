@@ -31,7 +31,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private boolean mNeedUpdate = false;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "MMFDB2.db";
+    private static final String DATABASE_NAME = "MMFDB3.db";
     public static final String TABLE_PRODUCTS = "PRODUCT";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PRODUCTNAME = "Name";
@@ -561,15 +561,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         CharSequence email = text.getText().toString();
         return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
-
-    //TODO: Make the fav_recipes and fav_tips methods
-    //NEW: Methods to get favorite recipes and tips.
-    public void fav_recipes(){}
-
-    public void fav_tips(){}
-
-
-
 
 
 
