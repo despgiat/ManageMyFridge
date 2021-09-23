@@ -501,9 +501,16 @@ public class MyDBHandler extends SQLiteOpenHelper {
             LoginScreen.user.setUsername(cursor.getString(1));
             LoginScreen.user.setEmail(cursor.getString(2));
             LoginScreen.user.setPassword(cursor.getString(3));
-            LoginScreen.user.setFavRecipeString(cursor.getString(3));
-            LoginScreen.user.setFavoriteTipsString(cursor.getString(4));
-            LoginScreen.user.setImg(cursor.getString(5));
+            LoginScreen.user.setImg(cursor.getString(4));
+            LoginScreen.user.setFavRecipeString(cursor.getString(5));
+            LoginScreen.user.setFavoriteTipsString(cursor.getString(6));
+            System.out.println(cursor.getString(6));
+
+            if (!LoginScreen.user.getTipString().equals("")){
+                //LoginScreen.user.setFavRecipeArray(LoginScreen.user.stringToArray(LoginScreen.user.getFavoriteRecipesString()));
+                LoginScreen.user.setFavoriteTipsArray(LoginScreen.user.stringToArray(LoginScreen.user.getTipString()));
+                System.out.println(LoginScreen.user.getFavoriteTipsString());
+            }
             cursor.close();
             flag = true;
         } else {
