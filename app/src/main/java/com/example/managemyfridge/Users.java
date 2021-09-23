@@ -85,10 +85,10 @@ public class Users {
 
     public ArrayList<Integer> getFavoriteRecipesArray(){ return this.favoriteRecipes;}
 
-    public void addFavoriteRecipe(int a){this.favoriteRecipes.add(a);}
+    public void addFavoriteRecipe(int a){this.favoriteRecipes.add(a); favoriteRecipesString = arrayToString(this.favoriteRecipes);}
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void removeFavoriteRecipe(int a){this.favoriteRecipes.removeIf(s -> s.equals(a));}
+    public void removeFavoriteRecipe(int a){this.favoriteRecipes.removeIf(s -> s.equals(a)); favoriteRecipesString = arrayToString(this.favoriteRecipes);}
 
     public String arrayToString(ArrayList<Integer> favorites)
     {
@@ -113,8 +113,8 @@ public class Users {
         }
         return tempFavs;
     }
-
-    public String getFavoriteTipsString(){ favoriteTipsString = arrayToString(favoriteTips); return favoriteTipsString; }
+    public String getTipString(){return favoriteTipsString;}
+    public String getFavoriteTipsString(){ return favoriteTipsString; }
 
     public void setFavoriteTipsString(String favs){ this.favoriteTipsString=favs; }
 
@@ -122,10 +122,10 @@ public class Users {
 
     public ArrayList<Integer> getFavoriteTipsArray(){ return this.favoriteTips;}
 
-    public void addFavoriteTip(int a){this.favoriteTips.add(a);}
+    public void addFavoriteTip(int a){this.favoriteTips.add(a); favoriteTipsString = arrayToString(favoriteTips);}
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void removeFavoriteTip(int a){this.favoriteTips.removeIf(s -> s.equals(a));}
+    public void removeFavoriteTip(int a){this.favoriteTips.removeIf(s -> s.equals(a)); favoriteTipsString = arrayToString(this.favoriteTips);}
 
 
 

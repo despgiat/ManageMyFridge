@@ -142,6 +142,8 @@ public class TipsFragment extends Fragment {
     {
         fave.setIcon(R.drawable.ic_fave_filled);
         LoginScreen.user.addFavoriteTip(tip.get_id());
+        LoginScreen.dbHandlerlog.updateUser();
+        System.out.println(LoginScreen.user.getFavoriteTipsString());
 
         //Database stuff
         //recipe will be marked as favourite (and it will be saved in the database
@@ -155,6 +157,7 @@ public class TipsFragment extends Fragment {
     {
         fave.setIcon(R.drawable.ic_fave_empty);
         LoginScreen.user.removeFavoriteTip(tip.get_id());
+        LoginScreen.dbHandlerlog.updateUser();
 
         //Database stuff
 

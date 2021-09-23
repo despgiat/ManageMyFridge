@@ -148,6 +148,7 @@ public class RecipesFragment extends Fragment {
     {
         fave.setIcon(R.drawable.ic_fave_filled);
         LoginScreen.user.addFavoriteRecipe(recipe.get_id());
+        LoginScreen.dbHandlerlog.updateUser();
         Toast.makeText(getContext(), "This recipe has been added to your favorites!", Toast.LENGTH_SHORT).show();
     }
 
@@ -156,6 +157,7 @@ public class RecipesFragment extends Fragment {
     {
         fave.setIcon(R.drawable.ic_fave_empty);
         LoginScreen.user.removeFavoriteRecipe(recipe.get_id());
+        LoginScreen.dbHandlerlog.updateUser();
         Toast.makeText(getContext(), "This recipe has been removed from your favorites!", Toast.LENGTH_SHORT).show();
 
     }
