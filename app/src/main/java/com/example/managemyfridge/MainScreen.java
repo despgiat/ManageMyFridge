@@ -119,8 +119,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         fridge = new Fridge(products);
 
         //---------------TESTING-------------------//
-        LoginScreen.user.addFavoriteTip(1);
-        LoginScreen.user.addFavoriteRecipe(2);
+       // LoginScreen.user.addFavoriteTip(1);
+       // LoginScreen.user.addFavoriteRecipe(2);
         //LoginScreen.user.addFavoriteRecipe(3);
 
 

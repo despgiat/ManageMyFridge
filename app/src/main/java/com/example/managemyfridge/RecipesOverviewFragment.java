@@ -29,8 +29,6 @@ public class RecipesOverviewFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "recipes";
     //private static final String ARG_PARAM2 = "param2";
-
-    private ArrayList<Recipe> mParam1;
     //private String mParam2;
 
     public RecipesOverviewFragment() {
@@ -41,7 +39,6 @@ public class RecipesOverviewFragment extends Fragment {
         RecipesOverviewFragment fragment = new RecipesOverviewFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, recipes);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +47,7 @@ public class RecipesOverviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (ArrayList<Recipe>) getArguments().getSerializable(ARG_PARAM1);
+            recipes = (ArrayList<Recipe>) getArguments().getSerializable(ARG_PARAM1);
 
             //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recipes");
             //mParam2 = getArguments().getString(ARG_PARAM2);
@@ -70,6 +67,17 @@ public class RecipesOverviewFragment extends Fragment {
         recipesRecyclerView.setLayoutManager(linearLayoutManagerToday);
         recipesAdapter = new ContentRecyclerAdapter(getContext(), this, LoginScreen.dbHandlerlog.getallRecipes());
         recipesRecyclerView.setAdapter(recipesAdapter);
+
+        warning = view.findViewById(R.id.recipesWarningTextView);
+
+        if(recipes.isEmpty())
+        {
+            warning.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            warning.setVisibility(View.GONE);
+        }
 
         // Inflate the layout for this fragment
         return view;

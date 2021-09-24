@@ -7,12 +7,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -35,6 +34,9 @@ public class FavouritesFragment extends Fragment {
 
     RecyclerView.Adapter fav_recipesAdapter;
     RecyclerView.Adapter fav_tipsAdapter;
+
+    TextView recipesTextView;
+    TextView tipsTextView;
 
     public FavouritesFragment() {
         // Required empty public constructor
@@ -69,6 +71,9 @@ public class FavouritesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
+        recipesTextView = view.findViewById(R.id.fav_recipes_textview);
+        tipsTextView = view.findViewById(R.id.faveTipsTextView);
+
         //The full catalog of recipes
         //The other implementation can be that the adapters can have the data themselves and the input can be the ids of the recipes we want to show each time
 
@@ -98,6 +103,23 @@ public class FavouritesFragment extends Fragment {
                 }
             }
 
+            if(recipe_ids.size() == 0)
+            {
+                recipesTextView.setText("You don't have any favourite recipes yet!");
+            }
+            else
+            {
+                recipesTextView.setText("Your favourite recipes:");
+            }
+            if(tips_ids.size() == 0)
+            {
+                tipsTextView.setText("You don't have any favourite tips yet!");
+            }
+            else
+            {
+                tipsTextView.setText("Your favourite tips:");
+            }
+
 
         //TODO PLACEHOLDER, TO ADD THE USER'S FAVOURITE RECIPES (DONE)
 
@@ -114,7 +136,6 @@ public class FavouritesFragment extends Fragment {
         tipsRecyclerView.setLayoutManager(linearLayoutManager1);
         fav_tipsAdapter = new TipRecyclerAdapter(getContext(), this, tips);
         tipsRecyclerView.setAdapter(fav_tipsAdapter);
-
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favourites");
 

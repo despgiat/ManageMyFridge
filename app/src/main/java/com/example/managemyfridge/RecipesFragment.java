@@ -88,7 +88,10 @@ public class RecipesFragment extends Fragment {
         instructions.setText(recipe.get_instructions());
 
         TextView ingredients = view.findViewById(R.id.ingredientsListTextView);
-        ingredients.setText(recipe.get_ingredients());
+        ingredients.setText(formatIngredients(recipe.get_ingredients()));
+
+        TextView source = view.findViewById(R.id.recipe_sourceTextView);
+        source.setText(recipe.get_source());
 
         //RecyclerView ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerView);
         //LinearLayoutManager linearLayoutManagerIngredients = new LinearLayoutManager(this.getContext());
@@ -160,6 +163,11 @@ public class RecipesFragment extends Fragment {
         LoginScreen.dbHandlerlog.updateUser();
         Toast.makeText(getContext(), "This recipe has been removed from your favorites!", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public String formatIngredients(String ingredients)
+    {
+        return ingredients.replace(". ", "\n");
     }
 
 

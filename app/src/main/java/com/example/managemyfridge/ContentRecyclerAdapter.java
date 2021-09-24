@@ -41,7 +41,6 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
         this.context = context;
         this.fromFragment = fromFragment;
         this.recipeData = recipeData;
-        System.out.println("WHOAH");
     }
 
     @NonNull

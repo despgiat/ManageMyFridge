@@ -91,7 +91,8 @@ public class TipsFragment extends Fragment {
         TextView description = view.findViewById(R.id.tip_instructionsTextView);
         description.setText(tipDescription);
 
-
+        TextView source = view.findViewById(R.id.tip_sourceTextView);
+        source.setText(tip.get_source());
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(tipTitle);
 

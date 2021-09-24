@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,13 +68,20 @@ public class RecipeSearchFragment extends Fragment {
 
     private Fridge fridge;
 
-    ListView diet_prefs_listView;
+    RecyclerView diet_prefs_recyclerview;
+    RecyclerView meal_type_recyclerview;
+
+    CheckboxRecyclerAdapter dietprefsAdapter;
+    CheckboxRecyclerAdapter mealtypeAdapter;
+
+    //ListView diet_prefs_listView;
     ListView meal_type_listView;
     ExpandableListView ingredients_list;
 
     Button clearButton;
     Button importfromfridge;
     Button findRecipes;
+    Button findAllRecipes;
 
     public RecipeSearchFragment() {
         // Required empty public constructor
@@ -149,11 +159,28 @@ public class RecipeSearchFragment extends Fragment {
         clearButton = (Button) view.findViewById(R.id.clearButton);
         importfromfridge = view.findViewById(R.id.fromFridgeButton);
         findRecipes = view.findViewById(R.id.findRecipesButton);
+        findAllRecipes = view.findViewById(R.id.findAllRecipesButton);
 
-        diet_prefs_listView = view.findViewById(R.id.diet_prefs_list);
-//        listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
-        diet_prefs_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, diet_prefs));
+        diet_prefs_recyclerview = view.findViewById(R.id.diet_prefs_recyclerview);
+        meal_type_recyclerview = view.findViewById(R.id.meal_type_recyclerview);
 
+        //diet_prefs_listView = view.findViewById(R.id.diet_prefs_list);
+//
+//       listView.setChoiceMode(CHOICE_MODE_MULTIPLE);
+        LinearLayoutManager linearLayoutManagerPrefs = new LinearLayoutManager(this.getContext());
+        diet_prefs_recyclerview.setLayoutManager(linearLayoutManagerPrefs);
+        dietprefsAdapter = new CheckboxRecyclerAdapter(diet_prefs);
+        diet_prefs_recyclerview.setAdapter(dietprefsAdapter);
+
+
+        LinearLayoutManager linearLayoutManagerType = new LinearLayoutManager(this.getContext());
+        meal_type_recyclerview.setLayoutManager(linearLayoutManagerType);
+        mealtypeAdapter = new CheckboxRecyclerAdapter(meal_type);
+        meal_type_recyclerview.setAdapter(mealtypeAdapter);
+
+
+        //diet_prefs_listView.setAdapter(new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_multiple_choice, diet_prefs));
+/*
         diet_prefs_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -205,6 +232,8 @@ public class RecipeSearchFragment extends Fragment {
             }
         });
 
+ */
+
         ingredients_list = view.findViewById(R.id.ingredient_expandablelist);
 
         adapter = new IngredientExpListAdapter(this.getContext(), ingredientGroups, ingredients);
@@ -241,6 +270,23 @@ public class RecipeSearchFragment extends Fragment {
                 }
 
                 */
+            }
+        });
+
+        findAllRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle bundle;
+
+                ArrayList<Recipe> recipes = LoginScreen.dbHandlerlog.getallRecipes();
+
+                bundle = new Bundle();
+                bundle.putSerializable("recipes", recipes);
+                RecipesOverviewFragment fragment = new RecipesOverviewFragment(); //Shows the content fragment, whether is it recipes or tips
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.screen, fragment).addToBackStack(null).commit();
+
             }
         });
 
@@ -284,14 +330,20 @@ public class RecipeSearchFragment extends Fragment {
 
         checkedIngredients = adapter.getAllChecked();
 
-        for(int i = 0; i < checkedDietPrefs.size(); i++)
+        ArrayList<String> prefs = dietprefsAdapter.getChecked();
+        ArrayList<String> types = mealtypeAdapter.getChecked();
+
+        //checkedDietPrefs = dietprefsAdapter.getChecked();
+
+        for(int i = 0; i < prefs.size(); i++)
         {
-            System.out.println(checkedDietPrefs.get(i));
+            System.out.println(prefs.get(i));
         }
 
-        for(int i = 0; i < checkedMealTypes.size(); i++)
+
+        for(int i = 0; i < types.size(); i++)
         {
-            System.out.println(checkedMealTypes.get(i));
+            System.out.println(types.get(i));
         }
 
         for(int i = 0; i < checkedIngredients.size(); i++)

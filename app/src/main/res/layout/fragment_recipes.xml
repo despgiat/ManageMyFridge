@@ -44,14 +44,8 @@
             android:id="@+id/ingredientsListTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredientsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/instructionsTitleTextView"
@@ -72,6 +66,26 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="[Instructions text here]" />
+
+        <TextView
+            android:id="@+id/recipe_sourceTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Source"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/recipe_sourceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="[Source]" />
 
     </LinearLayout>
 </FrameLayout>
