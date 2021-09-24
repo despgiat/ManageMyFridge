@@ -470,8 +470,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
         values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
         values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
-        values.put(COLUMN_FAVORITES, LoginScreen.user.getFavoriteRecipesString());
-        values.put(COLUMN_TIPS, LoginScreen.user.getFavoriteTipsString());
+        values.put(COLUMN_FAVORITES, LoginScreen.user.getRecipeString());
+        values.put(COLUMN_TIPS, LoginScreen.user.getRecipeString());
 
         SQLiteDatabase db = this.getWritableDatabase();
         //original
@@ -504,12 +504,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
             LoginScreen.user.setImg(cursor.getString(4));
             LoginScreen.user.setFavRecipeString(cursor.getString(5));
             LoginScreen.user.setFavoriteTipsString(cursor.getString(6));
-            System.out.println(cursor.getString(6));
 
             if (!LoginScreen.user.getTipString().equals("")){
-                //LoginScreen.user.setFavRecipeArray(LoginScreen.user.stringToArray(LoginScreen.user.getFavoriteRecipesString()));
                 LoginScreen.user.setFavoriteTipsArray(LoginScreen.user.stringToArray(LoginScreen.user.getTipString()));
-                System.out.println(LoginScreen.user.getFavoriteTipsString());
+            }
+            if (!LoginScreen.user.getRecipeString().equals("")){
+                LoginScreen.user.setFavRecipeArray(LoginScreen.user.stringToArray(LoginScreen.user.getRecipeString()));
+                System.out.println(LoginScreen.user.getRecipeString());
             }
             cursor.close();
             flag = true;
@@ -546,8 +547,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PASSWORD, LoginScreen.user.getPassword());
         values.put(COLUMN_USERNAME, LoginScreen.user.getUsername());
         values.put(COLUMN_EMAIL, LoginScreen.user.getEmail());
-        values.put(COLUMN_FAVORITES, LoginScreen.user.getFavoriteRecipesString());
-        values.put(COLUMN_TIPS, LoginScreen.user.getFavoriteTipsString());
+        values.put(COLUMN_FAVORITES, LoginScreen.user.getRecipeString());
+        values.put(COLUMN_TIPS, LoginScreen.user.getTipString());
 
         SQLiteDatabase db = this.getWritableDatabase();
         //original

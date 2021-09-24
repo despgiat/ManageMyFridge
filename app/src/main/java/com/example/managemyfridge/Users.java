@@ -77,20 +77,7 @@ public class Users {
         this.email = email;
     }
 
-    public String getFavoriteRecipesString(){ favoriteRecipesString = arrayToString(favoriteRecipes); return favoriteRecipesString; }
-
-    public void setFavRecipeString(String favs){ this.favoriteRecipesString=favs; }
-
-    public void setFavRecipeArray(ArrayList<Integer> favorites){this.favoriteRecipes = favorites;}
-
-    public ArrayList<Integer> getFavoriteRecipesArray(){ return this.favoriteRecipes;}
-
-    public void addFavoriteRecipe(int a){this.favoriteRecipes.add(a); favoriteRecipesString = arrayToString(this.favoriteRecipes);}
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void removeFavoriteRecipe(int a){this.favoriteRecipes.removeIf(s -> s.equals(a)); favoriteRecipesString = arrayToString(this.favoriteRecipes);}
-
-    public String arrayToString(ArrayList<Integer> favorites)
+      public String arrayToString(ArrayList<Integer> favorites)
     {
         StringBuffer sb = new StringBuffer();
 
@@ -113,17 +100,23 @@ public class Users {
         }
         return tempFavs;
     }
+    public String getRecipeString(){return favoriteRecipesString;}
+    public void setFavRecipeString(String favs){ this.favoriteRecipesString=favs; }
+    public void setFavRecipeArray(ArrayList<Integer> favorites){this.favoriteRecipes = favorites;}
+    public ArrayList<Integer> getFavoriteRecipesArray(){ return this.favoriteRecipes;}
+
+    public void addFavoriteRecipe(int a){this.favoriteRecipes.add(a); favoriteRecipesString = arrayToString(this.favoriteRecipes);}
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void removeFavoriteRecipe(int a){this.favoriteRecipes.removeIf(s -> s.equals(a)); favoriteRecipesString = arrayToString(this.favoriteRecipes);}
+
+
     public String getTipString(){return favoriteTipsString;}
-    public String getFavoriteTipsString(){ return favoriteTipsString; }
-
     public void setFavoriteTipsString(String favs){ this.favoriteTipsString=favs; }
-
     public void setFavoriteTipsArray(ArrayList<Integer> favorites){this.favoriteTips = favorites;}
-
     public ArrayList<Integer> getFavoriteTipsArray(){ return this.favoriteTips;}
 
-    public void addFavoriteTip(int a){this.favoriteTips.add(a); favoriteTipsString = arrayToString(favoriteTips);}
-
+    public void addFavoriteTip(int a){this.favoriteTips.add(a); favoriteTipsString = arrayToString(this.favoriteTips);}
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void removeFavoriteTip(int a){this.favoriteTips.removeIf(s -> s.equals(a)); favoriteTipsString = arrayToString(this.favoriteTips);}
 
