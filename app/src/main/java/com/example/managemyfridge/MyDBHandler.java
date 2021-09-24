@@ -504,7 +504,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
           //  LoginScreen.user.setImg(cursor.getString(4));
             LoginScreen.user.setFavRecipeString(cursor.getString(5));
             LoginScreen.user.setFavoriteTipsString(cursor.getString(6));
-
+            //if the favorite's string is not empty, then we fill the favorite's array
             if (!LoginScreen.user.getTipString().equals("")){
                 LoginScreen.user.setFavoriteTipsArray(LoginScreen.user.stringToArray(LoginScreen.user.getTipString()));
             }
