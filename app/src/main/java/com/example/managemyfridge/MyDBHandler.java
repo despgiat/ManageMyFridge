@@ -501,7 +501,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             LoginScreen.user.setUsername(cursor.getString(1));
             LoginScreen.user.setEmail(cursor.getString(2));
             LoginScreen.user.setPassword(cursor.getString(3));
-            LoginScreen.user.setImg(cursor.getString(4));
+          //  LoginScreen.user.setImg(cursor.getString(4));
             LoginScreen.user.setFavRecipeString(cursor.getString(5));
             LoginScreen.user.setFavoriteTipsString(cursor.getString(6));
 
