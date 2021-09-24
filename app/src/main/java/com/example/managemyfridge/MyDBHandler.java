@@ -316,6 +316,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         } else {
             product = null;
         }
+        //cursor.close();
         db.close();
         return product;
     }
@@ -775,6 +776,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
             //Incrementing i in order to move to next meal type if there is any.
             i++;
 
+        
+
             // at last closing our cursor and db
             // and returning our array list.
             cursor.close();
@@ -866,8 +869,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
             // on below line we are adding the recipes of chosen meal type to our recipe array list.
 
+
             for (Recipe rec : temp){
-                if (rec.get_recipetype() == meal_type){
+                if (rec.get_recipetype().equals(meal_type) ){
                     listofRecipes.add(rec);
 
                 }
@@ -881,6 +885,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
         }
+
         return listofRecipes;
 
     }
