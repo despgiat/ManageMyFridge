@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -239,6 +240,17 @@ public class RecipeSearchFragment extends Fragment {
         adapter = new IngredientExpListAdapter(this.getContext(), ingredientGroups, ingredients);
 
         ingredients_list.setAdapter(adapter);
+
+       /*ingredients_list.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+// Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+        });
+
+        */
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override

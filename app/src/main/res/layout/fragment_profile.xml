@@ -119,6 +119,7 @@
         android:textSize="14sp"
         android:textStyle="bold"
         android:visibility="gone" />
+
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -137,6 +138,7 @@
             android:text="Discard"  android:visibility="gone"
             />
     </TableRow>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -179,7 +181,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone">
@@ -191,7 +193,7 @@
         android:layout_height="match_parent">
 
         <TableRow
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
             <EditText
@@ -206,7 +208,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <EditText
@@ -220,7 +222,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
             <TextView
@@ -231,26 +233,26 @@
                 android:visibility="gone"/>
         </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/save_new_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/discard"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Discard changes"  android:visibility="gone"
+                />
+        </TableRow>
     </TableLayout>
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/save_new_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/discard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Discard"  android:visibility="gone"
-            />
-    </TableRow>
     <TextView
         android:id="@+id/clearAppData"
         android:layout_width="wrap_content"

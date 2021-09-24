@@ -153,6 +153,7 @@ public class RecipesFragment extends Fragment {
         LoginScreen.user.addFavoriteRecipe(recipe.get_id());
         LoginScreen.dbHandlerlog.updateUser();
         Toast.makeText(getContext(), "This recipe has been added to your favorites!", Toast.LENGTH_SHORT).show();
+        favourite = true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -162,6 +163,7 @@ public class RecipesFragment extends Fragment {
         LoginScreen.user.removeFavoriteRecipe(recipe.get_id());
         LoginScreen.dbHandlerlog.updateUser();
         Toast.makeText(getContext(), "This recipe has been removed from your favorites!", Toast.LENGTH_SHORT).show();
+        favourite = false;
 
     }
 
