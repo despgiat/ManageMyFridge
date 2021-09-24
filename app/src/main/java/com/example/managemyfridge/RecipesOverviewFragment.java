@@ -48,9 +48,6 @@ public class RecipesOverviewFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             recipes = (ArrayList<Recipe>) getArguments().getSerializable(ARG_PARAM1);
-
-            //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recipes");
-            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -65,7 +62,7 @@ public class RecipesOverviewFragment extends Fragment {
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
         recipesRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        recipesAdapter = new ContentRecyclerAdapter(getContext(), this, LoginScreen.dbHandlerlog.getallRecipes());
+        recipesAdapter = new ContentRecyclerAdapter(getContext(), this, recipes);
         recipesRecyclerView.setAdapter(recipesAdapter);
 
         warning = view.findViewById(R.id.recipesWarningTextView);

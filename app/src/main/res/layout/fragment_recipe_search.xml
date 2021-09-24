@@ -21,42 +21,62 @@
             android:text="@string/motivational_text_in_recipes"
             android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/diet_preferences_textview"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Diet Preferences"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
+            android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/diet_prefs_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/meal_type_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Meal Type"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
+                <TextView
+                    android:id="@+id/diet_preferences_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Diet Preferences"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/meal_type_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/diet_prefs_recyclerview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="inherit"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/meal_type_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Meal Type"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/meal_type_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/ingredients_textview"
@@ -72,12 +92,22 @@
             android:textStyle="bold"
             android:visibility="visible" />
 
-        <ExpandableListView
-            android:id="@+id/ingredient_expandablelist"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:choiceMode="multipleChoice"
-            android:visibility="visible" />
+            android:layout_height="match_parent">
+
+            <ExpandableListView
+                android:id="@+id/ingredient_expandablelist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="multipleChoice"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -258,18 +258,25 @@ public class RecipeSearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                findRecipes();
+                ArrayList<Recipe> foundRecipes = findRecipes();
 
-                //findRecipes();
-
-               // ArrayList<String> ingList = adapter.getAllChecked();
-
-               /* for(int i = 0; i < ingList.size(); i++)
+                for(int i = 0; i < foundRecipes.size(); i++)
                 {
-                    System.out.println(ingList.get(i));
+                    System.out.println(foundRecipes.get(i).get_recipename());
                 }
 
-                */
+                    Bundle bundle;
+                    bundle = new Bundle();
+                    bundle.putSerializable("recipes", foundRecipes);
+                    RecipesOverviewFragment fragment = new RecipesOverviewFragment(); //Shows the content fragment, whether is it recipes or tips
+                    fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.screen, fragment).addToBackStack(null).commit();
+               // }
+               // else
+               // {
+                 //   Toast.makeText(getActivity(), "Please choose at least one item of each list to proceed!", Toast.LENGTH_SHORT).show();
+               // }
+
             }
         });
 
@@ -326,33 +333,22 @@ public class RecipeSearchFragment extends Fragment {
 
     public ArrayList<Recipe> findRecipes()
     {
-        ArrayList<Recipe> foundRecipes = new ArrayList<>();
+       // ArrayList<Recipe> foundRecipes = new ArrayList<>();
 
-        checkedIngredients = adapter.getAllChecked();
+        //checkedIngredients = adapter.getAllChecked();
 
         ArrayList<String> prefs = dietprefsAdapter.getChecked();
         ArrayList<String> types = mealtypeAdapter.getChecked();
 
-        //checkedDietPrefs = dietprefsAdapter.getChecked();
+        ArrayList<Recipe> recipesFound = LoginScreen.dbHandlerlog.getallRecipesofCertainPref(prefs, types);
 
-        for(int i = 0; i < prefs.size(); i++)
+        System.out.println("RECIPES FOUND:");
+        for(int i = 0; i < recipesFound.size(); i++)
         {
-            System.out.println(prefs.get(i));
+            System.out.println(recipesFound.get(i).get_recipename());
         }
 
-
-        for(int i = 0; i < types.size(); i++)
-        {
-            System.out.println(types.get(i));
-        }
-
-        for(int i = 0; i < checkedIngredients.size(); i++)
-        {
-            System.out.println(checkedIngredients.get(i));
-        }
-
-        return foundRecipes;
-
+        return recipesFound;
 
     }
 
