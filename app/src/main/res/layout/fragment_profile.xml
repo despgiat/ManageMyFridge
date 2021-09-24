@@ -105,6 +105,7 @@
 
     </LinearLayout>
 
+
     <TextView
         android:id="@+id/changeUsernameButton"
         android:layout_width="wrap_content"
