@@ -724,6 +724,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
         // on below line we are creating a new array list for chosen recipes.
         ArrayList<Recipe> listofRecipes = new ArrayList<>();
 
+        // on below line we are creating a new helping array list for temporarily chosen recipes.
+        ArrayList<Recipe> temp = new ArrayList<>();
+
 
         //adding the recipes based on diet preference
         while (i<listofpreferences.size()){
@@ -760,17 +763,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
 
-                    // on below line we are adding the data from cursor to our recipe array list.
-                    /*boolean exists = false;
-                    for (Customer customer : customers) {
-                        if (customer.getName().equals(name)) {
-                            return customer;
-                        }
-                    }
-                    if(!exists) {
-
-                    }*/
-                    listofRecipes.add(recipe);
+                    // on below line we are adding the data from cursor to our temp recipe array list.
+                    //listofRecipes.add(recipe);
+                    temp.add(recipe);
 
                 } while (cursor.moveToNext());
                 // moving our cursor to next.
@@ -788,6 +783,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
 
 
+
+        /*
 
         //Adding the recipes based on meal type
         while (j < listofmealtype.size()){
@@ -826,15 +823,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
                     // on below line we are adding the data from cursor to our recipe array list.
-                    /*boolean exists = false;
-                    for (Customer customer : customers) {
-                        if (customer.getName().equals(name)) {
-                            return customer;
-                        }
-                    }
-                    if(!exists) {
 
-                    }*/
 
                     //checking if the recipe found is already on the list of recipes we're going to return.
                     // If it is we make boolean exists true and don't add that recipe in the list
@@ -864,10 +853,30 @@ public class MyDBHandler extends SQLiteOpenHelper {
             //Incrementing i in order to move to next meal type if there is any.
             j++;
 
-            // at last closing our cursor and db
-            // and returning our array list.
-            cursor.close();
-            db.close();
+         */
+
+        //Adding the recipes based on meal type
+        while (j < listofmealtype.size()){
+
+            //meal type chosen, changes until all meal types chosen are selected and related recipes are searched for
+            String meal_type = listofmealtype.get(j);
+
+
+
+            // on below line we are adding the recipes of chosen meal type to our recipe array list.
+
+            for (Recipe rec : temp){
+                if (rec.get_recipetype() == meal_type){
+                    listofRecipes.add(rec);
+
+                }
+            }
+
+
+
+            //Incrementing i in order to move to next meal type if there is any.
+            j++;
+
 
 
         }
