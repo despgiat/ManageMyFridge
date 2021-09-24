@@ -38,6 +38,8 @@ public class ProfileFragment extends Fragment {
     TextView username;
     TextView email;
     Button changeUsername;
+    Button saveUsername;
+    Button discardUsername;
     EditText editTextUsername;
     TextView passwordTextView;
     Button changePassword;
@@ -169,6 +171,9 @@ public class ProfileFragment extends Fragment {
             }
         });
         /*TODO: Change button to Save, after click*/
+
+        saveUsername = view.findViewById(R.id.save_username);
+        discardUsername = view.findViewById(R.id.discard_username);
         changeUsername = view.findViewById(R.id.editUsernameButton);
         changeUsername.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,41 +181,63 @@ public class ProfileFragment extends Fragment {
 
                 //String usernameText = (String) username.getText();
 
-
-                editMode = !editMode;
-                if(editMode)
-                {
+                changeUsername.setVisibility(View.GONE);
+                //editMode = !editMode;
+               // if(editMode)
+                //{
                     username.setVisibility(View.GONE);
                     editTextUsername = view.findViewById(R.id.editTextUsername);
                     editTextUsername.setVisibility(View.VISIBLE);
                     editTextUsername.setText(username.getText());
-                }
-                else
-                {
-                    if(editTextUsername.getText() != null)
-                    {
-                        username.setText(editTextUsername.getText());
-                        editTextUsername.setVisibility(View.GONE);
-                        username.setVisibility(View.VISIBLE);
+                    saveUsername.setVisibility(View.VISIBLE);
+                    discardUsername.setVisibility(View.VISIBLE);
 
-                        //set this as the general username
+                    saveUsername.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(editTextUsername.getText() != null)
+                            {
+                                username.setText(editTextUsername.getText());
+                                editTextUsername.setVisibility(View.GONE);
+                                username.setVisibility(View.VISIBLE);
+                                saveUsername.setVisibility(View.GONE);
+                                discardUsername.setVisibility(View.GONE);
+                                changeUsername.setVisibility(View.VISIBLE);
+                                //set this as the general username
 
-                        editor.putString("username", String.valueOf(editTextUsername.getText()));
-                        editor.apply();
+                                editor.putString("username", String.valueOf(editTextUsername.getText()));
+                                editor.apply();
 
 
 
-                        //change the Username everywhere
+                                //change the Username everywhere
 
-                        ((MainScreen)getActivity()).usernameChange();
+                                ((MainScreen)getActivity()).usernameChange();
 
-                        LoginScreen.user.setUsername(username.getText().toString());
+                                LoginScreen.user.setUsername(username.getText().toString());
 
-                        //update DB
-                        LoginScreen.dbHandlerlog.updateUser();
-                    }
+                                //update DB
+                                LoginScreen.dbHandlerlog.updateUser();
+                            }
 
-                }
+                        }
+                    });
+                    discardUsername.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            editTextUsername.getText().clear();
+                            editTextUsername.setVisibility(View.GONE);
+                            saveUsername.setVisibility(View.GONE);
+                            discardUsername.setVisibility(View.GONE);
+                            changeUsername.setVisibility(View.VISIBLE);
+                            username.setVisibility(View.VISIBLE);
+                        }
+                    });
+               // }
+             //   else
+             //   {
+
+              //  }
 
             }
         });
