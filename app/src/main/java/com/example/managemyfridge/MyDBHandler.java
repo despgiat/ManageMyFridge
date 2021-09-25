@@ -1,6 +1,5 @@
 package com.example.managemyfridge;
 
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
@@ -66,9 +65,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_RELATED_PRODUCT = "Related_Product";*/
     public static final String COLUMN_IMAGE = "Img";
 
-    public static final String TABLE_INGREDIENTS = "INGREDIENT";
-   // public static final String COLUMN_INGREDIENTNAME = "Ingredient_Name";
-    public static final String COLUMN_ID_OF_RECIPE = "_idofRECIPE";
+   /* public static final String TABLE_INGREDIENTS = "INGREDIENT";
+    public static final String COLUMN_INGREDIENTNAME = "Ingredient_Name";
+    public static final String COLUMN_ID_OF_RECIPE = "_idofRECIPE"; */
 
 
 
@@ -133,10 +132,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
         mInput.close();
     }
 
-    public boolean openDataBase() throws SQLException {
+    /*public boolean openDataBase() throws SQLException {
         mDataBase = SQLiteDatabase.openDatabase(DATABASE_PATH + DATABASE_NAME, null, SQLiteDatabase.CREATE_IF_NECESSARY);
         return mDataBase != null;
-    }
+    }*/
 
     @Override
     public synchronized void close() {
@@ -159,100 +158,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             mNeedUpdate = true;
     }
 
-    //ORIGINAL CODE
-    /*
 
-    //Constructor
-    public MyDBHandler(Context context, String name,
-                       SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
-    }
-
-    //Δημιουργία του σχήματος της ΒΔ (πίνακας products, Ingredients, Recipes)
-    //this is called the first time a database is accessed
-    //Added autoincrement in id key
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        //create products table
-        String CREATE_PRODUCTS_TABLE = "CREATE TABLE " +
-                TABLE_PRODUCTS + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_PRODUCTNAME + " TEXT NOT NULL," +
-                COLUMN_QUANTITY + " TEXT NOT NULL," + //QUANTINY no longer integer
-                COLUMN_EXDATE + " TEXT," +
-                COLUMN_IS_IT_OPEN + " TEXT," +
-                COLUMN_TYPE + " TEXT  ," + //NOT NULL Here
-                COLUMN_DATE_OF_OPENING + " TEXT," +
-                COLUMN_IMAGE + " TEXT," +
-                COLUMN_UNIT + " TEXT" +
-                ")";
-        db.execSQL(CREATE_PRODUCTS_TABLE);
-
-        //create ingredients table
-        String CREATE_INGREDIENTS_TABLE = "CREATE TABLE " +
-                TABLE_INGREDIENTS + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_ID_OF_RECIPE + " INTEGER NOT NULL," +
-                COLUMN_INGREDIENTNAME + " TEXT NOT NULL," +
-                COLUMN_QUANTITY + " TEXT NOT NULL," +
-                COLUMN_UNIT + " TEXT" +
-                ")";
-        db.execSQL(CREATE_INGREDIENTS_TABLE);
-
-        //create recipes table
-        String CREATE_RECIPES_TABLE = "CREATE TABLE " +
-                TABLE_RECIPES + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_RECIPENAME + " TEXT NOT NULL," +
-                COLUMN_RECIPE_TYPE + " TEXT  ," +
-                COLUMN_INSTRUCTIONS + " TEXT  ," +
-                //COLUMN_IS_IT_FAV + " TEXT  ," +
-                COLUMN_SOURCE + " TEXT  ," +
-                COLUMN_IMAGE + " TEXT" +
-                ")";
-        db.execSQL(CREATE_RECIPES_TABLE);
-
-        //create tips table
-        String CREATE_TIPS_TABLE = "CREATE TABLE " +
-                TABLE_TIPS + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_TIPNAME + " TEXT NOT NULL," +
-                COLUMN_DESCRIPTION + " TEXT  ," +
-                COLUMN_RELATED_PRODUCT + " TEXT  ," +
-                //COLUMN_IS_IT_FAV + " TEXT  ," +
-                COLUMN_SOURCE + " TEXT  ," + //NEWLY ADDED
-                COLUMN_IMAGE + " TEXT" +
-                ")";
-        db.execSQL(CREATE_TIPS_TABLE);
-
-        //create users table
-        String CREATE_USERS_TABLE = "CREATE TABLE " +
-                TABLE_USERS + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_USERNAME + " TEXT ," +
-                COLUMN_EMAIL + " TEXT  ," +
-                COLUMN_PASSWORD + " TEXT  ," +
-                COLUMN_IMAGE + " TEXT" +
-                ")";
-        db.execSQL(CREATE_USERS_TABLE);
-    }
-
-
-
-
-    //Αναβάθμιση ΒΔ: εδώ τη διαγραφώ και τη ξαναδημιουργώ ίδια
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion,
-                          int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        onCreate(db);
-    }
-
-     */
 
 
 
@@ -280,16 +186,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
 
 
-        //change to make sure it works
-        /*long insert = db.insert(TABLE_PRODUCTS, null, values);
-        db.close();
-        if(insert==-1){
-            return false;
-        }
-        else {
-            return true;
-        }*/
-
     }
 
     //Μέθοδος για εύρεση προϊόντος βάσει ονομασίας του
@@ -312,33 +208,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return product;
     }
 
-    //Μέθοδος για εύρεση προϊόντος βάσει ονομασίας του
-    public Product newfindProduct(String productname) {
-        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " +
-                COLUMN_PRODUCTNAME + " = '" + productname + "'";
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        Product product = new Product();
-        if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            product.setID(Integer.parseInt(cursor.getString(0)));
-            product.setProductName(cursor.getString(1));
-            product.setQuantity(cursor.getString(2));
-            product.set_exdate(cursor.getString(3));
-            product.set_opened(cursor.getString(4));
-            product.set_prodtype(cursor.getString(5));
-            product.set_DateofOpening(cursor.getString(6));
-            //product.set_img(cursor.getString(7)); //the img changes based on type, not user's choice.
-            product.set_unit(cursor.getString(8));
-           //product.set_idofUSER(Integer.parseInt(cursor.getString(9))); //ID of user doesn't change
-            cursor.close();
 
-        } else {
-            product = null;
-        }
-        db.close();
-        return product;
-    }
 
     //Μέθοδος για διαγραφή προϊόντος βάσει ονομασίας του
     public boolean deleteProduct(String productname) {
@@ -401,7 +271,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //method to change/update the values of  the is_it_open and dateofopening variables
     public boolean makeProductOpen(int id, String todaydate){
         boolean result;
-        //String query = "SELECT _id, Is_it_open, Date_of_opening FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_ID + " = '" + id + "'";
+
         String query = "SELECT _id FROM " + TABLE_PRODUCTS + " WHERE " +
                 COLUMN_ID + " = '" + id + "'";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -452,9 +322,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     }
 
+
+
     //USER METHODS
 
-    //TODO: Add method to get fav_tips and fav_recipes, old methods may need changes
 
     //adding user to data base
     public void addUser(){
@@ -513,6 +384,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return flag;
     }
 
+    /*
 
     //delete user
     public boolean deleteUser(String username) {
@@ -530,7 +402,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
         db.close();
         return result;
-    }
+    }*/
 
     //update user
     public void updateUser (){
@@ -558,107 +430,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
 
-    //INGREDIENT METHODS
-
-    //TODO: Might need to alter or delete all methods
-
-
-    // we have created a new method that returns all the ingredients of a recipe.
-    public ArrayList<Ingredient> getallIngredients() {
-        // on below line we are creating a
-        // database for reading our database.
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // on below line we are creating a cursor with query to read data from database.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_INGREDIENTS, null);
-
-        // on below line we are creating a new array list.
-        ArrayList<Ingredient> listofIngredients = new ArrayList<>();
-
-        // moving our cursor to first position.
-        if (cursor.moveToFirst()) {
-            do {
-                // on below line we are adding the data from cursor to our array list.
-                listofIngredients.add(new Ingredient(cursor.getInt(0), //id
-                        cursor.getInt(1), //idofRECIPE
-                        cursor.getString(2), //ingredientname
-                        cursor.getString(3), //quantity
-                        cursor.getString(4) //unit
-
-                ));
-            } while (cursor.moveToNext());
-            // moving our cursor to next.
-        }
-        // at last closing our cursor and db
-        // and returning our array list.
-        cursor.close();
-        db.close();
-        return listofIngredients;
-    }
-
-    //NEW: PROBABLY WE'LL STICK WITH THIS
-    // we have created a new method that returns all the ingredients of a recipe.
-    public String newgetallIngredientsofRecipe(int idofrecipe) {
-
-        // on below line we are creating a
-        // database for reading our database.
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // on below line we are creating a cursor with query to read data from database.
-        Cursor cursor = db.rawQuery("SELECT Ingredients FROM " + TABLE_RECIPES + " WHERE " +
-                COLUMN_ID_OF_RECIPE + " = '" + idofrecipe + "'", null);
-
-        String Ingredients = cursor.getString(0);
-
-        // at last closing our cursor and db
-        // and returning our array list.
-        cursor.close();
-        db.close();
-        return Ingredients;
-
-    }
-
-
-
-    // we have created a new method that returns all the ingredients of a recipe.
-    public ArrayList<Ingredient> getallIngredientsofRecipe(int idofrecipe) {
-        // on below line we are creating a
-        // database for reading our database.
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // on below line we are creating a cursor with query to read data from database.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_INGREDIENTS + " WHERE " +
-                COLUMN_ID_OF_RECIPE + " = '" + idofrecipe + "'", null);
-
-        // on below line we are creating a new array list.
-        ArrayList<Ingredient> listofIngredients = new ArrayList<>();
-
-        // moving our cursor to first position.
-        if (cursor.moveToFirst()) {
-            do {
-                // on below line we are adding the data from cursor to our array list.
-                listofIngredients.add(new Ingredient(cursor.getInt(0), //id
-                        cursor.getInt(1), //idofRECIPE
-                        cursor.getString(2), //ingredientname
-                        cursor.getString(3), //quantity
-                        cursor.getString(4) //unit
-
-                ));
-            } while (cursor.moveToNext());
-            // moving our cursor to next.
-        }
-        // at last closing our cursor and db
-        // and returning our array list.
-        cursor.close();
-        db.close();
-        return listofIngredients;
-    }
-
-
-
     //RECIPE METHODS
-
-    //TODO: Changes may be needed, added ingredient in table RECIPE
 
     // we have created a new method that returns all the recipes.
     public ArrayList<Recipe> getallRecipes() {
@@ -711,8 +483,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         int i = 0;
         int j = 0;
 
-        //boolean to see if recipe with certain id already exists
-        boolean exists;
 
         // on below line we are creating a new array list for chosen recipes.
         ArrayList<Recipe> listofRecipes = new ArrayList<>();
@@ -721,6 +491,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         ArrayList<Recipe> temp = new ArrayList<>();
 
 
+        //First loop
         //adding the recipes based on diet preference
         while (i<listofpreferences.size()){
 
@@ -776,78 +547,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
 
 
-
-        /*
-
-        //Adding the recipes based on meal type
-        while (j < listofmealtype.size()){
-
-            exists = false;
-
-            //meal type chosen, changes until all meal types chosen are selected and related recipes are searched for
-            String meal_type = listofmealtype.get(j);
-
-            // on below line we are creating a
-            // database for reading our database.
-            SQLiteDatabase db = this.getReadableDatabase();
-
-            // on below line we are creating a cursor with query to read data from database.
-
-            //searches for all recipes with certain meal type
-            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_RECIPES +  " WHERE " +
-                    COLUMN_RECIPE_TYPE + " = '" + meal_type + "'", null);
-
-
-
-
-
-            // moving our cursor to first position.
-            if (cursor.moveToFirst()) {
-                do {
-                    Recipe recipe = new Recipe(cursor.getInt(0), //id
-                            cursor.getString(1), //recipename
-                            cursor.getString(2), //recipediet_pref //newly added
-                            cursor.getString(3), //recipetype
-                            cursor.getString(4), //instructions
-                            cursor.getString(5), //ingredients
-                            cursor.getString(6)); //source
-
-
-
-
-                    // on below line we are adding the data from cursor to our recipe array list.
-
-
-                    //checking if the recipe found is already on the list of recipes we're going to return.
-                    // If it is we make boolean exists true and don't add that recipe in the list
-
-                    //soon to be id of the recipe. We need it to check if the recipe is already in the list.
-                    int stbid = recipe.get_id();
-
-                    for (Recipe rec : listofRecipes){
-                        if (rec.get_id() == stbid){
-                            exists = true;
-                            break;
-                        }
-                        else {
-                            exists = false;
-                        }
-                    }
-
-                    if(!exists){
-                        listofRecipes.add(recipe);
-                    }
-
-
-                } while (cursor.moveToNext());
-                // moving our cursor to next.
-            }
-
-            //Incrementing i in order to move to next meal type if there is any.
-            j++;
-
-         */
-
+        //Second loop
         //Adding the recipes based on meal type
         while (j < listofmealtype.size()){
 
@@ -876,6 +576,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return listofRecipes;
 
     }
+
 
     //TIP METHODS
 
