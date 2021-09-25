@@ -77,13 +77,6 @@ public class CheckboxRecyclerAdapter extends RecyclerView.Adapter<CheckboxRecycl
         }
     }
 
-   /* public ArrayList<Integer> getCheckedIds()
-    {
-        return
-    }
-
-    */
-
     public ArrayList<String> getChecked()
     {
         return checked;

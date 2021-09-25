@@ -49,7 +49,7 @@
     <string name="productName"></string>
     <string name="expired">Expired</string>
     <string name="no_expired_in_fridge_warning">There are currently no expired items in your fridge! Add more products or just wait a couple days!</string>
-    <string name="motivational_text_in_recipes">Millions of food gets wasted every year. You can contribute to the lessening of the food waste by making use of as many items in your kitchen as you can. Enter your list of ingredients and find recipes that you\'ll love, while contributing to the zero waste movement! Input your diet preferences, the kind of meal you want to eat and the ingredients of your choice!</string>
+    <string name="motivational_text_in_recipes">Tons of good quality food gets wasted every year. You can combat the food waste phenomenon by making use of as many items in your kitchen as you can. Input your diet preferences, the kind of meal you want to eat and the ingredients of your choice and find recipes that you\'ll love, while contributing to the zero waste movement! !</string>
     <string name="recipes">Recipes</string>
     <string name="find_recipes">Find Recipes!</string>
     <string name="clear_selection">Clear Selection</string>
@@ -57,7 +57,7 @@
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
     <string name="recipes_found">Recipes Found</string>
-    <string name="no_recipes_found_warning">We didn\'t find any recipes for the ingredients you requested. Wait for the next update when we will add more recipes! Sorry for the inconveniece!</string>
+    <string name="no_recipes_found_warning">We didn\'t find any recipes given your preferences. Wait for the next update in which we will add even more recipes! Sorry for the inconveniece!</string>
     <string name="zero_waste_tips">Zero Waste Tips</string>
     <string name="zero_waste_tips_description">Check out these useful tips below on important matters like how to store products in your fridge correctly to keep them fresher, how to make use of vegetable trimmings and other waste reducing tips!</string>
     <string name="tomorrow_to_expire">Tomorrow to expire</string>

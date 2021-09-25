@@ -31,11 +31,6 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
     Fragment fromFragment;
     ArrayList<Recipe> recipeData;
 
-    //The below will be derived from the database
-    //String[] recipeNames = {"Porkchops with honey", "Ceasar's Salad", "Chocolate Cake"};
-    //String[] recipeDescriptions = {"Delicious porkchops with honey and chili sauce", "Ceasar's Salad with chicken and lettuce", "Decadent chocolate Cake with vanilla buttercream"};
-    //Ingredient[] ingredients = {new Ingredient(1,1,  "flour", "3 1/4", "cups"), new Ingredient(2,1,  "flour", "3 1/4", "cups"), new Ingredient(3,1,  "flour", "3 1/4", "cups")};
-
     public ContentRecyclerAdapter(Context context, Fragment fromFragment, ArrayList<Recipe> recipeData)
     {
         this.context = context;
@@ -54,6 +49,29 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
     public void onBindViewHolder(@NonNull ContentRecyclerAdapter.ViewHolder holder, int position) {
         holder.title.setText(recipeData.get(position).get_recipename());
         holder.description.setText(recipeData.get(position).get_instructions());
+
+        String meal_type = recipeData.get(position).get_recipetype();
+        switch (meal_type)
+        {
+            case "Breakfast":
+                holder.imageView.setImageResource(R.drawable.ic_breakfast);
+                break;
+            case "Brunch":
+                holder.imageView.setImageResource(R.drawable.ic_brunch);
+                break;
+            case "Lunch":
+                holder.imageView.setImageResource(R.drawable.ic_lunch);
+                break;
+            case "Dinner":
+                holder.imageView.setImageResource(R.drawable.ic_dinner);
+                break;
+            case "Snack":
+                holder.imageView.setImageResource(R.drawable.ic_snack);
+                break;
+            case "Dessert":
+                holder.imageView.setImageResource(R.drawable.ic_cake);
+                break;
+        }
 
         boolean isFave = LoginScreen.user.getFavoriteRecipesArray().contains(recipeData.get(position).get_id());
 
@@ -78,13 +96,14 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
         ImageView fave_icon;
         TextView title;
         TextView description;
-        //ImageView imageView;
+        ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tip_title);
             description = itemView.findViewById(R.id.tip_subtitle);
             fave_icon = itemView.findViewById(R.id.fave_icon_card);
+            imageView = itemView.findViewById(R.id.tipImage);
 
             itemView.setOnClickListener(new View.OnClickListener() { //When a card is clicked, a new fragment is added to the stack
                 @Override
@@ -99,7 +118,6 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("recipe", (Serializable) recipeData.get(position));
                     bundle.putBoolean("favourite", LoginScreen.user.getFavoriteRecipesArray().contains(recipeData.get(position).get_id()));
-                    //bundle.putSerializable("ingredients", ingredients);
 
                     //Add the image and the ingredients list and we're set
 

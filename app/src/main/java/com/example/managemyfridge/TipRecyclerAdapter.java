@@ -25,17 +25,11 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
     MyDBHandler dbHandler;
     ArrayList<Tip> tipsData;
 
-    //String[] recipeNames = {"Porkchops with honey", "Ceasar's Salad", "Chocolate Cake"};
-    //String[] recipeDescriptions = {"Delicious porkchops with honey and chili sauce", "Ceasar's Salad with chicken and lettuce", "Decadent chocolate Cake with vanilla buttercream"};
-    //Ingredient[] ingredients = {new Ingredient(1,1,  "flour", "3 1/4", "cups"), new Ingredient(2,1,  "flour", "3 1/4", "cups"), new Ingredient(3,1,  "flour", "3 1/4", "cups")};
-
     public TipRecyclerAdapter(Context context, Fragment fromFragment, ArrayList<Tip> tipsData)
     {
         this.context = context;
         this.fromFragment = fromFragment;
         dbHandler = new MyDBHandler(context, null, null, 1);
-        //tipsData = dbHandler.getallTips();
-
         this.tipsData = tipsData;
 
     }
@@ -51,6 +45,7 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
     public void onBindViewHolder(@NonNull TipRecyclerAdapter.ViewHolder holder, int position) {
         holder.title.setText(tipsData.get(position).get_tipname());
         holder.description.setText(tipsData.get(position).get_description());
+        holder.imageView.setImageResource(R.drawable.ic_tips_idea_image);
 
         boolean isFave = LoginScreen.user.getFavoriteTipsArray().contains(tipsData.get(position).get_id());
 
@@ -74,13 +69,14 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
         TextView title;
         TextView description;
         ImageView fave_icon;
-        //ImageView imageView;
+        ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tip_title);
             description = itemView.findViewById(R.id.tip_subtitle);
             fave_icon = itemView.findViewById(R.id.fave_icon_card);
+            imageView = itemView.findViewById(R.id.tipImage);
 
             itemView.setOnClickListener(new View.OnClickListener() { //When a card is clicked, a new fragment is added to the stack
                 @Override
@@ -95,14 +91,6 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("tip", (Serializable) tipsData.get(position));
                     bundle.putBoolean("favourite", LoginScreen.user.getFavoriteTipsArray().contains(tipsData.get(position).get_id()));
-
-                    //bundle.putString("title", tipsData.get(position).get_tipname());
-                    //bundle.putString("description", tipsData.get(position).get_description());
-                    //bundle.putBoolean("fave", LoginScreen.user.getFavoriteTipsArray().contains(position)); //True if this particular tip's id is in the favourites list or not
-
-                    //bundle.putSerializable("ingredients", ingredients);
-
-                    //Add the image and the ingredients list and we're set
 
                     TipsFragment fragment = new TipsFragment(); //Shows the content fragment, whether is it recipes or tips
                     fragment.setArguments(bundle);

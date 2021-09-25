@@ -33,22 +33,10 @@ public class RecipesFragment extends Fragment {
 
     private static final String RECIPEINFO = "recipe";
     private static final String FAVOURITE = "favourite";
-    //private static final String INSTRUCTIONS = "instructions";
-    //private static final String INGREDIENTS = "ingredients";
-
 
     private Recipe recipe;
-   // private String recipeTitle;
-   // private String recipeInstructions;
-    //private Ingredient[] ingredients;
-
-    RecyclerView.Adapter ingredientsAdapter;
-
-    //Recipe recipe //The recipe in question, it will be retrieved from the database
-
     boolean favourite; //We will check from the database if it was marked as favourite by the user and we will display it as such
     MenuItem fave;
-    Menu toolbar;
 
     public RecipesFragment() {
         // Required empty public constructor
@@ -60,7 +48,6 @@ public class RecipesFragment extends Fragment {
         Bundle args = new Bundle();
         args.putSerializable(RECIPEINFO, param1);
         args.putBoolean(FAVOURITE, param2);
-        //args.putSerializable(INGREDIENTS, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,12 +80,11 @@ public class RecipesFragment extends Fragment {
         TextView source = view.findViewById(R.id.recipe_sourceTextView);
         source.setText(recipe.get_source());
 
-        //RecyclerView ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerView);
-        //LinearLayoutManager linearLayoutManagerIngredients = new LinearLayoutManager(this.getContext());
+        TextView diet = view.findViewById(R.id.recipe_diet_textview);
+        diet.setText(recipe.get_diet_pref());
 
-        //ingredientsRecyclerView.setLayoutManager(linearLayoutManagerIngredients);
-        //ingredientsAdapter = new IngredientAdapter(recipe.get_ingredients());
-        //ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+        TextView type = view.findViewById(R.id.recipe_mealtype_textview);
+        type.setText(recipe.get_recipetype());
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(recipe.get_recipename());
 

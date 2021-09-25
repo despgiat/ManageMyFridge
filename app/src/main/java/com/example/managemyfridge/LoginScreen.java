@@ -47,6 +47,7 @@ public class LoginScreen extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i = new Intent(getApplicationContext(), SignUpScreen.class);
                 startActivity(i);
                 finish(); //So that we don't go back to the login activity on back pressed

@@ -133,10 +133,6 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
                 }
 
                 group_checkedStates.put(groupPosition, childMap) ;//.get(groupPosition).get()checkedStates.put(childPosition, 1);
-
-
-                //group_checkedStates.put(groupPosition, checkedStates);
-                //notifyDataSetChanged();
             }
         });
 

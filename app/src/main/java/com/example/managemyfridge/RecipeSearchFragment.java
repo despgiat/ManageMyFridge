@@ -65,9 +65,6 @@ public class RecipeSearchFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "fridge";
-    private static final String ARG_PARAM2 = "param2";
-
-    private Fridge fridge;
 
     RecyclerView diet_prefs_recyclerview;
     RecyclerView meal_type_recyclerview;
@@ -75,8 +72,6 @@ public class RecipeSearchFragment extends Fragment {
     CheckboxRecyclerAdapter dietprefsAdapter;
     CheckboxRecyclerAdapter mealtypeAdapter;
 
-    //ListView diet_prefs_listView;
-    ListView meal_type_listView;
     ExpandableListView ingredients_list;
 
     Button clearButton;
@@ -111,7 +106,7 @@ public class RecipeSearchFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            fridge = (Fridge) getArguments().getSerializable(ARG_PARAM1);
+
             diet_prefs = getResources().getStringArray(R.array.diet_preference);
             meal_type = getResources().getStringArray(R.array.meal_type);
             ingredientGroups = Arrays.asList(getResources().getStringArray(R.array.ingredient_groups));
@@ -274,22 +269,15 @@ public class RecipeSearchFragment extends Fragment {
 
                 ArrayList<Recipe> foundRecipes = findRecipes();
 
-                for(int i = 0; i < foundRecipes.size(); i++)
+                if(foundRecipes != null)
                 {
-                    System.out.println(foundRecipes.get(i).get_recipename());
-                }
-
                     Bundle bundle;
                     bundle = new Bundle();
                     bundle.putSerializable("recipes", foundRecipes);
                     RecipesOverviewFragment fragment = new RecipesOverviewFragment(); //Shows the content fragment, whether is it recipes or tips
                     fragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.screen, fragment).addToBackStack(null).commit();
-               // }
-               // else
-               // {
-                 //   Toast.makeText(getActivity(), "Please choose at least one item of each list to proceed!", Toast.LENGTH_SHORT).show();
-               // }
+                }
 
             }
         });
@@ -316,91 +304,25 @@ public class RecipeSearchFragment extends Fragment {
         return view;
     }
 
-   /* public void ClearSelection() {
-        listView.clearChoices();
-        listView.requestLayout();
-    }
-
-    public void ImportFromFridge() {
-
-        //We get all of the fridge's products and for every ingredient type, we check if there is one instance (product) of that type.
-
-        ArrayList<Product> products = fridge.getFridgeItems();
-
-        for (int i = 0; i < ingredients.length; i++) {
-
-            for(Product product : products)
-            {
-                if(product.get_prodtype().equals(ingredients[i]))
-                {
-                    listView.setItemChecked(i, true);
-                }
-            }
-        }
-        listView.requestLayout();
-
-    }
-
-    */
 
     //TODO The actual findRecipes function. This is a placeholder
 
     public ArrayList<Recipe> findRecipes()
     {
-       //ArrayList<Recipe> foundRecipes = new ArrayList<>();
+        checkedDietPrefs = dietprefsAdapter.getChecked();
+        checkedMealTypes = mealtypeAdapter.getChecked();
+        checkedIngredients = adapter.getAllChecked();
 
-        //checkedIngredients = adapter.getAllChecked();
-
-        ArrayList<String> prefs = dietprefsAdapter.getChecked();
-        ArrayList<String> types = mealtypeAdapter.getChecked();
-        ArrayList<String> ingredients = adapter.getAllChecked();
-
-        ArrayList<Recipe> recipesFound = LoginScreen.dbHandlerlog.getallRecipesofCertainPref(prefs, types, ingredients);
-
-
-
-
-        System.out.println("RECIPES FOUND:");
-        for(int i = 0; i < recipesFound.size(); i++)
+        if(checkedDietPrefs.isEmpty() || checkedMealTypes.isEmpty() || checkedIngredients.isEmpty())
         {
-            System.out.println(recipesFound.get(i).get_recipename());
-        }
-
-        return recipesFound;
-
-    }
-
-   /*public ArrayList<Recipe> findRecipes()
-    {
-        ArrayList<Recipe> foundRecipes; //= new ArrayList<>();
-        //ArrayList<Recipe> allRecipes = dbHandler.getallRecipes();
-
-        ArrayList<String> prefs = new ArrayList<>();
-        ArrayList<String> types = new ArrayList<>();
-        types.add("Lunch");
-        types.add("Snack");
-        prefs.add("Vegan");
-        prefs.add("Vegetarian");
-
-        foundRecipes = dbHandler.getallRecipesofCertainPref(prefs,types);
-        //System.out.println(foundRecipes.size());
-
-        if(foundRecipes.size() > 0)
-        {
-            for(int i = 0; i < foundRecipes.size(); i++)
-            {
-                System.out.println(foundRecipes.get(i).get_recipename());
-            }
+            Toast.makeText(getActivity(), "You should choose at least one diet preference, one meal type and one ingredient to proceed!", Toast.LENGTH_SHORT).show();
+            return null;
         }
         else
         {
-            System.out.println("No recipes found!");
+            return LoginScreen.dbHandlerlog.getallRecipesofCertainPref(checkedDietPrefs, checkedMealTypes, checkedIngredients);
         }
 
-
-        return foundRecipes;
     }
-
-    */
 
 }
