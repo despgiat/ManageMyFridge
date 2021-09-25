@@ -127,6 +127,8 @@ public class RecipeSearchFragment extends Fragment {
             ingredients.put(ingredientGroups.get(7), Arrays.asList(getResources().getStringArray(R.array.condiments_group)));
             ingredients.put(ingredientGroups.get(8), Arrays.asList(getResources().getStringArray(R.array.dairy_alts_group)));
             ingredients.put(ingredientGroups.get(9), Arrays.asList(getResources().getStringArray(R.array.nuts_group)));
+            ingredients.put(ingredientGroups.get(10), Arrays.asList(getResources().getStringArray(R.array.baking_group)));
+
 
             dbHandler = new MyDBHandler(getActivity(), null, null, 1);
 
@@ -345,7 +347,7 @@ public class RecipeSearchFragment extends Fragment {
 
     public ArrayList<Recipe> findRecipes()
     {
-       // ArrayList<Recipe> foundRecipes = new ArrayList<>();
+       //ArrayList<Recipe> foundRecipes = new ArrayList<>();
 
         //checkedIngredients = adapter.getAllChecked();
 
@@ -353,6 +355,9 @@ public class RecipeSearchFragment extends Fragment {
         ArrayList<String> types = mealtypeAdapter.getChecked();
 
         ArrayList<Recipe> recipesFound = LoginScreen.dbHandlerlog.getallRecipesofCertainPref(prefs, types);
+
+
+
 
         System.out.println("RECIPES FOUND:");
         for(int i = 0; i < recipesFound.size(); i++)

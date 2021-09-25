@@ -157,135 +157,126 @@
         <item>Condiments</item>
         <item>Dairy Alternatives</item>
         <item>Nuts</item>
+        <item>Baking</item>
     </string-array>
 
     <string-array name="dairy_group">
-        <item>Eggs</item>
-        <item>Milk</item>
         <item>Butter</item>
         <item>Cheese</item>
-        <item>Butter</item>
-        <item>Yogurt</item>
+        <item>Eggs</item>
+        <item>Feta</item>
         <item>Heavy Cream</item>
-        <item>Sour Cream</item>
-        <item>Ice Cream</item>
+        <item>Milk</item>
+        <item>Parmesan</item>
+        <item>Sour cream</item>
+        <item>Yoghurt</item>
     </string-array>
 
     <string-array name="meats_group">
-        <item>Beef</item>
-        <item>Pork</item>
         <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
+        <item>Beef</item>
+        <item>Chicken</item>
         <item>Duck</item>
         <item>Lamb</item>
         <item>Liver</item>
+        <item>Pork</item>
+        <item>Turkey</item>
     </string-array>
 
     <string-array name="vegetables_group">
-        <item>Beef</item>
-        <item>Pork</item>
-        <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
-        <item>Duck</item>
-        <item>Lamb</item>
-        <item>Liver</item>
+        <item>Beetroot</item>
+        <item>Broccoli</item>
+        <item>Cabbage</item>
+        <item>Carrot</item>
+        <item>Cauliflower</item>
+        <item>Celery</item>
+        <item>Garlic</item>
+        <item>Green beans</item>
+        <item>Leek</item>
+        <item>Olives</item>
+        <item>Onion</item>
+        <item>Parsnip</item>
+        <item>Peas</item>
+        <item>Pepper</item>
+        <item>Potato</item>
+        <item>Pumpkin</item>
+        <item>Squash</item>
     </string-array>
 
     <string-array name="fruits_group">
-        <item>Beef</item>
-        <item>Pork</item>
-        <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
-        <item>Duck</item>
-        <item>Lamb</item>
-        <item>Liver</item>
+        <item>Apple</item>
+        <item>Banana</item>
+        <item>Blueberries</item>
+        <item>Dates</item>
+        <item>Fig</item>
+        <item>Grapes</item>
+        <item>Lemon</item>
+        <item>Nectarine</item>
+        <item>Orange</item>
+        <item>Passion fruit</item>
+        <item>Peach</item>
+        <item>Pear</item>
+        <item>Raspberries</item>
+        <item>Strawberries</item>
+        <item>Tangerine</item>
+        <item>Tomato</item>
+
     </string-array>
 
     <string-array name="grains_group">
-        <item>Beef</item>
-        <item>Pork</item>
-        <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
-        <item>Duck</item>
-        <item>Lamb</item>
-        <item>Liver</item>
+        <item>Barley</item>
+        <item>Bread</item>
+        <item>Quinoa</item>
+        <item>Wheat</item>
     </string-array>
 
     <string-array name="fish_group">
-        <item>Beef</item>
-        <item>Pork</item>
-        <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
-        <item>Duck</item>
-        <item>Lamb</item>
-        <item>Liver</item>
+        <item>Codfish</item>
+        <item>Seabass</item>
+        <item>Sardine</item>
+        <item>Anchovies</item>
+        <item>Mussels</item>
+        <item>Calamari</item>
+        <item>Oysters</item>
     </string-array>
 
     <string-array name="legumes_group">
-        <item>Beef</item>
-        <item>Pork</item>
-        <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
-        <item>Duck</item>
-        <item>Lamb</item>
-        <item>Liver</item>
+        <item>Beans</item>
+        <item>Lentils</item>
+        <item>Peanut</item>
     </string-array>
 
     <string-array name="condiments_group">
-        <item>Beef</item>
-        <item>Pork</item>
-        <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
-        <item>Duck</item>
-        <item>Lamb</item>
-        <item>Liver</item>
+        <item>Ketchup</item>
+        <item>Mayonnaise</item>
+        <item>Mustard</item>
     </string-array>
 
     <string-array name="dairy_alts_group">
-        <item>Beef</item>
-        <item>Pork</item>
-        <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
-        <item>Duck</item>
-        <item>Lamb</item>
-        <item>Liver</item>
+        <item>Almond Milk</item>
+        <item>Coconut Milk</item>
+        <item>Hemp Milk</item>
+        <item>Oat Milk</item>
+        <item>Rice Milk</item>
     </string-array>
 
     <string-array name="nuts_group">
-        <item>Beef</item>
-        <item>Pork</item>
-        <item>Bacon</item>
-        <item>Chicken Thighs</item>
-        <item>Chicken Breast</item>
-        <item>Chicken Wings</item>
-        <item>Turkey</item>
-        <item>Duck</item>
-        <item>Lamb</item>
-        <item>Liver</item>
+        <item>Almonds</item>
+        <item>Cashews</item>
+        <item>Mixed Seeds</item>
+        <item>Tahini</item>
+        <item>Walnuts</item>
+    </string-array>
+
+    <string-array name="baking_group">
+        <item>Brown Sugar</item>
+        <item>Cacao powder</item>
+        <item>Cane Sugar</item>
+        <item>Cocoa powder</item>
+        <item>Flour</item>
+        <item>Maple Syrup</item>
+        <item>Vanilla</item>
+        <item>White Sugar</item>
     </string-array>
 
 </resources>
