@@ -157,16 +157,5 @@ public class IngredientExpListAdapter extends BaseExpandableListAdapter {
         return group_checkedStates;
     }
 
-   /* @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int heightMeasureSpec_custom = View.MeasureSpec.makeMeasureSpec(
-                Integer.MAX_VALUE >> 2, View.MeasureSpec.AT_MOST);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec_custom);
-        ViewGroup.LayoutParams params = getLayoutParams();
-        params.height = getMeasuredHeight();
-    }
-
-    */
-
 
 }
