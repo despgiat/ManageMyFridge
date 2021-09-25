@@ -2,13 +2,11 @@ package com.example.managemyfridge;
 
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
 
@@ -17,14 +15,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
     //Σταθερές για τη ΒΔ (όνομα ΒΔ, έκδοση, πίνακες κλπ)
 
-    //New: Added PATH, mDataBase, mContext, mNeedUpdate and changed the name of the DB to MMFDB1
+    //New: Added PATH, mDataBase, mContext, mNeedUpdate and changed the name of the DB to MMFDB3
     private static String DATABASE_PATH =  "";
     private SQLiteDatabase mDataBase;
     private final Context mContext;
@@ -42,8 +39,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_QUANTITY = "Quantity";
     public static final String COLUMN_UNIT = "Unit";
 
-    //NEW: IDOFUSER = 0 for starters
-    private static String COLUMN_ID_OF_USER = "_idofUSER";
+    //NEW: IDOFUSER
+    private static final String COLUMN_ID_OF_USER = "_idofUSER";
 
     public static final String TABLE_USERS = "USERS";
     public static final String COLUMN_USERNAME = "Username";
@@ -53,34 +50,29 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_TIPS = "Fav_Tips";
 
     public static final String TABLE_RECIPES = "RECIPE";
-    public static final String COLUMN_RECIPENAME = "Name";
+   /* public static final String COLUMN_RECIPENAME = "Name";
     public static final String COLUMN_RECIPE_TYPE = "Type_of_Recipe";
     public static final String COLUMN_INSTRUCTIONS = "Instructions";
     public static final String COLUMN_IS_IT_FAV = "Is_it_fav";
 
-    public static final String COLUMN_SOURCE = "Source"; //NEWLY ADDED
+    public static final String COLUMN_SOURCE = "Source"; //NEWLY ADDED*/
 
+   //NEW: COLUMN FOR DIET PREFERENCE
+   public static final String COLUMN_DIET_PREF = "Diet_Preference";
 
     public static final String TABLE_TIPS = "TIP";
-    public static final String COLUMN_TIPNAME = "Name";
+   /* public static final String COLUMN_TIPNAME = "Name";
     public static final String COLUMN_DESCRIPTION = "Description";
-    public static final String COLUMN_RELATED_PRODUCT = "Related_Product";
+    public static final String COLUMN_RELATED_PRODUCT = "Related_Product";*/
     public static final String COLUMN_IMAGE = "Img";
 
     public static final String TABLE_INGREDIENTS = "INGREDIENT";
-    public static final String COLUMN_INGREDIENTNAME = "Ingredient_Name";
+   // public static final String COLUMN_INGREDIENTNAME = "Ingredient_Name";
     public static final String COLUMN_ID_OF_RECIPE = "_idofRECIPE";
 
-    //NEW: COLUMN FOR DIET PREFERENCE
-    public static final String COLUMN_DIET_PREF = "Diet_Preference";
-
-
-    //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
 
 
     //NEW: constructor and new methods for DB handling
-
-
     public MyDBHandler(Context context, String name,
                        SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -867,7 +859,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             // on below line we are adding the recipes of chosen meal type to our recipe array list.
 
             for (Recipe rec : temp){
-                if (rec.get_recipetype() == meal_type){
+                if (rec.get_recipetype().equals(meal_type)){
                     listofRecipes.add(rec);
 
                 }
