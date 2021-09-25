@@ -476,17 +476,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     //returns all recipes of certain diet preference, meal type (and ingredients later).
-    public ArrayList<Recipe> getallRecipesofCertainPref(ArrayList<String> listofpreferences, ArrayList<String> listofmealtype){
+    public ArrayList<Recipe> getallRecipesofCertainPref(ArrayList<String> listofpreferences, ArrayList<String> listofmealtype, ArrayList<String> listofingredients){
 
         int i = 0;
         int j = 0;
+        int k = 0;
 
 
         // on below line we are creating a new array list for chosen recipes.
         ArrayList<Recipe> listofRecipes = new ArrayList<>();
 
-        // on below line we are creating a new helping array list for temporarily chosen recipes.
-        ArrayList<Recipe> temp = new ArrayList<>();
+        // on below line we are creating two new helping array lists for temporarily chosen recipes.
+        ArrayList<Recipe> temp1 = new ArrayList<>();
+        ArrayList<Recipe> temp2 = new ArrayList<>();
 
 
         //First loop
@@ -525,9 +527,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
 
-                    // on below line we are adding the data from cursor to our temp recipe array list.
+
+                            // on below line we are adding the data from cursor to our temp recipe array list.
                     //listofRecipes.add(recipe);
-                    temp.add(recipe);
+                    temp1.add(recipe);
 
                 } while (cursor.moveToNext());
                 // moving our cursor to next.
@@ -545,6 +548,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
 
 
+
+
         //Second loop
         //Adding the recipes based on meal type
         while (j < listofmealtype.size()){
@@ -556,9 +561,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
             // on below line we are adding the recipes of chosen meal type to our recipe array list.
 
-            for (Recipe rec : temp){
+            for (Recipe rec : temp1){
                 if (rec.get_recipetype().equals(meal_type)){
-                    listofRecipes.add(rec);
+                    temp2.add(rec);
 
                 }
             }
@@ -571,6 +576,44 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
         }
+
+        //Third loop
+        //Adding the recipes based on ingredients.
+        while (k < listofingredients.size()){
+
+            //ingredient chosen, changes until all ingredients chosen are selected and related recipes are searched for
+            String ingr = listofingredients.get(k).toLowerCase();
+
+
+
+            // on below line we are adding the recipes of chosen meal type to our recipe array list.
+
+            for (Recipe rec : temp2){
+
+                String ingredients = rec.get_ingredients().toLowerCase();
+
+                if (ingredients.contains(ingr)){
+                    if (!listofRecipes.contains(rec)){
+                        listofRecipes.add(rec);
+                    }
+                }
+
+            }
+
+
+
+            //Incrementing i in order to move to next meal type if there is any.
+            k++;
+
+
+
+        }
+
+
+
+
+
+
         return listofRecipes;
 
     }

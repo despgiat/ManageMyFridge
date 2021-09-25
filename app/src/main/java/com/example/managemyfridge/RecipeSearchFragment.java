@@ -353,8 +353,9 @@ public class RecipeSearchFragment extends Fragment {
 
         ArrayList<String> prefs = dietprefsAdapter.getChecked();
         ArrayList<String> types = mealtypeAdapter.getChecked();
+        ArrayList<String> ingredients = adapter.getAllChecked();
 
-        ArrayList<Recipe> recipesFound = LoginScreen.dbHandlerlog.getallRecipesofCertainPref(prefs, types);
+        ArrayList<Recipe> recipesFound = LoginScreen.dbHandlerlog.getallRecipesofCertainPref(prefs, types, ingredients);
 
 
 
