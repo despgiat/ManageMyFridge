@@ -1,7 +1,6 @@
 package com.example.managemyfridge;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Tip implements Serializable {
 
@@ -10,22 +9,12 @@ public class Tip implements Serializable {
     private String _tipname;
     private String _description;
     private String _related_product;
-    //private String _favoured;
     private String _source;
     private String _img;
 
     public Tip() {
     }
 
-
-    //old constructor
-    /*public Tip(int id, String tipname, String description, String related_product, String isitfav) {
-        this.set_id(id);
-        this._tipname = tipname;
-        this._description = description;
-        this._related_product = related_product;
-        this._favoured = isitfav;
-    }*/
 
 
     //new constr. with source
@@ -68,14 +57,6 @@ public class Tip implements Serializable {
     public void set_related_product(String _related_product) {
         this._related_product = _related_product;
     }
-
-   /* public String get_favoured() {
-        return _favoured;
-    }
-
-    public void set_favoured(String _favoured) {
-        this._favoured = _favoured;
-    } */
 
     public String get_source() {
         return _source;

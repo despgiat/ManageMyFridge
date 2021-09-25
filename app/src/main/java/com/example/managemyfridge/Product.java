@@ -11,7 +11,6 @@ public class Product implements Serializable {
 
 
     private String _exdate;
-    //private boolean _opened;
     private String _opened;
     private String _prodtype;
     private String _DateofOpening;
@@ -49,19 +48,6 @@ public class Product implements Serializable {
         this._unit = unit;
     }
 
-   /* public Product(int id, String productname, int quantity) {
-        this.setID(id);
-        this._productname = productname;
-        this._quantity = quantity;
-
-    }
-
-    public Product(String productname, int quantity) {
-        this._productname = productname;
-        this._quantity = quantity;
-
-    }*/
-
 
 
     public int getID() {
@@ -96,13 +82,6 @@ public class Product implements Serializable {
         this._exdate = _exdate;
     }
 
-    /*public boolean isOpened() {
-        return _opened;
-    }
-
-    public void setOpened(boolean _opened) {
-        this._opened = _opened;
-    }*/
 
     public String get_opened() {
         return _opened;
