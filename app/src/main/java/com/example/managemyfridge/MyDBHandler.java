@@ -164,7 +164,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //PRODUCT METHODS
 
-    //TODO: Change the product methods, new idofuser needed. DONE
 
     //Μέθοδος για προσθήκη ενός προϊόντος στη ΒΔ
     public void addProduct(Product product, int idofuser) {
@@ -173,7 +172,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PRODUCTNAME, product.getProductName());
         values.put(COLUMN_QUANTITY, product.getQuantity());
         values.put(COLUMN_EXDATE, product.get_exdate());
-        //values.put(COLUMN_IS_IT_OPEN, product.isOpened());
         values.put(COLUMN_IS_IT_OPEN, product.get_opened());
         values.put(COLUMN_TYPE, product.get_prodtype());
         values.put(COLUMN_DATE_OF_OPENING, product.get_DateofOpening());
@@ -308,7 +306,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PRODUCTNAME, product.getProductName());
         values.put(COLUMN_QUANTITY, product.getQuantity());
         values.put(COLUMN_EXDATE, product.get_exdate());
-        //values.put(COLUMN_IS_IT_OPEN, product.isOpened());
         values.put(COLUMN_IS_IT_OPEN, product.get_opened());
         values.put(COLUMN_TYPE, product.get_prodtype());
         values.put(COLUMN_DATE_OF_OPENING, product.get_DateofOpening());
@@ -478,6 +475,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return listofRecipes;
     }
 
+    //returns all recipes of certain diet preference, meal type (and ingredients later).
     public ArrayList<Recipe> getallRecipesofCertainPref(ArrayList<String> listofpreferences, ArrayList<String> listofmealtype){
 
         int i = 0;
