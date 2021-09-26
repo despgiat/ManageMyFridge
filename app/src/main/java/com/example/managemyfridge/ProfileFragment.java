@@ -31,6 +31,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class ProfileFragment extends Fragment {
 
+    //Layout items
     Button logoutButton;
     TextView changePic;
     TextView removePic;
@@ -50,7 +51,6 @@ public class ProfileFragment extends Fragment {
     Button cancel;
 
     boolean editMode = false;
-
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,20 +86,19 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Profile");
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        //profilePicture = view.findViewById(R.id.profilePic);
-
         username = view.findViewById(R.id.usernameTextView);
         email = view.findViewById(R.id.emailTextView);
 
+        //Retrieves the user's username from the shared preferences
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         String name = sharedPreferences.getString("username", "Username");
+
+        //gets the user's information from the field user from the Login Screen and updates the Textviews accordingly
         username.setText(LoginScreen.user.getUsername());
         email.setText(LoginScreen.user.getEmail());
 
@@ -111,7 +110,7 @@ public class ProfileFragment extends Fragment {
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changePassword.setVisibility(View.GONE);
+                changePassword.setVisibility(View.GONE); //The changePassword button disappears and new edit texts appear for the user to input the new password
                 passwordTextView.setVisibility(View.GONE);
                 new_passowrd = view.findViewById(R.id.newPassword);
                 new_passowrd.setVisibility(View.VISIBLE);
@@ -119,12 +118,15 @@ public class ProfileFragment extends Fragment {
                 confirm_passowrd = view.findViewById(R.id.passwordConfirm);
                 confirm_passowrd.setVisibility(View.VISIBLE);
 
-
                 save = view.findViewById(R.id.save_new_password);
                 save.setVisibility(View.VISIBLE);
                 cancel = view.findViewById(R.id.discard);
                 cancel.setVisibility(View.VISIBLE);
 
+                /**
+                 * When the Save button is clicked, the program checks if the new password and confirmation password are matching to proceed
+                 * before the database is updated with the new password
+                 */
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -137,6 +139,8 @@ public class ProfileFragment extends Fragment {
                             confirm_passowrd.setError("The passwords you have entered are not matching, please re-enter them to register!");
                         }
                         else{
+
+                            //The database is updated and the UI is updated
                             LoginScreen.user.setPassword(newpass);
                             LoginScreen.dbHandlerlog.updateUser();
 
@@ -152,6 +156,9 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
+                /**
+                 * Discards the changes and updates the UI with the previous layout items
+                 */
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -168,8 +175,10 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        /*TODO: Change button to Save, after click*/
 
+        /**
+         * Same as above with changing the user's username
+         */
         saveUsername = view.findViewById(R.id.save_username);
         discardUsername = view.findViewById(R.id.discard_username);
         changeUsername = view.findViewById(R.id.editUsernameButton);
@@ -177,12 +186,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //String usernameText = (String) username.getText();
-
+                //New edit texts appear for the user to input the new username and well as buttons to save or discard the changes made
                 changeUsername.setVisibility(View.GONE);
-                //editMode = !editMode;
-               // if(editMode)
-                //{
+
                     username.setVisibility(View.GONE);
                     editTextUsername = view.findViewById(R.id.editTextUsername);
                     editTextUsername.setVisibility(View.VISIBLE);
@@ -193,8 +199,9 @@ public class ProfileFragment extends Fragment {
                     saveUsername.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(editTextUsername.getText() != null)
+                            if(editTextUsername.getText() != null) //Checks if the inputted new username is not null before proceeding to update the user in the database
                             {
+                                //Updates the UI to how it was originally
                                 username.setText(editTextUsername.getText());
                                 editTextUsername.setVisibility(View.GONE);
                                 username.setVisibility(View.VISIBLE);
@@ -207,20 +214,21 @@ public class ProfileFragment extends Fragment {
                                 editor.apply();
 
 
-
                                 //change the Username everywhere
-
                                 ((MainScreen)getActivity()).usernameChange();
 
+                                //Updates the database
                                 LoginScreen.user.setUsername(username.getText().toString());
-
-                                //update DB
                                 LoginScreen.dbHandlerlog.updateUser();
                             }
 
                         }
                     });
-                    discardUsername.setOnClickListener(new View.OnClickListener() {
+
+                /**
+                 * Discards the changes and restores the UI
+                 */
+                discardUsername.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             editTextUsername.getText().clear();
@@ -231,17 +239,15 @@ public class ProfileFragment extends Fragment {
                             username.setVisibility(View.VISIBLE);
                         }
                     });
-               // }
-             //   else
-             //   {
-
-              //  }
 
             }
         });
 
         email = view.findViewById(R.id.emailTextView);
 
+        /**
+         * Log Out, changePic and removePic implemented in the MainScreen Activity
+         */
         logoutButton = view.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override

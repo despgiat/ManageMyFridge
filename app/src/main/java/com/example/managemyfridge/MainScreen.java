@@ -44,17 +44,17 @@ import java.util.ArrayList;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.HomeFragmentListener{
 
-    private Fridge fridge;
+    private Fridge fridge; //The user's fridge
     LocalDate currentDate;
     public static DateTimeFormatter formatter; //the date formatter, used by different fragments in the app
 
     //Views
-    DrawerLayout drawerLayout;
+    DrawerLayout drawerLayout; //For the navigation drawer implementation
     NavigationView navigationView;
     View inflatedView;
     ImageView profilePicture;
 
-    Fragment currentFragment;
+    Fragment currentFragment; //The fragment which is currently displayed
     MyDBHandler dbHandler;
 
     @Override
@@ -63,11 +63,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.activity_main_screen);
         currentDate = LocalDate.now();
 
-        /**----------Finding View IDs-------------**/
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawerLayout);
-
-        /**----------END OF Finding view IDs-------**/
 
         //Setting up the custom Toolbar
         Toolbar myToolbar = findViewById(R.id.toolbar);
@@ -75,10 +72,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        /**
+         * Implementing the navigation drawer
+         */
         inflatedView = navigationView.inflateHeaderView(R.layout.header_navigation_drawer); //inflates the header of the navigation drawer (the section containing the user's profile picture
         // username and email )
         profilePicture = (ImageView) inflatedView.findViewById(R.id.imageViewProfilePic);
-        registerForContextMenu(profilePicture); //When the profile picture on the navigation drawer header gets long-clicked, a context menu will appear
+        registerForContextMenu(profilePicture); //When the profile picture on the navigation drawer header gets long-clicked, a context menu will appear prompting the user to change their profile picture in the navigation drawer header
 
         //Setting up the navigation drawer - See Android Material Design on creating the Navigation Drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -94,8 +94,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         TextView header = inflatedView.findViewById(R.id.headerUsername);
         header.setText(headerUsername);
 
+        /**
+         * Gets the user's preference for the dark mode from the Shared Preferences and sets the app's theme
+         */
         boolean darkMode = sharedPreferences.getBoolean("dark_mode", false);
-        System.out.println("Dark Mode is " + darkMode);
         if (darkMode)
         {
             //Switch to Dark Mode
@@ -115,7 +117,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         dbHandler = new MyDBHandler(this, null, null, 1);
         ArrayList<Product> products = dbHandler.showallProducts(LoginScreen.user.getID());
         fridge = new Fridge(products);
-
 
         //Some fragments in the app get added to the backstack, and we want the "burger" button in the navigation drawer to become the arrow, and to allow the navigation only backward
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -157,6 +158,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onResume() {
 
+        /**
+         * Updates the navigation drawer header (in case there was a username change and it has to update)
+         */
         super.onResume();
 
         TextView header = inflatedView.findViewById(R.id.headerUsername);
@@ -167,10 +171,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
-    //TODO Save the user's favourites and other data in the database
-
-
-    //Starts the MainActivity, which adds new items to the product database
+    /**
+     * The methods below call the "MainActivity" which is used for adding new products in the database or for editing existing ones
+     */
     public void addNewItem()
     {
         Intent i = new Intent(this, MainActivity.class);
@@ -201,10 +204,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 case 3: //3 is Edit product
                     //Update the fridge from the database:
                     fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
-                    //Updates the Home Fragment with the new fridge and displays it
 
-                    //TODO Send the user back to the myFridge or the Expired fragment, depending on which fragment they called the "edit" function for a product
-
+                    //Updates the MyFridge Fragment with the new fridge and displays it
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("fridge", fridge);
                     MyFridge myFridge = new MyFridge();
@@ -212,11 +213,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     currentFragment = myFridge;
                     navigationView.getMenu().findItem(R.id.myFridgeItem).setChecked(true);
                     getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
-
                     break;
-                //Updates the Home Fragment with the new fridge and displays it
 
                 case 22:
+                    /**
+                     * When the user wants to update their navigation drawer header picture
+                     */
                     // Get the url of the image from data
                     Uri selectedImageUri = data.getData();
                     if (null != selectedImageUri) {
@@ -231,7 +233,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onBackPressed() {
 
-        //When the drawer is open, clicking back causes it to close
+        //When the drawer is open, clicking "back" causes it to close
         if (this.drawerLayout.isDrawerOpen(GravityCompat.START))
         {
             this.drawerLayout.closeDrawer(GravityCompat.START);
@@ -242,7 +244,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             getSupportFragmentManager().popBackStack();
         }
 
-        //if the current fragment displayed is not the home fragment and there are no other fragments in the backstack -> for ex. when the user is at the myfridge screen
+        /**if the current fragment displayed is not the home fragment and there are no other fragments in the backstack
+         * -> for ex. when the user is at the myfridge screen, then the Home Fragment gets displayed
+        */
         else if(getSupportFragmentManager().getBackStackEntryCount() == 0 && !(currentFragment instanceof HomeFragment))
         {
             Bundle bundle = new Bundle();
@@ -300,9 +304,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
-    /**Navigation drawer menu choices handler
+    /**
+     * Navigation drawer menu choices handler
      * On click on each menu item, the appropriate fragment is displayed in the main screen (thus the user navigated to the app's different screens)
-     *
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) { //Navigation drawer choices handler
@@ -322,7 +326,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             case R.id.homeItem:
                 fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
                 bundle.putSerializable("fridge", fridge);
-
                 HomeFragment homeFragment = new HomeFragment();
                 homeFragment.setArguments(bundle);
                 currentFragment = homeFragment;
@@ -342,7 +345,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             case R.id.recipesItem:
                 RecipeSearchFragment recipeSearchFragment = new RecipeSearchFragment();
-
                 recipeSearchFragment.setArguments(bundle);
                 currentFragment = recipeSearchFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, recipeSearchFragment).commit();
@@ -360,21 +362,18 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 SettingsFragment settingsFragment = new SettingsFragment();
                 currentFragment = settingsFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, settingsFragment).commit();
-
                 break;
 
             case R.id.favouritesItem:
                 FavouritesFragment favouritesFragment = new FavouritesFragment();
                 currentFragment = favouritesFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, favouritesFragment).commit();
-
                 break;
 
             case R.id.profileItem:
                 ProfileFragment profileFragment = new ProfileFragment();
                 currentFragment = profileFragment;
                 getSupportFragmentManager().beginTransaction().replace(R.id.screen, profileFragment).commit();
-
                 break;
         }
 
@@ -383,8 +382,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
+    /**
+     * Method which "Logs Out" the user. The MainScreen Activity closes and the LoginScreen Activity starts
+     */
     public void LogOut()
     {
+        //Alert dialog for handling the user's choice to log out or not
         new AlertDialog.Builder(this)
                 .setTitle("Log out")
                 .setMessage("Are you sure you want to logout?")
@@ -403,11 +406,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
-
     @Override
     public void UpdateData(Fridge fridge)
     {
-        System.out.println("FRIDGE UPDATED");
         this.fridge = fridge;
     }
 
@@ -418,8 +419,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
      */
     public void goToExpired(View view)
     {
-        navigationView.getMenu().findItem(R.id.expiredItem).setChecked(true);
+        navigationView.getMenu().findItem(R.id.expiredItem).setChecked(true); //The navigation drawer is updated, showing the corrent menu item
+        //the fridge gets updated
         fridge.setFridgeItems(dbHandler.showallProducts(LoginScreen.user.getID()));
+        //the expired fragment is shown on screen
         Bundle bundle = new Bundle();
         bundle.putSerializable("fridge", fridge);
         ExpiredFragment expiredFragment = new ExpiredFragment();
@@ -429,8 +432,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
     //Opens a product of id in the database
+    //fromFragment is the fragment which called the "openProduct" method
     public void openProduct(int id, Fragment fromFragment)
     {
+        //Marks the product as open in the database
         boolean opened = dbHandler.makeProductOpen(id, currentDate.format(formatter));
 
         if(opened)
@@ -460,6 +465,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
+    //Changed the header username in the navigation drawer using the username from the shared preferences
     public void usernameChange()
     {
         SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);

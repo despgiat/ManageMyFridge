@@ -25,6 +25,7 @@ import java.time.format.DateTimeParseException;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Activity Layout items
     EditText itemName;
     EditText expiry;
     EditText openedDate;
@@ -39,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
     Intent i;
     Fridge fridge; //The fridge is retrieved from the MainScreen
-    Product product;
+    Product product; //In case of editing a product, this is the product which will be edited. Retrieved from the MainScreen activity
     DateTimeFormatter formatter;
     LocalDate currentDate;
-    String isOpened;
+    String isOpened; //indicated whether the added or edited product is opened or not
     String openedDateText;
-    boolean customOpenedDate;
+    boolean customOpenedDate; //true if the product's opened date is not the current date
 
     //boolean edit = false;
 
@@ -72,11 +73,8 @@ public class MainActivity extends AppCompatActivity {
             throw mSQLException;
         }
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         formatter = MainScreen.formatter; //Gets the date formatter from the MainScreen
-        currentDate = LocalDate.now();
+        currentDate = LocalDate.now(); //Gets the current system date
 
         //References to view objects
         itemName = findViewById(R.id.editTextTextPersonName);
@@ -86,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         openedLayout.setVisibility(View.GONE);
         radioGroupOpened = findViewById(R.id.radioGroup);
         dateRadioGroup = findViewById(R.id.radioGroup2);
-        //otherDate = findViewById(R.id.editTextDateOpened);
         dateFormat = findViewById(R.id.textViewDateFormat);
         quantityBox = findViewById(R.id.productQuantityEditText);
         typeSpinner = findViewById(R.id.typeSpinner);
@@ -94,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
 
         //Array Adapters for the spinners (to display the product units and type)
+        //Gets the data from strings.xml
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.units));
         unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         unitSpinner.setAdapter(unitAdapter);
@@ -106,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         i = getIntent();
         fridge = (Fridge) i.getSerializableExtra("Fridge"); //retrieves the fridge from the MainScreen that called it
         product = (Product) i.getSerializableExtra("Product"); //if the product is not null, this means that we are currently editing a product instead of adding a new one
+
+        //Depending on whether we are editing a product or adding a new one, the button's text is updated accordingly
         if(product != null)
             button.setText("SAVE");
         else
@@ -115,43 +115,45 @@ public class MainActivity extends AppCompatActivity {
         //For the changing of the phone's settings (rotation, dark mode and such)
         //if the fields are already filled we want them to stay that way
         if (savedInstanceState != null) {
-            //Retrieve data from the Bundle (other methods include getInt(), getBoolean() etc)
-           // Product product = (Product) savedInstanceState.getSerializable("Product");
             CharSequence item_name = savedInstanceState.getCharSequence("item_name");
-           // int userChoice = savedInstanceState.getInt("savedUserChoice");
 
             //Restore the dynamic state of the UI
             itemName.setText(item_name);
 
         } else {
             //Initialize the UI
-            if(product != null)
+
+            /**
+             * If we are editing an existing product, we fill out every view of the activity's layout with the product's current information
+             */
+            if(product != null) //Thus we are editing an existing one
             {
                 itemName.setText(product.getProductName());
-                itemName.setFocusable(false); //To make it non editable
+                itemName.setFocusable(false); //To make the product's name non editable
                 itemName.setClickable(false);
 
                 expiry.setText(product.get_exdate());
 
-                //TODO When the product was found in the database, store its values into the "temp" variables we use to update the product's fields (DONE)
                 isOpened = product.get_opened();
                 openedDateText = product.get_DateofOpening();
 
+                //If the product was not opened, the layout containing the radio buttons regarding the opening date will not appear
                 if(product.get_opened().equals("no"))
                 {
                     openedLayout.setVisibility(View.GONE);
-                    radioGroupOpened.check(R.id.noButton);
+                    radioGroupOpened.check(R.id.noButton); //Checks the appropriate buttons of the radio group
                 }
                 else
                 {
                     openedLayout.setVisibility(View.VISIBLE);
                     radioGroupOpened.check(R.id.yesButton);
 
-                    if(currentDate.format(formatter).equals(product.get_DateofOpening()))
+                    //If the product was opened, checks the appropriate button regarding the opening date
+                    if(currentDate.format(formatter).equals(product.get_DateofOpening())) //if the product was opened today
                     {
                         dateRadioGroup.check(R.id.todayButton);
                     }
-                    else
+                    else //if the product was opened at a different date
                     {
                         dateRadioGroup.check(R.id.otherDateButton);
                         openedDate.setVisibility(View.VISIBLE);
@@ -177,11 +179,13 @@ public class MainActivity extends AppCompatActivity {
         //Save data to the Bundle (other methods include putInt(), putBoolean() etc)
         CharSequence item_name = itemName.getText();
         outState.putCharSequence("item_name", item_name);
-
-        //outState.putCharSequence("savedDisplayText", displayText);
-        //outState.putInt("savedUserChoice", radioGroupOpened.getCheckedRadioButtonId());
     }
 
+    /**
+     * When the user is done filling out the products information, this method is called.
+     * The method checks whether the user's input on the product was valid (ex. checks if the inputted date is in the correct format)
+     * and updates the database, in which the new product will be added or the existing one will be altered.
+     */
     public void addNewItem(View view)
     {
         //Load the database
@@ -193,8 +197,6 @@ public class MainActivity extends AppCompatActivity {
         String quantity = quantityBox.getText().toString();
         String unit = unitSpinner.getSelectedItem().toString();
         String productType = typeSpinner.getSelectedItem().toString();
-
-        //TODO Editing the custom opening date doesn't work, we should fix it. (FIXED)
 
         if(customOpenedDate) //If the user had chosen a custom opening date and not the "Today" option in the last radio group (upon checking that the product has been opened)
         {
@@ -218,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            //If the product is marked as opened, check the open date's validity
             if(isOpened.equals("yes"))
             {
                 try
@@ -233,19 +236,18 @@ public class MainActivity extends AppCompatActivity {
 
             if (!itemNameText.equals("") &&  !quantity.equals("")){ //Checks if the same item already exists in the database.
                 Product found = dbHandler.findProduct(itemNameText);
-                if (found == null){ //if it doesn't, the new product gets added
+                if (found == null){ //if it doesn't, the new product gets added with the inputted information
 
                     Product product = new Product(itemNameText, quantity, expiryText, isOpened, productType, openedDateText, unit);
 
-                    //NEW: Find id of user and send it with new product to be created
+                    //Finds the id of the user and send it with new product to be created
                     int idofuser = LoginScreen.user.getID();
                     dbHandler.addProduct(product, idofuser);
-
 
                     //adding toast if product was added
                     Toast.makeText(MainActivity.this, "Product added", Toast.LENGTH_SHORT).show();
                 }
-                else {
+                else { //if we are editing an existing product, we overwrite the product's information and save the changes to the database
 
                     found.setProductName(itemNameText);
                     found.setQuantity(quantity);
@@ -257,14 +259,13 @@ public class MainActivity extends AppCompatActivity {
 
                     dbHandler.updateProduct(found);
 
-                    //adding toast if product was not added
+                    //adding toast if product was saved
                     Toast.makeText(MainActivity.this, "Changes saved", Toast.LENGTH_SHORT).show();
                 }
             }
 
 
             Intent returnData = new Intent();
-            //returnData.putExtra("Fridge", fridge);
             setResult(RESULT_OK , returnData);
             finish();
         }
