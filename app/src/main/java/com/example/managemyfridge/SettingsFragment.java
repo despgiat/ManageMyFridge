@@ -21,13 +21,6 @@ import androidx.preference.SwitchPreference;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String DARK_MODE_SWITCH = "darkMode";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     Preference darkMode;
     Preference feedback;
     Preference version;
@@ -43,8 +36,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,9 +43,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Load the preferences from an XML resource
-        //addPreferencesFromResource(R.xml.app_settings);
 
         if (getArguments() != null) {
           //  mParam1 = getArguments().getString(ARG_PARAM1);
@@ -78,8 +66,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         darkModeEnabled = sharedPreferences.getBoolean("dark_mode", false);
-       // System.out.println(darkModeEnabled);
-
 
         feedback = (Preference) findPreference("send_feedback");
         feedback.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -100,20 +86,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
 
         darkMode = (SwitchPreference) findPreference("darkMode");
-       // if(darkMode.)
-
-        /*switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) { //Check which mode the system is currently using
-            case Configuration.UI_MODE_NIGHT_YES:
-                System.out.println("DARK MODE");
-                darkModeEnabled = true;
-                break;
-            case Configuration.UI_MODE_NIGHT_NO:
-                System.out.println("LIGHT MODE");
-                darkModeEnabled = false;
-                break;
-        }
-
-         */
 
         darkMode.setDefaultValue(darkModeEnabled); //The default value is the theme that the system is currently using
 
@@ -138,8 +110,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 System.out.println(darkModeEnabled);
 
                 //TODO: The user's choice is saved in the SharedPreferences and will be retrieved upon starting the application (DONE)
-                //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                //SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("dark_mode", darkModeEnabled);
                 editor.apply();
                 return true;

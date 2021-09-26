@@ -15,11 +15,15 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * CheckboxRecyclerAdapter is the adapter which helps display checkbox lists in the RecipeSearchFragment for the user's choices.
+ */
+
 public class CheckboxRecyclerAdapter extends RecyclerView.Adapter<CheckboxRecyclerAdapter.ViewHolder> {
 
-    String[] choices;
-    ArrayList<String> checked;
-    ArrayList<Integer> checkedIds;
+    String[] choices; //The data to be displayed
+    ArrayList<String> checked; //All of the checked checkboxes
+    ArrayList<Integer> checkedIds; // ...and their ids
 
     public CheckboxRecyclerAdapter(String[] choices)
     {
@@ -38,7 +42,6 @@ public class CheckboxRecyclerAdapter extends RecyclerView.Adapter<CheckboxRecycl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.checkBox.setText(choices[position]);
-
     }
 
     @Override
@@ -55,10 +58,13 @@ public class CheckboxRecyclerAdapter extends RecyclerView.Adapter<CheckboxRecycl
 
             checkBox = itemView.findViewById(R.id.ingredient_checkbox);
 
+            /**
+             * By clicking on an item, it gets added or removed from the list of checked items.
+             */
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
+                    int position = getAdapterPosition(); //The position of the item which was clicked in the recycler view
 
                     if(!checkedIds.contains(position))
                     {

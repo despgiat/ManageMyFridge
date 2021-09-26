@@ -56,8 +56,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     Fragment currentFragment;
     MyDBHandler dbHandler;
-    //SharedPreferences sharedPreferences; //Geeks for geeks
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,12 +116,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         ArrayList<Product> products = dbHandler.showallProducts(LoginScreen.user.getID());
         fridge = new Fridge(products);
 
-        //---------------TESTING-------------------//
-        //LoginScreen.user.addFavoriteTip(1);
-       // LoginScreen.user.addFavoriteRecipe(2);
-        //LoginScreen.user.addFavoriteRecipe(3);
-
-
 
         //Some fragments in the app get added to the backstack, and we want the "burger" button in the navigation drawer to become the arrow, and to allow the navigation only backward
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -158,7 +150,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             getSupportFragmentManager().beginTransaction().replace(R.id.screen, home).commit();
             navigationView.setCheckedItem(R.id.homeItem);
             currentFragment = home;
-           // getSupportActionBar().setTitle("Home");
         }
 
     }
@@ -167,24 +158,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public void onResume() {
 
         super.onResume();
-/*
-        //read preferences
-        SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
-        //SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        String headerUsername = sharedPreferences.getString("username", "Username");
-        //int a = sharedPreferences.getInt("age", 0);
-
-        // Setting the fetched data
-        // in the EditTexts
-
-        TextView header = inflatedView.findViewById(R.id.headerUsername);
-        header.setText(headerUsername);
-
-        //name.setText(s1);
-        //age.setText(String.valueOf(a));
-
- */
         TextView header = inflatedView.findViewById(R.id.headerUsername);
         header.setText(LoginScreen.user.getUsername());
 
@@ -195,13 +169,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     //TODO Save the user's favourites and other data in the database
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        //Save arraylists in the databases
-
-    }
 
     //Starts the MainActivity, which adds new items to the product database
     public void addNewItem()
@@ -243,9 +210,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     MyFridge myFridge = new MyFridge();
                     myFridge.setArguments(bundle);
                     currentFragment = myFridge;
+                    navigationView.getMenu().findItem(R.id.myFridgeItem).setChecked(true);
                     getSupportFragmentManager().beginTransaction().replace(R.id.screen, myFridge).commit();
-
-                    //getSupportFragmentManager().beginTransaction().detach(currentFragment).attach(currentFragment).commit(); //To refresh the Fragment UI
 
                     break;
                 //Updates the Home Fragment with the new fridge and displays it

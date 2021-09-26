@@ -26,10 +26,7 @@ public class RecipesOverviewFragment extends Fragment {
     TextView warning; //No recipes found
     RecyclerView.Adapter recipesAdapter;
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "recipes";
-    //private static final String ARG_PARAM2 = "param2";
-    //private String mParam2;
 
     public RecipesOverviewFragment() {
         // Required empty public constructor

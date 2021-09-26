@@ -19,8 +19,6 @@ import android.widget.TextView;
 
 import java.time.LocalDate;
 
-//TODO Update Expired Items for each user distinctively (DONE)
-
 public class ExpiredFragment extends Fragment {
 
     private Fridge fridge; //We need to access the fridge products
@@ -56,6 +54,7 @@ public class ExpiredFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Retrieves the current date so that the "Fridge" can be checked for expired items
         LocalDate now = LocalDate.now();
         currentDate = now.format(MainScreen.formatter);
 
@@ -68,7 +67,6 @@ public class ExpiredFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Expired");
 

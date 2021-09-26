@@ -24,6 +24,9 @@ import java.util.ArrayList;
 
 /**
  * The app's home screen. When the user logs into the app, the Home Fragment is displayed to them.
+ * The HomeFragment (home screen) displays the products that are expiring at the current date, as well as the next day and two days later.
+ * If there are expired items in the fridge (products that are expiring at the current date and the previous days) the fragment displays a warning
+ * message.
  */
 
 public class HomeFragment extends Fragment {
@@ -38,7 +41,6 @@ public class HomeFragment extends Fragment {
     ArrayList<Product> expireToday; //We want to show the user which of the products in their fridge expire at the current date, one day later and two days later
     ArrayList<Product> expireTomorrow;
     ArrayList<Product> expireSoon;
-    boolean expiredItems; //whether there are expired products in the fridge
 
     TextView todayTextView;
     TextView tomorrowTextView;
@@ -55,7 +57,6 @@ public class HomeFragment extends Fragment {
 
     public static HomeFragment newInstance(Fridge fridge) {
         HomeFragment fragment = new HomeFragment();
-
         Bundle args = new Bundle();
         args.putSerializable(FRIDGE, fridge);
         fragment.setArguments(args);
@@ -81,11 +82,12 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Retrieved the current date
         LocalDate now = LocalDate.now();
         currentDate = now.format(MainScreen.formatter);
 
         if (getArguments() != null) {
-            fridge = (Fridge) getArguments().getSerializable(FRIDGE); //retrieves the fridge from the MainScreen
+            fridge = (Fridge) getArguments().getSerializable(FRIDGE); //retrieves the fridge from the MainScreen Activity
         }
 
     }
@@ -154,13 +156,13 @@ public class HomeFragment extends Fragment {
 
     /**
      * Checks for expiring products at the current date, at the next day and two days later.
-     * If there aren't any, displays the appropriate text to the user.
+     * If there aren't any, updates the UI appropriately, notifying the user.
      */
-
 
     public void CheckFridge()
     {
         ArrayList<Product> products = fridge.checkForExpiredAtDate(currentDate); //The products that have expired up until the current date
+        //We need its size to update the screen's UI accordingly
 
         if(expireToday.isEmpty()) //Controls the views' appearance and text depending on if there are products in the ArrayLists that expire today, tomorrow or soon
         {
@@ -208,6 +210,7 @@ public class HomeFragment extends Fragment {
     }
 
 
+    //For the fragment - Activity communication
     public interface HomeFragmentListener {
         public void UpdateData(Fridge fridge);
     }

@@ -21,16 +21,11 @@ import java.util.ArrayList;
 
 public class FavouritesFragment extends Fragment {
 
-    //We will get this info from the user's class.
+    ArrayList<Recipe> all_recipes; //All of the database's recipes
+    ArrayList<Tip> all_tips; //All of the database's tips
 
-    private static final String FAV_RECIPES = "fav_recipes";
-    private static final String FAV_TIPS = "fav_tips";
-
-    ArrayList<Recipe> all_recipes;
-    ArrayList<Tip> all_tips;
-
-    ArrayList<Integer> recipe_ids;
-    ArrayList<Integer> tips_ids;
+    ArrayList<Integer> recipe_ids; //The ids of the user's favourite recipes
+    ArrayList<Integer> tips_ids; //The ids of the user's favourite tips
 
     RecyclerView.Adapter fav_recipesAdapter;
     RecyclerView.Adapter fav_tipsAdapter;
@@ -45,8 +40,6 @@ public class FavouritesFragment extends Fragment {
     public static FavouritesFragment newInstance(String param1, String param2) {
         FavouritesFragment fragment = new FavouritesFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,19 +60,20 @@ public class FavouritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
         recipesTextView = view.findViewById(R.id.fav_recipes_textview);
         tipsTextView = view.findViewById(R.id.faveTipsTextView);
 
-        //The full catalog of recipes
-        //The other implementation can be that the adapters can have the data themselves and the input can be the ids of the recipes we want to show each time
 
-        ArrayList<Recipe> recipes = new ArrayList<>();
+        ArrayList<Recipe> recipes = new ArrayList<>(); //Temporary Arraylists to hold the user's favourite recipes and tips.
         ArrayList<Tip> tips = new ArrayList<>();
 
+        /**
+         * For each recipe in the user's favourites (recipe_ids), we look for the corresponding recipe id in the database to retrieve the particular recipe.
+         * When found, the recipe is added to the temp recipes ArrayList which holds the user's favourite recipes as Recipe instances.
+         */
             for(int i = 0; i < recipe_ids.size(); i++)
             {
                 for(int j = 0; j < all_recipes.size(); j++)
@@ -92,6 +86,10 @@ public class FavouritesFragment extends Fragment {
             }
 
 
+        /**
+         * For each tip in the user's favourites (tips_ids), we look for the corresponding tip id in the database to retrieve the particular tip.
+         * When found, the tip is added to the temp tips ArrayList which holds the user's favourite tips as Tip instances.
+         */
             for(int i = 0; i < tips_ids.size(); i++)
             {
                 for(int j = 0; j < all_tips.size(); j++)
@@ -103,6 +101,7 @@ public class FavouritesFragment extends Fragment {
                 }
             }
 
+            //We check for the sizes of the user's favourite Recipes and Tips ids ArrayList to display the correct message
             if(recipe_ids.size() == 0)
             {
                 recipesTextView.setText("You don't have any favourite recipes yet!");
@@ -120,16 +119,15 @@ public class FavouritesFragment extends Fragment {
                 tipsTextView.setText("Your favourite tips:");
             }
 
-
-        //TODO PLACEHOLDER, TO ADD THE USER'S FAVOURITE RECIPES (DONE)
-
+        /**
+         * Setting up the recycler views to display the recipes and the tips as cards
+         */
 
         RecyclerView recipesRecyclerView = view.findViewById(R.id.faveRecipesRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         recipesRecyclerView.setLayoutManager(linearLayoutManager);
         fav_recipesAdapter = new ContentRecyclerAdapter(getContext(), this, recipes);
         recipesRecyclerView.setAdapter(fav_recipesAdapter);
-
 
         RecyclerView tipsRecyclerView = view.findViewById(R.id.faveTipsRecyclerView);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this.getContext());

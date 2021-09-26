@@ -63,8 +63,6 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
         holder.deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Remove the item from the list -> And the fridge in general
-                // RemoveItem(position);
 
                 new AlertDialog.Builder(fromFragment.getContext()) //When deleting a product, an alert dialogue is displayed to the user.
                         .setTitle("Delete Product")
@@ -92,12 +90,12 @@ public class EditableProductRecyclerAdapter extends RecyclerView.Adapter<Editabl
             @Override
             public void onClick(View v) {
                 System.out.println(productData.get(position).getID());
-                ((MainScreen) fromFragment.getActivity()).openProduct(productData.get(position).getID(), fromFragment);
+                ((MainScreen) fromFragment.getActivity()).openProduct(productData.get(position).getID(), fromFragment); //Code in MainScreen script
                 notifyDataSetChanged();
             }
         });
 
-        holder.editItem.setOnClickListener(new View.OnClickListener() { //The AddItemActivity is launched with its fields already filled with the products' information and the user is able to alter them.
+        holder.editItem.setOnClickListener(new View.OnClickListener() { //The MainActivity (which implements the addition of new items) is launched with its fields already filled with the products' information and the user is able to alter them.
             @Override
             public void onClick(View v)
             {

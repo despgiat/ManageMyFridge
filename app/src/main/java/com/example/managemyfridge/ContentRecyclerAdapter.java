@@ -19,16 +19,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * ContentRecyclerAdapter is the Adapter which helps the recipes and the tips in the fragments RecipesOverviewFragment and
- * TipsOverviewFragment to be displayed as clickable cards.
+ * ContentRecyclerAdapter is the Adapter which helps the recipes in the fragment RecipesOverviewFragment to be displayed as clickable cards.
  */
 
 
 public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecyclerAdapter.ViewHolder>{
 
-    //Content from the database
     Context context;
-    Fragment fromFragment;
+    Fragment fromFragment; //The fragment which contains the recycler view
     ArrayList<Recipe> recipeData;
 
     public ContentRecyclerAdapter(Context context, Fragment fromFragment, ArrayList<Recipe> recipeData)
@@ -50,6 +48,9 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
         holder.title.setText(recipeData.get(position).get_recipename());
         holder.description.setText(recipeData.get(position).get_instructions());
 
+        /**
+         * Depending on the recipe type (Breakfast, Lunch etc...), the image view displays the correct "thumbnail" image for each recipe
+         */
         String meal_type = recipeData.get(position).get_recipetype();
         switch (meal_type)
         {
@@ -73,8 +74,10 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
                 break;
         }
 
+        /**
+         * If this particular recipe is favoured by the user, then a filled heart icon also gets displayed on the card at the top right corner
+         */
         boolean isFave = LoginScreen.user.getFavoriteRecipesArray().contains(recipeData.get(position).get_id());
-
         if(isFave)
         {
             holder.fave_icon.setVisibility(View.VISIBLE);
@@ -96,7 +99,7 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
         ImageView fave_icon;
         TextView title;
         TextView description;
-        ImageView imageView;
+        ImageView imageView; //the recipe's thumbnail in the card
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,23 +108,21 @@ public class ContentRecyclerAdapter extends RecyclerView.Adapter<ContentRecycler
             fave_icon = itemView.findViewById(R.id.fave_icon_card);
             imageView = itemView.findViewById(R.id.tipImage);
 
-            itemView.setOnClickListener(new View.OnClickListener() { //When a card is clicked, a new fragment is added to the stack
+            /**
+             * When a card is clicked, a new fragment which will display the recipe's information (Recipe Fragment) is added to the fragments' stack
+             * and is displayed on the screen
+             */
+
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-
-                    //Retrieve the data for this particular recipe from the database
-                    //And load its components in the next screen
-
-                    //replace screen and get to the recipe fragment
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("recipe", (Serializable) recipeData.get(position));
                     bundle.putBoolean("favourite", LoginScreen.user.getFavoriteRecipesArray().contains(recipeData.get(position).get_id()));
 
-                    //Add the image and the ingredients list and we're set
-
-                    RecipesFragment fragment = new RecipesFragment(); //Shows the content fragment, whether is it recipes or tips
+                    RecipesFragment fragment = new RecipesFragment();
                     fragment.setArguments(bundle);
 
                     fromFragment.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.screen, fragment).addToBackStack(null).commit();

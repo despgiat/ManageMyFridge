@@ -25,9 +25,6 @@ import android.widget.Toast;
  */
 public class TipsFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    //private static final String TITLE = "title";
-    //private static final String DESCRIPTION = "description";
     public static final String FAVOURITE = "favourite";
 
     public static final String TIPINFO = "tip";
@@ -150,7 +147,7 @@ public class TipsFragment extends Fragment {
         //recipe will be marked as favourite (and it will be saved in the database
 
         Toast.makeText(getContext(), "This recipe has been added to your favorites!", Toast.LENGTH_SHORT).show();
-        //favourite = true;
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -164,7 +161,6 @@ public class TipsFragment extends Fragment {
         //Database stuff
 
         Toast.makeText(getContext(), "This recipe has been removed from your favorites!", Toast.LENGTH_SHORT).show();
-        //favourite = false;
     }
 
 
