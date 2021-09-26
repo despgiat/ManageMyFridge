@@ -151,6 +151,10 @@ public class Product implements Serializable {
                 '}';
     }
 
+    /**
+     * Checks if the product is expired by comparing its expiration date with the given date
+     */
+
     public boolean productExpired(String date)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
