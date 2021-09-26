@@ -15,12 +15,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- *Upon entering the desired products and clicking "Find recipes!", this fragment gets displayed in the screen.
- * Some of the recipes' basic information are displayed as clickable cards. Upon clicking, the user can see the whole recipe, as it is the RecipeFragment gets displayed
+ * Upon entering the preferences and clicking "Find recipes!" or "Show All Recipes" in the RecipeSearchFragment, this fragment gets displayed in the screen.
+ * Some of the recipes' basic information are displayed as clickable cards. Upon clicking, the user can see the whole recipe, as the RecipeFragment gets displayed on the screen
  */
 public class RecipesOverviewFragment extends Fragment {
 
-    //The recipes are retrieved here.
+    //The recipes we wish to display are stored here.
     ArrayList<Recipe> recipes;
 
     TextView warning; //No recipes found
@@ -55,6 +55,8 @@ public class RecipesOverviewFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recipes");
 
         View view = inflater.inflate(R.layout.fragment_recipes_overview, container, false);
+
+        //Setting up the recycler view to display the recipes are clickable cards
         RecyclerView recipesRecyclerView = view.findViewById(R.id.recipesFoundRecyclerView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
@@ -62,6 +64,7 @@ public class RecipesOverviewFragment extends Fragment {
         recipesAdapter = new ContentRecyclerAdapter(getContext(), this, recipes);
         recipesRecyclerView.setAdapter(recipesAdapter);
 
+        //If there are no recipes to be displayed (if the recipes ArrayList is empty, then the UI will update appropriately and the warning will be shown)
         warning = view.findViewById(R.id.recipesWarningTextView);
 
         if(recipes.isEmpty())

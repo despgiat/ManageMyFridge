@@ -29,38 +29,29 @@ import java.util.List;
 
 import static android.widget.AbsListView.CHOICE_MODE_MULTIPLE;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeSearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipeSearchFragment extends Fragment {
 
-    String[] diet_prefs;
-    String[] meal_type;
+    String[] diet_prefs; //the app's supported diet preferences from strings.xml
+    String[] meal_type; //the app's supported meal types from strings.xml
 
-    List<String> ingredientGroups;
-    HashMap<String, List<String>> ingredients;
-
+    List<String> ingredientGroups; //The ingredient group titles (for the ingredient expandable list adapter)
+    HashMap<String, List<String>> ingredients; //the group titles and the list of ingredients HashMap (for the ingredient expandable list adapter)
     IngredientExpListAdapter adapter;
 
     MyDBHandler dbHandler;
-
-    ArrayList<String> checkedDietPrefs;
-    ArrayList<String> checkedMealTypes;
-    ArrayList<String> checkedIngredients;
-
+    ArrayList<String> checkedDietPrefs; //All of the user's checked diet preferences
+    ArrayList<String> checkedMealTypes; //All of the user's checked meal types
+    ArrayList<String> checkedIngredients; //All of the user's checked ingredients
 
     RecyclerView diet_prefs_recyclerview;
     RecyclerView meal_type_recyclerview;
-
     CheckboxRecyclerAdapter dietprefsAdapter;
     CheckboxRecyclerAdapter mealtypeAdapter;
 
     ExpandableListView ingredients_list;
 
-    Button findRecipes;
-    Button findAllRecipes;
+    Button findRecipes; //When clicked, it gets the user's input from the diet preference, meal type and ingredients lists and displays the appropriate recipes
+    Button findAllRecipes; //When clicked, all of the database's recipes are displayed
 
     public RecipeSearchFragment() {
         // Required empty public constructor
@@ -81,10 +72,12 @@ public class RecipeSearchFragment extends Fragment {
 
         if (getArguments() != null) {
 
+            //Gets the string arrays from strings.xml
             diet_prefs = getResources().getStringArray(R.array.diet_preference);
             meal_type = getResources().getStringArray(R.array.meal_type);
             ingredientGroups = Arrays.asList(getResources().getStringArray(R.array.ingredient_groups));
 
+            //For each of the ingredient groups, we retrieve the ingredients "subgroups" from strings.xml
             ingredients = new HashMap<>();
             ingredients.put(ingredientGroups.get(0), Arrays.asList(getResources().getStringArray(R.array.dairy_group)));
             ingredients.put(ingredientGroups.get(1), Arrays.asList(getResources().getStringArray(R.array.meats_group)));
@@ -97,7 +90,6 @@ public class RecipeSearchFragment extends Fragment {
             ingredients.put(ingredientGroups.get(8), Arrays.asList(getResources().getStringArray(R.array.dairy_alts_group)));
             ingredients.put(ingredientGroups.get(9), Arrays.asList(getResources().getStringArray(R.array.nuts_group)));
             ingredients.put(ingredientGroups.get(10), Arrays.asList(getResources().getStringArray(R.array.baking_group)));
-
 
             dbHandler = new MyDBHandler(getActivity(), null, null, 1);
 
@@ -116,31 +108,35 @@ public class RecipeSearchFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_recipe_search, container, false);
 
+        //Setting up text views
         findRecipes = view.findViewById(R.id.findRecipesButton);
         findAllRecipes = view.findViewById(R.id.findAllRecipesButton);
 
         diet_prefs_recyclerview = view.findViewById(R.id.diet_prefs_recyclerview);
         meal_type_recyclerview = view.findViewById(R.id.meal_type_recyclerview);
 
-
+        //Setting up recycler views and pumping data to them
         LinearLayoutManager linearLayoutManagerPrefs = new LinearLayoutManager(this.getContext());
         diet_prefs_recyclerview.setLayoutManager(linearLayoutManagerPrefs);
         dietprefsAdapter = new CheckboxRecyclerAdapter(diet_prefs);
         diet_prefs_recyclerview.setAdapter(dietprefsAdapter);
-
 
         LinearLayoutManager linearLayoutManagerType = new LinearLayoutManager(this.getContext());
         meal_type_recyclerview.setLayoutManager(linearLayoutManagerType);
         mealtypeAdapter = new CheckboxRecyclerAdapter(meal_type);
         meal_type_recyclerview.setAdapter(mealtypeAdapter);
 
+        //Sets up the ingredient expandable list
         ingredients_list = view.findViewById(R.id.ingredient_expandablelist);
-
         adapter = new IngredientExpListAdapter(this.getContext(), ingredientGroups, ingredients);
-
         ingredients_list.setAdapter(adapter);
 
 
+        /**
+         * The finding recipes button listeners.
+         * findRecipes button gets the data from findRecipes() method, pumps them to the RecipesOverviewFragment so that the recipes are displayed and the
+         * findAllRecipes button gets all the recipes from the database and inputs them to the RecipesOverviewFragment to have them displayed
+         */
         findRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,8 +178,12 @@ public class RecipeSearchFragment extends Fragment {
         return view;
     }
 
-
-    //TODO The actual findRecipes function. This is a placeholder
+    /**
+     * Get's all of the user's input from the diet preferences, meal type and ingredients lists and calls the getallRecipesofCertainPref from
+     * the database to find the appropriate recipes base on the above preferences.
+     * If the input is invalid, it notifies the user with a Toast.
+     * @return the list of recipes found in the database that comply with the user's preferences
+     */
 
     public ArrayList<Recipe> findRecipes()
     {

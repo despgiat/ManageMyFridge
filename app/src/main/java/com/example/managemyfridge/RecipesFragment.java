@@ -24,19 +24,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipesFragment extends Fragment {
 
     private static final String RECIPEINFO = "recipe";
     private static final String FAVOURITE = "favourite";
 
-    private Recipe recipe;
-    boolean favourite; //We will check from the database if it was marked as favourite by the user and we will display it as such
-    MenuItem fave;
+    private Recipe recipe; //The recipe's info which we want to display
+    boolean favourite; //Is the recipe a favourite
+    MenuItem fave; //the favourite button in the toolbar
 
     public RecipesFragment() {
         // Required empty public constructor
@@ -58,7 +53,7 @@ public class RecipesFragment extends Fragment {
         if (getArguments() != null) {
             recipe = (Recipe) getArguments().getSerializable(RECIPEINFO);
             favourite = getArguments().getBoolean(FAVOURITE);
-            setHasOptionsMenu(true);
+            setHasOptionsMenu(true); //To display the toolbar menu in where the favourite button sits
         }
     }
 
@@ -67,6 +62,7 @@ public class RecipesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        //Setting up the textviews with the recipe's information
         View view = inflater.inflate(R.layout.fragment_recipes, container, false);
         TextView titleTextView = view.findViewById(R.id.recipeTitle);
         titleTextView.setText(recipe.get_recipename());
@@ -75,7 +71,7 @@ public class RecipesFragment extends Fragment {
         instructions.setText(recipe.get_instructions());
 
         TextView ingredients = view.findViewById(R.id.ingredientsListTextView);
-        ingredients.setText(formatIngredients(recipe.get_ingredients()));
+        ingredients.setText(formatIngredients(recipe.get_ingredients())); //Formats the ingredients to be displayed correctly on screen
 
         TextView source = view.findViewById(R.id.recipe_sourceTextView);
         source.setText(recipe.get_source());
@@ -91,17 +87,16 @@ public class RecipesFragment extends Fragment {
         return view;
     }
 
-
+    /**
+     * In the toolbar we add the "Favourite" button, to mark/unmark the recipe as favourite.
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu items for use in the action bar
         inflater.inflate(R.menu.recipes_toobar_menu, menu);
 
-        //TODO Check from the database if this recipe belongs to the user's favorites and display it accordingly (the heart icon should be filled ) (DONE)
-
+        //If the tip is a favourite, the displayed button will be a filled heart, otherwise, an empty heart
         fave = menu.findItem(R.id.fave);
-
-
         if(favourite)
         {
             fave.setIcon(R.drawable.ic_fave_filled);
@@ -133,6 +128,10 @@ public class RecipesFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * Methods to handle the adding/removing tips from favourites
+     * They alter the button's icon, add/remove the tip to/from the list of favourite tips of the user and update the user in the database to save the changes
+     */
     public void setAsFavourite()
     {
         fave.setIcon(R.drawable.ic_fave_filled);
@@ -153,6 +152,9 @@ public class RecipesFragment extends Fragment {
 
     }
 
+    /**
+     * Uses a simple string formatter to format the ingredients string as the list of ingredients from the database are displayed at one text
+     */
     public String formatIngredients(String ingredients)
     {
         return ingredients.replace(". ", "\n");

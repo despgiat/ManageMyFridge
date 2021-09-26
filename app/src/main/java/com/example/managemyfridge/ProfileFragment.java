@@ -120,8 +120,6 @@ public class ProfileFragment extends Fragment {
                 confirm_passowrd.setVisibility(View.VISIBLE);
 
 
-
-
                 save = view.findViewById(R.id.save_new_password);
                 save.setVisibility(View.VISIBLE);
                 cancel = view.findViewById(R.id.discard);

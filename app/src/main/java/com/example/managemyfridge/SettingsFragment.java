@@ -19,12 +19,18 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
+/**
+ * The app's settings.
+ * We use the Shared Preferences to store the application settings, like the dark mode.
+ * https://www.geeksforgeeks.org/shared-preferences-in-android-with-examples/#:~:text=Shared%20Preferences%20is%20the%20way,app%20on%20the%20device%20storage.
+ */
+
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+    //The application preferences displayed on the Settings Screen
     Preference darkMode;
     Preference feedback;
     Preference version;
-
     boolean darkModeEnabled;
 
     public SettingsFragment() {
@@ -53,7 +59,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = super.onCreateView(inflater, container, savedInstanceState); //because we don't want to inflate a new XML layout
+        View view = super.onCreateView(inflater, container, savedInstanceState); //We don't want to inflate a new XML layout, so we call super
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Settings");
         return view;
     }
@@ -62,11 +68,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.app_settings, rootKey);
 
+            //Retrieves the SharedPreferences to check their values
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        //Retrieves the user's "dark mode" preference
         darkModeEnabled = sharedPreferences.getBoolean("dark_mode", false);
 
+        /**
+         * When the "feedback" preference is clicked, the user is prompt to an email composer with some fields already filled (the email receivers and the subject)
+         * so that they can write and send feedback to the app's developers
+         */
         feedback = (Preference) findPreference("send_feedback");
         feedback.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
@@ -76,6 +88,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
 
 
+        /**
+         * When clicked, a toast will be displayed showing the app's version
+         */
         version = findPreference("version");
         version.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -85,31 +100,26 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
+
         darkMode = (SwitchPreference) findPreference("darkMode");
-
-        darkMode.setDefaultValue(darkModeEnabled); //The default value is the theme that the system is currently using
-
+        darkMode.setDefaultValue(darkModeEnabled); //Its value is the one we retrieved from the SharedPreferences
         darkMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) { //Check which theme is currently the system using
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                if ((boolean) newValue) //if it is checked
+                if ((boolean) newValue) //if the preference changed to true (on)
                 {
                     //Switch to Dark Mode
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 }
-                else //if not
+                else //if the preference changes to false (off)
                 {
                     //Switch to Light Mode
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
 
-                darkModeEnabled = (boolean) newValue;
-                //darkMode.setDefaultValue(darkModeEnabled);
+                darkModeEnabled = (boolean) newValue; //The darkModeEnabled value changes to the new preference value and is stored in the Shared Preferences
 
-                System.out.println(darkModeEnabled);
-
-                //TODO: The user's choice is saved in the SharedPreferences and will be retrieved upon starting the application (DONE)
                 editor.putBoolean("dark_mode", darkModeEnabled);
                 editor.apply();
                 return true;
@@ -123,7 +133,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, addresses);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-
         startActivity(Intent.createChooser(intent, "Send feedback"));
 
     }

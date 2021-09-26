@@ -17,13 +17,11 @@ import java.util.ArrayList;
 
 public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.ViewHolder>{
 
-    //Content from the database
     Context context;
-    Fragment fromFragment;
+    Fragment fromFragment; //The fragment which called the adapter
 
-    //The below will be derived from the database
     MyDBHandler dbHandler;
-    ArrayList<Tip> tipsData;
+    ArrayList<Tip> tipsData; //The list of tips to be displayed by the recycler view
 
     public TipRecyclerAdapter(Context context, Fragment fromFragment, ArrayList<Tip> tipsData)
     {
@@ -41,12 +39,14 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
         return new TipRecyclerAdapter.ViewHolder(v);
     }
 
+    //The card's
     @Override
     public void onBindViewHolder(@NonNull TipRecyclerAdapter.ViewHolder holder, int position) {
         holder.title.setText(tipsData.get(position).get_tipname());
         holder.description.setText(tipsData.get(position).get_description());
-        holder.imageView.setImageResource(R.drawable.ic_tips_idea_image);
+        holder.imageView.setImageResource(R.drawable.ic_tips_idea_image); //The tip's thumbnail image
 
+        //If the tip is a favourite, then a filled heart icon is also displayed at the top right corner of the card
         boolean isFave = LoginScreen.user.getFavoriteTipsArray().contains(tipsData.get(position).get_id());
 
         if(isFave)
@@ -78,21 +78,20 @@ public class TipRecyclerAdapter extends RecyclerView.Adapter<TipRecyclerAdapter.
             fave_icon = itemView.findViewById(R.id.fave_icon_card);
             imageView = itemView.findViewById(R.id.tipImage);
 
-            itemView.setOnClickListener(new View.OnClickListener() { //When a card is clicked, a new fragment is added to the stack
+            /**
+             * When a card is clicked, a new fragment which will display the tips's information (TipsFragment) is added to the fragments' stack
+             * and is displayed on the screen
+             */
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
 
-                    //Retrieve the data for this particular recipe from the database
-                    //And load its components in the next screen
-
-                    //replace screen and get to the recipe fragment
-
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("tip", (Serializable) tipsData.get(position));
+                    bundle.putSerializable("tip", (Serializable) tipsData.get(position)); //Pumps the Tip's data and a boolean indicating whether if it's a favourite or not
                     bundle.putBoolean("favourite", LoginScreen.user.getFavoriteTipsArray().contains(tipsData.get(position).get_id()));
 
-                    TipsFragment fragment = new TipsFragment(); //Shows the content fragment, whether is it recipes or tips
+                    TipsFragment fragment = new TipsFragment();
                     fragment.setArguments(bundle);
 
                     fromFragment.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.screen, fragment).addToBackStack(null).commit();

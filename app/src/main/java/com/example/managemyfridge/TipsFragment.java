@@ -21,40 +21,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * The TipsFragment contains all of the information regarding a tip -> A header image, a title, and the text.
+ * The TipsFragment contains all of the information regarding a tip -> Its title, instructions and source.
  */
 public class TipsFragment extends Fragment {
 
     public static final String FAVOURITE = "favourite";
-
     public static final String TIPINFO = "tip";
     private Tip tip;
 
     private String tipTitle;
     private String tipDescription;
-    boolean favourite; //We will check from the database if it was marked as favourite by the user and we will display it as such
+    boolean favourite;
     MenuItem fave;
 
     public TipsFragment() {
         // Required empty public constructor
     }
 
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TipsFragment.
-     */
-
     public static TipsFragment newInstance(String param1, Boolean param2) {
         TipsFragment fragment = new TipsFragment();
         Bundle args = new Bundle();
-        //args.putString(TITLE, param1);
-        //args.putString(DESCRIPTION, param2);
-        //args.putBoolean(FAVOURITE, param3);
         args.putSerializable(TIPINFO, param1);
         args.putBoolean(FAVOURITE, param2);
         fragment.setArguments(args);
@@ -71,7 +57,7 @@ public class TipsFragment extends Fragment {
             tipDescription = tip.get_description();
             favourite = getArguments().getBoolean(FAVOURITE);
 
-            setHasOptionsMenu(true);
+            setHasOptionsMenu(true); //So that we can add the "Favourite" button to the toolbar
 
         }
     }
@@ -91,20 +77,23 @@ public class TipsFragment extends Fragment {
         TextView source = view.findViewById(R.id.tip_sourceTextView);
         source.setText(tip.get_source());
 
+        //Sets the toolbar title to the tip's title
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(tipTitle);
 
         return view;
     }
 
+    /**
+     * In the toolbar we add the "Favourite" button, to mark/unmark the tip as favourite.
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu items for use in the action bar
-        inflater.inflate(R.menu.recipes_toobar_menu, menu);
 
-        //TODO Check from the database if this tip belongs to the user's favorites and display it accordingly (DONE)
+        inflater.inflate(R.menu.recipes_toobar_menu, menu);
 
         fave = menu.findItem(R.id.fave);
 
+        //If the tip is a favourite, the displayed button will be a filled heart, otherwise, an empty heart
         if(favourite)
         {
             fave.setIcon(R.drawable.ic_fave_filled);
@@ -136,16 +125,17 @@ public class TipsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * Methods to handle the adding/removing tips from favourites
+     * They alter the button's icon, add/remove the tip to/from the list of favourite tips of the user and update the user in the database to save the changes
+     */
+
     public void setAsFavourite()
     {
         fave.setIcon(R.drawable.ic_fave_filled);
         LoginScreen.user.addFavoriteTip(tip.get_id());
         LoginScreen.dbHandlerlog.updateUser();
         favourite = true;
-
-        //Database stuff
-        //recipe will be marked as favourite (and it will be saved in the database
-
         Toast.makeText(getContext(), "This recipe has been added to your favorites!", Toast.LENGTH_SHORT).show();
 
     }
@@ -157,9 +147,6 @@ public class TipsFragment extends Fragment {
         LoginScreen.user.removeFavoriteTip(tip.get_id());
         LoginScreen.dbHandlerlog.updateUser();
         favourite = false;
-
-        //Database stuff
-
         Toast.makeText(getContext(), "This recipe has been removed from your favorites!", Toast.LENGTH_SHORT).show();
     }
 

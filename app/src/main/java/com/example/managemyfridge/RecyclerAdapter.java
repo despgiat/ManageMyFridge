@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 /**
- * The RecylerAdapter to display the products in the home screen.
+ * The RecylerAdapter to display the products going to expire in the current and following days in the home screen.
+ * It shows the product's name and the date that it was opened, if it was opened.
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
@@ -36,8 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.itemName.setText(productData.get(position).getProductName());
-        holder.itemOpened.setText(productData.get(position).get_opened().equals("yes") ? "Opened at " + (productData.get(position).get_DateofOpening()) : "");
-
+        holder.itemOpened.setText(productData.get(position).get_opened().equals("yes") ? "Opened at " + (productData.get(position).get_DateofOpening()) : ""); //If the product was opened, the card displays the opening date as well
     }
 
     @Override

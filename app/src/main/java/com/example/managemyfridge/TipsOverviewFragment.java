@@ -24,10 +24,8 @@ public class TipsOverviewFragment extends Fragment {
     ArrayList<Tip> all_tips;
     RecyclerView.Adapter tipsAdapter;
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
 
     private String mParam1;
     private String mParam2;
@@ -61,19 +59,15 @@ public class TipsOverviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tips_overview, container, false);
 
-        all_tips = LoginScreen.dbHandlerlog.getallTips();
+        all_tips = LoginScreen.dbHandlerlog.getallTips(); //retrieves all tips from the database
 
         //Recycler view for the display of tips
         RecyclerView tipsRecyclerView = view.findViewById(R.id.tipsCardView);
         LinearLayoutManager linearLayoutManagerToday = new LinearLayoutManager(this.getContext());
 
         tipsRecyclerView.setLayoutManager(linearLayoutManagerToday);
-        tipsAdapter = new TipRecyclerAdapter(getContext(), this, all_tips);
+        tipsAdapter = new TipRecyclerAdapter(getContext(), this, all_tips); //gives the data to the tip recycler adapter
         tipsRecyclerView.setAdapter(tipsAdapter);
-
-        System.out.println(tipsAdapter.getItemCount());
-
-        // Inflate the layout for this fragment
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Zero Waste Tips");
 
